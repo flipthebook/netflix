@@ -336,14 +336,13 @@ h1 {
 .list {
     position: absolute;
     display: flex;
-    flex-wrap: nowrap;
     bottom: 0;
     left: 0;
     height: 23%;
-    width: calc(100% - 2vh);
-    align-items: flex-end;
+    width: 100%;
     overflow-x: scroll;
-    margin: 0 1vh;
+    margin: 0;
+    justify-content: space-between;
 }
 
 .list::-webkit-scrollbar {
@@ -382,28 +381,28 @@ h1 {
 }
 
 .list__ {
-    height: 80%;
-    aspect-ratio: 1.1/1;
-    margin: 0 auto 1vh;
+    display: flex;
+    height: 100%;
+    aspect-ratio: .85/1;
+    margin: 0;
+    justify-content: center;
 }
 
 .list__img {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    height: 100%;
+    position: absolute;
+    height: 80%;
+    bottom: 3%;
     aspect-ratio: 1/1;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .list_mask {
-    position: relative;
+    position: absolute;
     display: flex;
-    height: 100%;
-    width: 100%;
-    bottom: 100%;
+    height: 80%;
+    aspect-ratio: 1/1;
+    bottom: 3%;
     background: linear-gradient(to top, rgba(0,0,0,1) 25%, rgba(0,0,0,0) 60%);
     z-index: 2;
     justify-content: center;
