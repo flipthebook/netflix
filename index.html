@@ -619,9 +619,11 @@ play.addEventListener("click", function() {
         // Verifica se o dispositivo é da Apple
         var isAppleDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         if (isAppleDevice) {
-            video1.load(); // Recarrega o vídeo
+            video2.load(); // Recarrega o vídeo
+            video1.style.display = 'none';
+            video2.style.display = 'block';
+            video2.currentTime = 0;
         }
-
         video1.play();
     }, 2000);
 });
