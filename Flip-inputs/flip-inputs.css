@@ -297,6 +297,8 @@
   
 #r_c2 {
     display: none;
+    flex-direction: column;
+    align-items: center;
     opacity: 0;
     transition: .5s ease;
 }
@@ -308,64 +310,46 @@
 }
 
 #video-preview-container {
-	width: 200px;
-	height: 200px;
-	position: relative;
-	overflow: hidden;
-	border: 2px solid #ccc;
-	display: none;
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    margin: 10px 10px 0px;
 }
 
 #video-preview {
-	position: absolute;
-	top: 0;
-	right: 0;
-	max-width: 115px;
-	height: 100%;
-}
-
-#video-preview-container2 {
-    width: 291px;
-    height: 137px;
-    position: relative;
-    overflow: hidden;
-    border: 2px solid #ccc;
-    display: none;
-}
-
-#video-preview2 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    max-width: 244px;
-    height: 137px;
-}
-
-#grip-info {
-    position: absolute;
-    display: flex;
-    top: 0;
-    left: 0;
     height: 100%;
-    width: 82px;
-    border-right: 3px dashed #ccc;
-    justify-content: center;
+    box-shadow: -2px 3px 7px rgb(0 0 0 / 0.5);
 }
 
-#grip-info p {
-    position: absolute;
-    font-size: 18px;
-    height: 70px;
-    text-align: center;
-    font-family: sans-serif;
-    font-weight: 600;
-    margin: 25px 0 0;
+.btns-video-preview {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
-#grip-info svg {
-    position: absolute;
-    width: 70%;
-    bottom: 10px;
+.btns-video-preview button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 35%;
+    margin-left: 16px;
+    cursor: pointer;
+    border: 1px dashed #ccc;
+    border-radius: 10%;
+    box-shadow: -2px 3px 7px rgb(0 0 0 / 0.5);
+    background: white;
+    transition: transform .5s ease;
+}
+
+.btns-video-preview button:hover {
+    transform: scale(1.02);
+}
+
+.btns-video-preview svg {
+    height: 100%;
 }
 
 .text-center {
@@ -373,7 +357,6 @@
   	margin-bottom: 15px;
   	margin-top: 30px;
 }
-
 
 button#btn-choose1, button#btn-choose2 {
 	background-color: #fff;
@@ -402,6 +385,8 @@ button#btn-choose1.selected, button#btn-choose2.selected {
 
 .choose1, .choose2 {
     display: none;
+    flex-direction: column;
+    align-items: center;
     opacity: 0;
     transition: 0.5s ease;
 }
@@ -448,6 +433,7 @@ input[type=text] {
     width: 100%;
     height:100%;
     margin: 30px 0 0;
+    padding: 10px;
     border-radius: 3em;
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
@@ -469,7 +455,7 @@ input[type=text] {
 .preview-title {
     color: white;
     font-family: sans-serif;
-    margin: 15px 0 30px;
+    margin: 5px 0 30px;
     font-size: 30px;
     font-weight: bold;
 }
@@ -479,7 +465,7 @@ input[type=text] {
     align-items: center;
     justify-content: center;
     perspective: 600px;
-    margin: 50px 0px 0px;
+    margin: 0px 0px 45px;
     flex-direction: column;
 }
 
@@ -499,8 +485,32 @@ input[type=text] {
     width: 189px;
     height: 200px;
     object-fit: cover;
+    transform-origin: 0% 50%;
     transform: translateZ(25px);
-    border-radius: 0 2px 2px 0;
+    backface-visibility: hidden;
+}
+
+.front-cover-img {
+    height: 100%;
+    width: 100%;
+}
+
+.book-page1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    width: 189px;
+    height: 200px;
+    transform: translateZ(24px);
+}
+
+.video-page {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    max-width: 135px;
 }
 
 .book-pages {
@@ -594,10 +604,27 @@ input[type=text] {
     transform: translateX(95px) translateY(215px) rotateY(90deg) rotateX(90deg);
 }
 
+.preview-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+}
+
+.play-preview-container {
+    display: none;
+    flex-direction: row;
+    margin: 10px 0px 0px;
+}
+
+.play-preview {
+    display: block;
+}
+
 .slider-container {
     display: flex;
     width: 280px;
-    margin: 50px 0px 10px;
+    margin: 10px 0px 0px;
     justify-content: center;
 }
 
@@ -720,18 +747,15 @@ input[type=text] {
 }
 
 #preview1 {
-    height: 90%;
-    max-width: 90%;
-    aspect-ratio: 17/18;
+    width: 80%;
     border: none;
     background: none;
     box-shadow: -2px 3px 10px rgb(0 0 0 / 1);
 }
 
 #preview1 canvas {
+    width: 100%;
     height: 100%;
-    aspect-ratio: 17/18;
-    object-fit: cover;
 }
 
 .btns__PopupEditor1 {

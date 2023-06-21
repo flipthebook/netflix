@@ -21,13 +21,17 @@ size1.addEventListener('click', () => {
     size2.style.background = 'white';
     book.style.height = '200px';
     frontCover.style.height = '200px';
+    page1.style.height = '200px';
     bookBefore.style.height = '196px';
     backCover.style.height = '200px';
     sideCover.style.height = '200px';
     book.style.width = '189px';
     frontCover.style.width = '189px';
+    page1.style.width = '189px';
     backCover.style.width = '189px';
+    videoPage.style.maxWidth = '135px';
     bookBefore.style.transform = 'translateX(162px) rotateY(90deg)';
+    bookShadow68x72();
     cropAspectRatio = 17 / 18;
     sizechossed.value = '68x72mm';
 });
@@ -45,16 +49,34 @@ size2.addEventListener('click', () => {
     size2.style.background = 'floralwhite';
     book.style.height = '133px';
     frontCover.style.height = '133px';
+    page1.style.height = '133px';
     bookBefore.style.height = '129px';
     backCover.style.height = '133px';
     sideCover.style.height = '133px';
     book.style.width = '283px';
     frontCover.style.width = '283px';
+    page1.style.width = '283px';
     backCover.style.width = '283px';
+    videoPage.style.maxWidth = '240px';
     bookBefore.style.transform = 'translateX(258px) rotateY(90deg)';
+    bookShadow48x102();
     cropAspectRatio = 17 / 8;
     sizechossed.value = '48x102mm';
 });
+
+const bookShadow = document.querySelector('.book-shadow');
+
+const bookShadow68x72 = () => {
+    bookShadow.style.width = '0px';
+    bookShadow.style.height = '0px';
+    bookShadow.style.transform = 'translateX(95px) translateY(215px) rotateY(90deg) rotateX(90deg)';
+};
+
+const bookShadow48x102 = () => {
+    bookShadow.style.width = '0px';
+    bookShadow.style.height = '105px';
+    bookShadow.style.transform = 'translateX(142px) translateY(100px) rotateY(90deg) rotateX(90deg)';	
+};
 
 const edit1 = document.querySelector('.edit1');
 const edit2 = document.querySelector('.edit2');
@@ -72,7 +94,7 @@ edit1.addEventListener('click', function() {
 
 edit2.addEventListener('click', function() {
     rc1.style.opacity = '0';
-    rc2.style.display = 'block';
+    rc2.style.display = 'flex';
     setTimeout(function() {
         rc1.style.display = 'none';
         rc2.style.opacity = '1';
@@ -98,16 +120,20 @@ const field = document.getElementById('line-property1');
 const videoInput = document.querySelector('input[id="videoUpload"]');
 const videoPreview = document.querySelector('#video-preview');
 const previewContainer = document.querySelector('#video-preview-container');
+const removeVideo = document.querySelector('.remove_video');
 
 btnChoose1.addEventListener('click', () => {
-    choose1.style.display = 'block';
+    choose1.style.display = 'flex';
     choose2.style.opacity = '0';
     setTimeout(function() {
         choose1.style.opacity = '1';
     }, 500);
-
+    if (videoInput.files.length > 0) {
+        playPreviewContainer.style.display = 'flex';
+        videoPreview.play();
+    }
     if (videoInput.files && videoInput.files[0]) {
-        previewContainer.style.display = 'block';
+        previewContainer.style.display = 'flex';
       }
     
     if (btnChoose2.classList.contains('selected')) {
@@ -121,13 +147,13 @@ btnChoose1.addEventListener('click', () => {
 });
 
 btnChoose2.addEventListener('click', () => {
-    choose2.style.display = 'block';
+    choose2.style.display = 'flex';
     choose1.style.opacity = '0';
     setTimeout(function() {
         choose2.style.opacity = '1';
     }, 500);
     previewContainer.style.display = 'none';
-
+    playPreviewContainer.style.display = 'none';
     if (btnChoose1.classList.contains('selected')) {
         setTimeout(function() {
             field.removeChild(choose1);
@@ -139,29 +165,40 @@ btnChoose2.addEventListener('click', () => {
 });
 
 const showPreviewContainer = () => {
-      previewContainer.style.display = 'inline-block';	
+    previewContainer.style.display = 'flex';	
 };
 
 const hidePreviewContainer = () => {
-      previewContainer.style.display = 'none';	
+    previewContainer.style.display = 'none';	
 };
 
 videoInput.addEventListener('change', () => {
-      const file = videoInput.files[0];
-      if (!file) {
+    const videoFile = videoInput.files[0];
+    if (videoInput.files.length > 0) {
+        const url = URL.createObjectURL(videoFile);
+        videoPreview.src = url;
+        videoPage.src = url;
         videoInput.style.background = '#4BB543';
+        playPreviewContainer.style.display = 'flex';
+        showPreviewContainer();
+    } else {
+        videoInput.style.background = '#FF5757';
+        playPreviewContainer.style.display = 'none';
         hidePreviewContainer();
-        return;
-      }
-      if (!file.type.startsWith('video/')) return;
-      const url = URL.createObjectURL(file);
-      videoPreview.src = url;
-      videoInput.style.background = '#FF5757';
-      showPreviewContainer();		
+    }
 });
+
+removeVideo.addEventListener('click', () => {
+    videoInput.value = '';
+    videoPreview.src = '';
+    videoPage.src = '';
+    videoInput.style.background = '#FF5757';
+    playPreviewContainer.style.display = 'none';
+    hidePreviewContainer();
+})
   
 var cropper1;
-var originalSrc = document.querySelector('.front-cover').src;
+var originalSrc = document.querySelector('.front-cover-img').src;
 const upload1 = document.getElementById('upload1');
 const aboveUpload1 = document.querySelector('.above_upload1');
 const openPopup1 = document.querySelector('.open__popup1');
@@ -169,6 +206,7 @@ const removeFile1 = document.querySelector('.remove_file1');
 const PopupEditor1 = document.querySelector('.popup__background1');
 const closePopup1 = document.getElementById('closePopupEditor1');
 const cropfileInput1 = document.getElementById('croppedImageInput1');
+const preview1 = document.getElementById('preview1');
 
 var cropAspectRatio;
 
@@ -191,8 +229,9 @@ upload1.addEventListener('change', function(e) {
                         var canvas = cropper1.getCroppedCanvas({
                             aspectRatio: cropAspectRatio
                         });
-                        document.getElementById('preview1').innerHTML = '';
-                        document.getElementById('preview1').appendChild(canvas);
+                        preview1.innerHTML = '';
+                        preview1.style.aspectRatio = cropAspectRatio;
+                        preview1.appendChild(canvas);
                         upload1.style.background = '#4BB543';
                     }
                 });
@@ -203,7 +242,7 @@ upload1.addEventListener('change', function(e) {
     } else {
         PopupEditor1.style.display = 'none';
         document.getElementById('previewResult1').src = '';
-        document.querySelector('.front-cover').src = originalSrc;
+        document.querySelector('.front-cover-img').src = originalSrc;
         closePopup1.style.display = 'none';
         aboveUpload1.style.display = 'none';
         cropfileInput1.value = '';
@@ -216,13 +255,15 @@ document.getElementById('cropBtn1').addEventListener('click', function() {
         aspectRatio: cropAspectRatio
     });
     angleSlider.value = 0;
-    book.style.transition = 'transform 1s ease';
-    book.style.transform = 'rotateY(0deg)';
+    if (book.style.transform !== 'rotateY(0deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(0deg)';
+    }
     PopupEditor1.style.display = 'none';
     closePopup1.style.display = 'flex';
     var croppedImage1 = canvas.toDataURL('image/webp');
     document.getElementById('previewResult1').src = croppedImage1;
-    document.querySelector('.front-cover').src = croppedImage1;
+    document.querySelector('.front-cover-img').src = croppedImage1;
 
     fetch(croppedImage1)
         .then(res => res.blob())
@@ -249,13 +290,15 @@ document.getElementById('remove_file_editor1').addEventListener('click', functio
     upload1.style.background = '#FF5757';
     PopupEditor1.style.display = 'none';
     document.getElementById('previewResult1').src = '';
-    document.querySelector('.front-cover').src = originalSrc;
+    document.querySelector('.front-cover-img').src = originalSrc;
     closePopup1.style.display = 'none';
     aboveUpload1.style.display = 'none';
     cropfileInput1.value = '';
     angleSlider.value = 30;
-    book.style.transition = 'transform 1s ease';
-    book.style.transform = 'rotateY(30deg)';
+    if (book.style.transform !== 'rotateY(30deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(30deg)';
+    }
 });
 
 openPopup1.addEventListener('click', function() {
@@ -275,8 +318,9 @@ openPopup1.addEventListener('click', function() {
             var canvas = cropper1.getCroppedCanvas({
                 aspectRatio: cropAspectRatio
             });
-            document.getElementById('preview1').innerHTML = '';
-            document.getElementById('preview1').appendChild(canvas);
+            preview1.innerHTML = '';
+            preview1.style.aspectRatio = cropAspectRatio;
+            preview1.appendChild(canvas);
             }
         });
         };
@@ -290,13 +334,15 @@ removeFile1.addEventListener('click', function() {
     upload1.style.background = '#FF5757';
     PopupEditor1.style.display = 'none';
     document.getElementById('previewResult1').src = '';
-    document.querySelector('.front-cover').src = originalSrc;
+    document.querySelector('.front-cover-img').src = originalSrc;
     closePopup1.style.display = 'none';
     aboveUpload1.style.display = 'none';
     cropfileInput1.value = '';
     angleSlider.value = 30;
-    book.style.transition = 'transform 1s ease';
-    book.style.transform = 'rotateY(30deg)';
+    if (book.style.transform !== 'rotateY(30deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(30deg)';
+    }
 });
 
 function updatePreview1() {
@@ -336,10 +382,58 @@ angleSlider.addEventListener('input', function() {
 
 textSlider.addEventListener('click', function() {
   angleSlider.value = 180;
-  book.style.transition = 'transform 1s ease';
-  book.style.transform = 'rotateY(180deg)';
+  if (book.style.transform !== 'rotateY(180deg)') {
+    book.style.transition = 'transform 1s ease';
+    book.style.transform = 'rotateY(180deg)';
+  }
 });
 
 book.addEventListener('transitionend', function() {
     book.style.transition = '';
 });
+
+const previewConstrols = document.querySelector('.preview-controls');
+const playPreview = document.querySelector('.play-preview');
+const playPreviewContainer = document.querySelector('.play-preview-container');
+const resetPreview = document.querySelector('.reset-preview');
+const page1 = document.querySelector('.book-page1');
+const page2 = document.querySelector('.book-page2');
+const videoPage = document.querySelector('.video-page');
+
+const frontFlip = () => {
+    book.style.transition = '';
+    frontCover.style.transition = 'transform .5s ease';
+    frontCover.style.transform = 'translateZ(25px) rotateY(-90deg)';
+    setTimeout(function() {
+        videoPage.play();
+    }, 500);
+};
+
+playPreview.addEventListener('click', function() {
+    previewConstrols.style.display = 'none';
+    if (book.style.transform !== 'rotateY(0deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(0deg)';
+        angleSlider.value = 0;
+        setTimeout(function() {
+            frontFlip();
+        }, 1000);
+    } else {
+        frontFlip();
+    }
+})
+
+videoPage.addEventListener('ended', function() {
+    videoPage.currentTime = 0;
+    frontCover.style.transform = 'translateZ(25px) rotateY(0deg)';
+    setTimeout(function() {
+        previewConstrols.style.display = 'flex';
+    }, 500);
+});
+
+resetPreview.addEventListener('click', function() {
+    frontCover.style.transform = 'translateZ(25px) rotateY(0deg)';
+});
+
+
+
