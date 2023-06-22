@@ -194,11 +194,48 @@ removeVideo.addEventListener('click', () => {
     videoPage.src = '';
     videoInput.style.background = '#FF5757';
     playPreviewContainer.style.display = 'none';
+    frontCover.style.transform = 'translateZ(25px) rotateY(0deg)';
+    setTimeout(function() {
+        previewConstrols.style.display = 'flex';
+    }, 500);
     hidePreviewContainer();
 })
-  
+
+const btnCoverEdit1 = document.querySelector('.btn-cover-edit1');
+const btnCoverEdit2 = document.querySelector('.btn-cover-edit2');
+const btnCoverEdit3 = document.querySelector('.btn-cover-edit3');
+const coverEdit1 = document.querySelector('.cover-edit1');
+const coverEdit2 = document.querySelector('.cover-edit2');
+const coverEdit3 = document.querySelector('.cover-edit3');
+
+btnCoverEdit1.addEventListener('click', function() {
+    coverEdit1.style.display = 'block';
+    coverEdit2.style.display = 'none';
+    coverEdit3.style.display = 'none';
+    btnCoverEdit1.classList.add('selected');
+    btnCoverEdit2.classList.remove('selected');
+    btnCoverEdit3.classList.remove('selected');
+});
+
+btnCoverEdit2.addEventListener('click', function() {
+    coverEdit1.style.display = 'none';
+    coverEdit2.style.display = 'block';
+    coverEdit3.style.display = 'none';
+    btnCoverEdit1.classList.remove('selected');
+    btnCoverEdit2.classList.add('selected');
+    btnCoverEdit3.classList.remove('selected');
+});
+
+btnCoverEdit3.addEventListener('click', function() {
+    coverEdit1.style.display = 'none';
+    coverEdit2.style.display = 'none';
+    coverEdit3.style.display = 'block';
+    btnCoverEdit1.classList.remove('selected');
+    btnCoverEdit2.classList.remove('selected');
+    btnCoverEdit3.classList.add('selected');
+});
+
 var cropper1;
-var originalSrc = document.querySelector('.front-cover-img').src;
 const upload1 = document.getElementById('upload1');
 const aboveUpload1 = document.querySelector('.above_upload1');
 const openPopup1 = document.querySelector('.open__popup1');
@@ -242,7 +279,8 @@ upload1.addEventListener('change', function(e) {
     } else {
         PopupEditor1.style.display = 'none';
         document.getElementById('previewResult1').src = '';
-        document.querySelector('.front-cover-img').src = originalSrc;
+        document.querySelector('.front-cover-img').src = '';
+        document.querySelector('.front-cover-img').style.display = 'none';
         closePopup1.style.display = 'none';
         aboveUpload1.style.display = 'none';
         cropfileInput1.value = '';
@@ -263,6 +301,7 @@ document.getElementById('cropBtn1').addEventListener('click', function() {
     closePopup1.style.display = 'flex';
     var croppedImage1 = canvas.toDataURL('image/webp');
     document.getElementById('previewResult1').src = croppedImage1;
+    document.querySelector('.front-cover-img').style.display = 'block';
     document.querySelector('.front-cover-img').src = croppedImage1;
 
     fetch(croppedImage1)
@@ -290,7 +329,8 @@ document.getElementById('remove_file_editor1').addEventListener('click', functio
     upload1.style.background = '#FF5757';
     PopupEditor1.style.display = 'none';
     document.getElementById('previewResult1').src = '';
-    document.querySelector('.front-cover-img').src = originalSrc;
+    document.querySelector('.front-cover-img').src = '';
+    document.querySelector('.front-cover-img').style.display = 'none';
     closePopup1.style.display = 'none';
     aboveUpload1.style.display = 'none';
     cropfileInput1.value = '';
@@ -334,7 +374,8 @@ removeFile1.addEventListener('click', function() {
     upload1.style.background = '#FF5757';
     PopupEditor1.style.display = 'none';
     document.getElementById('previewResult1').src = '';
-    document.querySelector('.front-cover-img').src = originalSrc;
+    document.querySelector('.front-cover-img').src = '';
+    document.querySelector('.front-cover-img').style.display = 'none';
     closePopup1.style.display = 'none';
     aboveUpload1.style.display = 'none';
     cropfileInput1.value = '';
@@ -411,6 +452,7 @@ const frontFlip = () => {
 
 playPreview.addEventListener('click', function() {
     previewConstrols.style.display = 'none';
+    resetPreview.style.display = 'block';
     if (book.style.transform !== 'rotateY(0deg)') {
         book.style.transition = 'transform 1s ease';
         book.style.transform = 'rotateY(0deg)';
@@ -428,11 +470,18 @@ videoPage.addEventListener('ended', function() {
     frontCover.style.transform = 'translateZ(25px) rotateY(0deg)';
     setTimeout(function() {
         previewConstrols.style.display = 'flex';
+        resetPreview.style.display = 'none';
     }, 500);
 });
 
 resetPreview.addEventListener('click', function() {
     frontCover.style.transform = 'translateZ(25px) rotateY(0deg)';
+    videoPage.pause();
+    setTimeout(function() {
+        videoPage.currentTime = 0;
+        previewConstrols.style.display = 'flex';
+        resetPreview.style.display = 'none';
+    }, 500);
 });
 
 

@@ -20,10 +20,8 @@
                     <p class="size1-title">68x78mm</p>
                     <div class="book-container-exm1">
                         <div class="book-exm1">
-                            <img class="front-cover-exm1"
-                            alt=""
-                            src="C:\Users\aliss\Downloads\AA19TUhv.jfif"
-                            />
+                            <div class="front-cover-exm1">
+                            </div>
                             <div class="back-cover-exm1">
                             </div>
                             <div class="side-cover-exm1">
@@ -38,10 +36,8 @@
                     <p class="size2-title">48x102mm</p>
                     <div class="book-container-exm2">
                         <div class="book-exm2">
-                            <img class="front-cover-exm2"
-                            alt=""
-                            src="C:\Users\aliss\Downloads\AA19TUhv.jfif"
-                            />
+                            <div class="front-cover-exm2">
+                            </div>
                             <div class="back-cover-exm2">
                             </div>
                             <div class="side-cover-exm2">
@@ -66,18 +62,20 @@
         </div>
 
         <div class="rounded-container" id="r_c1">
-            
             <div class="input-name">
                 Vídeo
             </div>
 
-            <div style="display: flex; justify-content: space-evenly;">
+            <div style="display: flex;justify-content: center;align-items: center;">
                 <button id="btn-choose1">
                     Arquivos
                     <span style="display: block; margin-top: 5px;">
                         <svg height="30px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#000000;} </style> <g> <path class="st0" d="M378.409,0H208.294h-13.176l-9.314,9.314L57.017,138.102l-9.315,9.314v13.176v265.513 c0,47.361,38.528,85.896,85.896,85.896h244.811c47.361,0,85.888-38.535,85.888-85.896V85.895C464.298,38.528,425.77,0,378.409,0z M432.494,426.104c0,29.877-24.214,54.092-54.084,54.092H133.598c-29.877,0-54.091-24.215-54.091-54.092V160.591h83.717 c24.884,0,45.07-20.179,45.07-45.07V31.804h170.115c29.87,0,54.084,24.214,54.084,54.091V426.104z"></path> <path class="st0" d="M228.222,229.171c-0.705-0.406-1.557-0.426-2.262-0.035c-0.712,0.391-1.117,1.131-1.117,1.948v56.73v56.752 c0,0.817,0.405,1.544,1.117,1.928c0.705,0.412,1.557,0.391,2.262,0l95.042-56.766c0.677-0.405,1.082-1.131,1.082-1.914 c0-0.775-0.404-1.522-1.082-1.906L228.222,229.171z"></path> </g> </g></svg>
                     </span>
                 </button>
+                <p style="font-size: 20px;font-family: sans-serif;margin: 0 10px;">
+                    Ou
+                </p>
                 <button id="btn-choose2">
                     Rede Sociais
                     <span style="display: block; margin-top:5px">
@@ -142,107 +140,136 @@
                 >
                 
             </div>
-
-            
-
         </div>
 
         <div class="rounded-container" id="r_c2">
+            <div class="cover-edit-container">
+                <button class="btn-cover-edit1">
+                    Frente
+                </button>
 
-            <div class="input-name">
-                Foto
+                <button class="btn-cover-edit2">
+                    Costa
+                </button>
+
+                <button class="btn-cover-edit3">
+                    Estilo
+                </button>
             </div>
 
-            <input 
-                id="upload1" 
-                type="file" 
-                accept="image/*"
-                required
-            >
-            
-            <div class="popup__background1">
-                <div id="Popup__editor1">
-                    <div class="editorContainer1">
-                        <div id="editor1"></div>
-                        <div class="user1">
-                            <div id="preview1"></div>
+            <div class="cover-edit1">
+                <div class="input-name">
+                    Foto
+                </div>
+
+                <input 
+                    id="upload1" 
+                    type="file" 
+                    accept="image/*"
+                    required
+                >
+                
+                <div class="popup__background1">
+                    <div id="Popup__editor1">
+                        <div class="editorContainer1">
+                            <div id="editor1"></div>
+                            <div class="user1">
+                                <div id="preview1"></div>
+                            </div>
+                        </div>
+                        <div class="btns__PopupEditor1">
+                            <button id="cropBtn1">
+                                <svg
+                                    fill="#2dc863"
+                                    viewBox="-0.64 -0.64 33.28 33.28"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    stroke="#2dc863"
+                                    stroke-width="0.64"
+                                    >
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 0c-8.836 0-16 7.163-16 16s7.163 16 16 16c8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 30.032c-7.72 0-14-6.312-14-14.032s6.28-14 14-14 14 6.28 14 14-6.28 14.032-14 14.032zM22.386 10.146l-9.388 9.446-4.228-4.227c-0.39-0.39-1.024-0.39-1.415 0s-0.391 1.023 0 1.414l4.95 4.95c0.39 0.39 1.024 0.39 1.415 0 0.045-0.045 0.084-0.094 0.119-0.145l9.962-10.024c0.39-0.39 0.39-1.024 0-1.415s-1.024-0.39-1.415 0z"></path> </g>
+                                </svg>
+                            </button>
+                            <button id="closePopupEditor1">
+                                <svg
+                                    viewBox="0 -0.5 21 21"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    fill="#000000"
+                                    style="padding: 30%;"
+                                    >
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>close [#1511]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-419.000000, -240.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="close-[#1511]" points="375.0183 90 384 98.554 382.48065 100 373.5 91.446 364.5183 100 363 98.554 371.98065 90 363 81.446 364.5183 80 373.5 88.554 382.48065 80 384 81.446"> </polygon> </g> </g> </g> </g>
+                                </svg>
+                            </button>
+                            <button id="remove_file_editor1">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Trash_Full"> <path id="Vector" d="M14 10V17M10 10V17M6 6V17.8C6 18.9201 6 19.4798 6.21799 19.9076C6.40973 20.2839 6.71547 20.5905 7.0918 20.7822C7.5192 21 8.07899 21 9.19691 21H14.8031C15.921 21 16.48 21 16.9074 20.7822C17.2837 20.5905 17.5905 20.2839 17.7822 19.9076C18 19.4802 18 18.921 18 17.8031V6M6 6H8M6 6H4M8 6H16M8 6C8 5.06812 8 4.60241 8.15224 4.23486C8.35523 3.74481 8.74432 3.35523 9.23438 3.15224C9.60192 3 10.0681 3 11 3H13C13.9319 3 14.3978 3 14.7654 3.15224C15.2554 3.35523 15.6447 3.74481 15.8477 4.23486C15.9999 4.6024 16 5.06812 16 6M16 6H18M18 6H20" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g>
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                    <div class="btns__PopupEditor1">
-                        <button id="cropBtn1">
+                </div>
+
+                <div class="above_upload1">
+                    <img id="previewResult1" src="">
+                    <div class="btns_above_upload1">
+                        <button class="open__popup1">
                             <svg
-                                fill="#2dc863"
-                                viewBox="-0.64 -0.64 33.28 33.28"
-                                version="1.1"
-                                xmlns="http://www.w3.org/2000/svg"
-                                stroke="#2dc863"
-                                stroke-width="0.64"
-                                >
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 0c-8.836 0-16 7.163-16 16s7.163 16 16 16c8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 30.032c-7.72 0-14-6.312-14-14.032s6.28-14 14-14 14 6.28 14 14-6.28 14.032-14 14.032zM22.386 10.146l-9.388 9.446-4.228-4.227c-0.39-0.39-1.024-0.39-1.415 0s-0.391 1.023 0 1.414l4.95 4.95c0.39 0.39 1.024 0.39 1.415 0 0.045-0.045 0.084-0.094 0.119-0.145l9.962-10.024c0.39-0.39 0.39-1.024 0-1.415s-1.024-0.39-1.415 0z"></path> </g>
-                            </svg>
+                            fill="#000000"
+                            version="1.1"
+                            id="Capa_1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 494.936 494.936"
+                            xml:space="preserve"
+                            >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157 c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21 s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741 c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"></path> <path d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069 c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963 c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692 C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107 l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005 c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"></path> </g> </g> </g>
+                        </svg>
+                        Editar
                         </button>
-                        <button id="closePopupEditor1">
-                            <svg
-                                viewBox="0 -0.5 21 21"
-                                version="1.1"
-                                xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink"
-                                fill="#000000"
-                                style="padding: 30%;"
-                                >
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>close [#1511]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-419.000000, -240.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="close-[#1511]" points="375.0183 90 384 98.554 382.48065 100 373.5 91.446 364.5183 100 363 98.554 371.98065 90 363 81.446 364.5183 80 373.5 88.554 382.48065 80 384 81.446"> </polygon> </g> </g> </g> </g>
-                            </svg>
-                        </button>
-                        <button id="remove_file_editor1">
+                        <button class="remove_file1">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Trash_Full"> <path id="Vector" d="M14 10V17M10 10V17M6 6V17.8C6 18.9201 6 19.4798 6.21799 19.9076C6.40973 20.2839 6.71547 20.5905 7.0918 20.7822C7.5192 21 8.07899 21 9.19691 21H14.8031C15.921 21 16.48 21 16.9074 20.7822C17.2837 20.5905 17.5905 20.2839 17.7822 19.9076C18 19.4802 18 18.921 18 17.8031V6M6 6H8M6 6H4M8 6H16M8 6C8 5.06812 8 4.60241 8.15224 4.23486C8.35523 3.74481 8.74432 3.35523 9.23438 3.15224C9.60192 3 10.0681 3 11 3H13C13.9319 3 14.3978 3 14.7654 3.15224C15.2554 3.35523 15.6447 3.74481 15.8477 4.23486C15.9999 4.6024 16 5.06812 16 6M16 6H18M18 6H20" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g>
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Trash_Full"> <path id="Vector" d="M14 10V17M10 10V17M6 6V17.8C6 18.9201 6 19.4798 6.21799 19.9076C6.40973 20.2839 6.71547 20.5905 7.0918 20.7822C7.5192 21 8.07899 21 9.19691 21H14.8031C15.921 21 16.48 21 16.9074 20.7822C17.2837 20.5905 17.5905 20.2839 17.7822 19.9076C18 19.4802 18 18.921 18 17.8031V6M6 6H8M6 6H4M8 6H16M8 6C8 5.06812 8 4.60241 8.15224 4.23486C8.35523 3.74481 8.74432 3.35523 9.23438 3.15224C9.60192 3 10.0681 3 11 3H13C13.9319 3 14.3978 3 14.7654 3.15224C15.2554 3.35523 15.6447 3.74481 15.8477 4.23486C15.9999 4.6024 16 5.06812 16 6M16 6H18M18 6H20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g>
                             </svg>
+                        Excluir
                         </button>
                     </div>
                 </div>
             </div>
+            
+            <div class="cover-edit2">
+                <div class="input-name">
+                    Texto
+                </div>
 
-            <div class="above_upload1">
-                <img id="previewResult1" src="">
-                <div class="btns_above_upload1">
-                    <button class="open__popup1">
-                        <svg
-                        fill="#000000"
-                        version="1.1"
-                        id="Capa_1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        viewBox="0 0 494.936 494.936"
-                        xml:space="preserve"
-                        >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157 c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21 s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741 c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"></path> <path d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069 c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963 c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692 C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107 l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005 c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"></path> </g> </g> </g>
-                    </svg>
-                    Editar
-                    </button>
-                    <button class="remove_file1">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Trash_Full"> <path id="Vector" d="M14 10V17M10 10V17M6 6V17.8C6 18.9201 6 19.4798 6.21799 19.9076C6.40973 20.2839 6.71547 20.5905 7.0918 20.7822C7.5192 21 8.07899 21 9.19691 21H14.8031C15.921 21 16.48 21 16.9074 20.7822C17.2837 20.5905 17.5905 20.2839 17.7822 19.9076C18 19.4802 18 18.921 18 17.8031V6M6 6H8M6 6H4M8 6H16M8 6C8 5.06812 8 4.60241 8.15224 4.23486C8.35523 3.74481 8.74432 3.35523 9.23438 3.15224C9.60192 3 10.0681 3 11 3H13C13.9319 3 14.3978 3 14.7654 3.15224C15.2554 3.35523 15.6447 3.74481 15.8477 4.23486C15.9999 4.6024 16 5.06812 16 6M16 6H18M18 6H20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g>
-                        </svg>
-                    Excluir
-                    </button>
+                <div class="text_container1">
+                    <input
+                    type="text"
+                    id="input-text1"
+                    maxlength="15"
+                    placeholder="Digite o texto aqui"
+                    oninput="updateCharCount()"
+                    onkeyup="updatePreview1()"
+                    required
+                    >
+                    <p id="char-count1">0/15</p>
                 </div>
             </div>
 
-            <div class="input-name" style="margin-top: 20px;">
-                Texto
-            </div>
-
-            <div class="text_container1">
-                <input
-                type="text"
-                id="input-text1"
-                maxlength="15"
-                placeholder="Digite o texto aqui"
-                oninput="updateCharCount()"
-                onkeyup="updatePreview1()"
-                required
-                >
-                <p id="char-count1">0/15</p>
+            <div class="cover-edit3">
+                <div class="input-name">
+                    Cor
+                </div>
+                <div class="cover-colors">
+                    <button class="cover-color1"></button>
+                    <button class="cover-color2"></button>
+                    <button class="cover-color3"></button>
+                    <button class="cover-color4"></button>
+                    <button class="cover-color5"></button>
+                    <button class="cover-color6"></button>
+                    <button class="cover-color7"></button>
+                </div>
             </div>
                 
         </div>
@@ -254,7 +281,7 @@
                     <div class="front-cover">
                         <img class="front-cover-img"
                         alt=""
-                        src="C:\Users\aliss\Downloads\AA19TUhv.jfif"
+                        src=""
                         />
                     </div>
                     <div class="book-page1">
@@ -270,13 +297,19 @@
             </div>
             <div class="preview-controls">
                 <div class="play-preview-container">
-                    <button class="play-preview">Play</button>
-                    <button class="reset-preview"> Reset</button>
+                    <button class="play-preview">
+                        <svg viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
+                        Play
+                    </button>
                 </div>
                 <div class="slider-container">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3.51018 14.9907C4.15862 16.831 5.38765 18.4108 7.01208 19.492C8.63652 20.5732 10.5684 21.0972 12.5165 20.9851C14.4647 20.873 16.3237 20.1308 17.8133 18.8704C19.303 17.61 20.3426 15.8996 20.7756 13.997C21.2086 12.0944 21.0115 10.1026 20.214 8.32177C19.4165 6.54091 18.0617 5.06746 16.3539 4.12343C14.6461 3.17941 12.6777 2.81593 10.7454 3.08779C7.48292 3.54676 5.32746 5.91142 3 8M3 8V2M3 8H9" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     <input class="slider-book" type="range" min="0" max="360" value="30" id="angle-slider">
                 </div>
             </div>
+            <button class="reset-preview">
+                <svg viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>close [#1511]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-419.000000, -240.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="close-[#1511]" points="375.0183 90 384 98.554 382.48065 100 373.5 91.446 364.5183 100 363 98.554 371.98065 90 363 81.446 364.5183 80 373.5 88.554 382.48065 80 384 81.446"> </polygon> </g> </g> </g> </g></svg>
+            </button>
         </div>
     </div>
 
