@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flipbook customization</title>
+    <link rel="icon" href="favicon.ico.png">
     <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.min.css">
     <link rel="stylesheet" type="text/css" href="flip-inputs.css"> 
 </head>
@@ -51,6 +52,43 @@
     </div>
 
     <div class="custom-container" style="display: none; opacity: 0; transition: 1s ease;">
+        <div class="final-preview">
+            <div class="preview-title">Prévia</div>
+            <div class="book-container">
+                <div class="book">
+                    <div class="front-cover">
+                        <img class="front-cover-img"
+                        alt=""
+                        src=""
+                        />
+                    </div>
+                    <div class="book-page1">
+                        <video class="video-page" src="" muted></video>
+                    </div>
+                    <div class="back-cover">
+                        <p class="back-text">Opa! Você descobriu um cupom secreto de 10% de desconto: imsuperblessed</p>
+                    </div>
+                    <div class="side-cover"></div>
+                    <div class="book-pages"></div>
+                    <div class="book-shadow"></div>
+                </div>
+            </div>
+            <div class="preview-controls">
+                <div class="play-preview-container">
+                    <button class="play-preview">
+                        <svg viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
+                        Play
+                    </button>
+                </div>
+                <div class="slider-container">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3.51018 14.9907C4.15862 16.831 5.38765 18.4108 7.01208 19.492C8.63652 20.5732 10.5684 21.0972 12.5165 20.9851C14.4647 20.873 16.3237 20.1308 17.8133 18.8704C19.303 17.61 20.3426 15.8996 20.7756 13.997C21.2086 12.0944 21.0115 10.1026 20.214 8.32177C19.4165 6.54091 18.0617 5.06746 16.3539 4.12343C14.6461 3.17941 12.6777 2.81593 10.7454 3.08779C7.48292 3.54676 5.32746 5.91142 3 8M3 8V2M3 8H9" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    <input class="slider-book" type="range" min="0" max="360" value="30" id="angle-slider">
+                </div>
+            </div>
+            <button class="reset-preview">
+                <svg viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>close [#1511]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-419.000000, -240.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="close-[#1511]" points="375.0183 90 384 98.554 382.48065 100 373.5 91.446 364.5183 100 363 98.554 371.98065 90 363 81.446 364.5183 80 373.5 88.554 382.48065 80 384 81.446"> </polygon> </g> </g> </g> </g></svg>
+            </button>
+        </div>
 
         <div class="text-center">
             <b>PERSONALIZE SEU FLIPBOOK</b>
@@ -62,7 +100,7 @@
         </div>
 
         <div class="rounded-container" id="r_c1">
-            <div class="input-name">
+            <div class="input-name" style="margin: 0px;">
                 Vídeo
             </div>
 
@@ -255,61 +293,96 @@
                     >
                     <p id="char-count1">0/15</p>
                 </div>
+
+                <div class="text-option-container">
+                    <p class="option-text">Cor</p>
+                    <input class="text-color-input" type="color">
+                    <div class="text-colors">
+                        <button class="edit-color1 text"></button>
+                        <button class="edit-color2 text"></button>
+                        <button class="edit-color3 text"></button>
+                        <button class="edit-color4 text"></button>
+                        <button class="edit-color5 text"></button>
+                        <button class="edit-color6 text"></button>
+                        <button class="edit-color7 text"></button>
+                        <button class="edit-color8 text"></button>
+                        <button class="edit-color9 text"></button>
+                        <button class="edit-color10 text"></button>
+                        <button class="edit-color11 text"></button>
+                        <button class="edit-color12 text"></button>
+                        <button class="edit-color13 text"></button>
+                        <button class="edit-color14 text"></button>
+                        <button class="edit-color15 text"></button>
+                    </div>
+                </div>
+
+                <div class="text-option-container">
+                    <p class="option-text">Fundo</p>
+                    <input class="text-background-input" type="color">
+                    <div class="text-colors">
+                        <button class="edit-color1 background"></button>
+                        <button class="edit-color2 background"></button>
+                        <button class="edit-color3 background"></button>
+                        <button class="edit-color4 background"></button>
+                        <button class="edit-color5 background"></button>
+                        <button class="edit-color6 background"></button>
+                        <button class="edit-color7 background"></button>
+                        <button class="edit-color8 background"></button>
+                        <button class="edit-color9 background"></button>
+                        <button class="edit-color10 background"></button>
+                        <button class="edit-color11 background"></button>
+                        <button class="edit-color12 background"></button>
+                        <button class="edit-color13 background"></button>
+                        <button class="edit-color14 background"></button>
+                        <button class="edit-color15 background"></button>
+                    </div>
+                </div>
+
+                <div class="text-option-container">
+                    <p class="option-text">Borda</p>
+                    <div class="border-options">
+                        <div class="border-thickness">
+                            <p>Espessura</p>
+                            <input class="border-thickness-input" type="range" min="0" max="10" value="0">
+                        </div>
+                        <div class="border-radius">
+                            <p>Curvatura</p>
+                            <input class="border-radius-input" type="range" min="0" max="40" value="0">
+                        </div>
+                        <div class="border-color">
+                            <p>Cor</p>
+                            <input class="border-color-input" type="color">
+                        </div>
+                    </div>
+                </div>                  
             </div>
 
             <div class="cover-edit3">
                 <div class="input-name">
                     Cor
                 </div>
-                <div class="cover-colors">
-                    <button class="cover-color1"></button>
-                    <button class="cover-color2"></button>
-                    <button class="cover-color3"></button>
-                    <button class="cover-color4"></button>
-                    <button class="cover-color5"></button>
-                    <button class="cover-color6"></button>
-                    <button class="cover-color7"></button>
+                <div class="cover-option-container">
+                    <input class="cover-color-input" type="color">
+                    <div class="cover-colors">
+                        <button class="edit-color1 cover"></button>
+                        <button class="edit-color2 cover"></button>
+                        <button class="edit-color3 cover"></button>
+                        <button class="edit-color4 cover"></button>
+                        <button class="edit-color5 cover"></button>
+                        <button class="edit-color6 cover"></button>
+                        <button class="edit-color7 cover"></button>
+                        <button class="edit-color8 cover"></button>
+                        <button class="edit-color9 cover"></button>
+                        <button class="edit-color10 cover"></button>
+                        <button class="edit-color11 cover"></button>
+                        <button class="edit-color12 cover"></button>
+                        <button class="edit-color13 cover"></button>
+                        <button class="edit-color14 cover"></button>
+                        <button class="edit-color15 cover"></button>
+                    </div>
                 </div>
             </div>
                 
-        </div>
-        
-        <div class="final-preview">
-            <div class="preview-title">Prévia</div>
-            <div class="book-container">
-                <div class="book">
-                    <div class="front-cover">
-                        <img class="front-cover-img"
-                        alt=""
-                        src=""
-                        />
-                    </div>
-                    <div class="book-page1">
-                        <video class="video-page" src="" muted></video>
-                    </div>
-                    <div class="back-cover">
-                        <p class="back-text">Opa! Você descobriu um cupom secreto de 10% de desconto: imsuperblessed</p>
-                    </div>
-                    <div class="side-cover"></div>
-                    <div class="book-pages"></div>
-                    <div class="book-shadow"></div>
-                </div>
-            </div>
-            <div class="preview-controls">
-                <div class="play-preview-container">
-                    <button class="play-preview">
-                        <svg viewBox="-0.5 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#1001]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-427.000000, -3765.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="play-[#1001]" points="371 3605 371 3613 378 3609"> </polygon> </g> </g> </g> </g></svg>
-                        Play
-                    </button>
-                </div>
-                <div class="slider-container">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3.51018 14.9907C4.15862 16.831 5.38765 18.4108 7.01208 19.492C8.63652 20.5732 10.5684 21.0972 12.5165 20.9851C14.4647 20.873 16.3237 20.1308 17.8133 18.8704C19.303 17.61 20.3426 15.8996 20.7756 13.997C21.2086 12.0944 21.0115 10.1026 20.214 8.32177C19.4165 6.54091 18.0617 5.06746 16.3539 4.12343C14.6461 3.17941 12.6777 2.81593 10.7454 3.08779C7.48292 3.54676 5.32746 5.91142 3 8M3 8V2M3 8H9" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                    <input class="slider-book" type="range" min="0" max="360" value="30" id="angle-slider">
-                </div>
-            </div>
-            <button class="reset-preview">
-                <svg viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>close [#1511]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-419.000000, -240.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="close-[#1511]" points="375.0183 90 384 98.554 382.48065 100 373.5 91.446 364.5183 100 363 98.554 371.98065 90 363 81.446 364.5183 80 373.5 88.554 382.48065 80 384 81.446"> </polygon> </g> </g> </g> </g></svg>
-            </button>
         </div>
     </div>
 

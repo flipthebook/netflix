@@ -197,6 +197,7 @@ removeVideo.addEventListener('click', () => {
     frontCover.style.transform = 'translateZ(25px) rotateY(0deg)';
     setTimeout(function() {
         previewConstrols.style.display = 'flex';
+        resetPreview.style.display = 'none';
     }, 500);
     hidePreviewContainer();
 })
@@ -209,30 +210,45 @@ const coverEdit2 = document.querySelector('.cover-edit2');
 const coverEdit3 = document.querySelector('.cover-edit3');
 
 btnCoverEdit1.addEventListener('click', function() {
-    coverEdit1.style.display = 'block';
+    coverEdit1.style.display = 'flex';
     coverEdit2.style.display = 'none';
     coverEdit3.style.display = 'none';
     btnCoverEdit1.classList.add('selected');
     btnCoverEdit2.classList.remove('selected');
     btnCoverEdit3.classList.remove('selected');
+    angleSlider.value = 0;
+    if (book.style.transform !== 'rotateY(0deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(0deg)';
+    }
 });
 
 btnCoverEdit2.addEventListener('click', function() {
     coverEdit1.style.display = 'none';
-    coverEdit2.style.display = 'block';
+    coverEdit2.style.display = 'flex';
     coverEdit3.style.display = 'none';
     btnCoverEdit1.classList.remove('selected');
     btnCoverEdit2.classList.add('selected');
     btnCoverEdit3.classList.remove('selected');
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
 });
 
 btnCoverEdit3.addEventListener('click', function() {
     coverEdit1.style.display = 'none';
     coverEdit2.style.display = 'none';
-    coverEdit3.style.display = 'block';
+    coverEdit3.style.display = 'flex';
     btnCoverEdit1.classList.remove('selected');
     btnCoverEdit2.classList.remove('selected');
     btnCoverEdit3.classList.add('selected');
+    angleSlider.value = 30;
+    if (book.style.transform !== 'rotateY(30deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(30deg)';
+    }
 });
 
 var cropper1;
@@ -386,9 +402,11 @@ removeFile1.addEventListener('click', function() {
     }
 });
 
+const backText = document.querySelector(".back-text");
+
 function updatePreview1() {
     var inputText1 = document.getElementById("input-text1").value;
-    document.querySelector(".back-text").textContent = inputText1;
+    backText.textContent = inputText1;
 }
 
 function updateCharCount() {
@@ -413,20 +431,160 @@ $input1.on('input', function(e) {
     }, 0);
 });
 
+const inputColorCover = document.querySelector('.cover-color-input');
+const colorCovers = document.querySelectorAll('[class^="edit-color"][class$="cover"]');
+const inputColorText = document.querySelector('.text-color-input');
+const colorText = document.querySelectorAll('[class^="edit-color"][class$="text"]');
+const inputBackgroundText = document.querySelector('.text-background-input');
+const backgroundText = document.querySelectorAll('[class^="edit-color"][class$="background"]');
+const borderThickness = document.querySelector('.border-thickness-input');
+const borderRadius = document.querySelector('.border-radius-input');
+const borderColor = document.querySelector('.border-color-input');
+
+colorText.forEach((colortext, indexColor) => {
+    colortext.addEventListener('click', function() {
+        const color = getColorByIndex(indexColor);
+        inputColorText.value = color;
+        backText.style.color = color;
+        angleSlider.value = 180;
+        if (book.style.transform !== 'rotateY(180deg)') {
+            book.style.transition = 'transform 1s ease';
+            book.style.transform = 'rotateY(180deg)';
+        }
+    });
+});
+
+inputColorText.addEventListener('input', function() {
+    var color = inputColorText.value;
+    backText.style.color = color;
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
+});
+
+backgroundText.forEach((backgroundtext, indexColor) => {
+    backgroundtext.addEventListener('click', function() {
+        const color = getColorByIndex(indexColor);
+        inputBackgroundText.value = color;
+        backText.style.backgroundColor = color;
+        angleSlider.value = 180;
+        if (book.style.transform !== 'rotateY(180deg)') {
+            book.style.transition = 'transform 1s ease';
+            book.style.transform = 'rotateY(180deg)';
+        }
+    });
+});
+
+inputBackgroundText.addEventListener('input', function() {
+    var color = inputBackgroundText.value;
+    backText.style.backgroundColor = color;
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
+});
+
+borderThickness.addEventListener('input', function() {
+    var newThickness = borderThickness.value;
+    backText.style.borderWidth = ''+ newThickness +'px' ;
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
+});
+
+borderRadius.addEventListener('input', function() {
+    var newRadius = borderRadius.value;
+    backText.style.borderRadius = ''+ newRadius +'px' ;
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
+});
+
+borderColor.addEventListener('input', function() {
+    var newCorlor = borderColor.value;
+    backText.style.borderColor = ''+ newCorlor +'' ;
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
+});
+
+colorCovers.forEach((colorCover, indexColor) => {
+    colorCover.addEventListener('click', function() {
+        const color = getColorByIndex(indexColor);
+        inputColorCover.value = color;
+        frontCover.style.backgroundColor = color;
+        sideCover.style.backgroundColor = color;
+        backCover.style.backgroundColor = color;
+    });
+});
+
+inputColorCover.addEventListener('input', function() {
+    const color = inputColorCover.value;
+    frontCover.style.backgroundColor = color;
+    sideCover.style.backgroundColor = color;
+    backCover.style.backgroundColor = color;
+});
+
+function getColorByIndex(indexColor) {
+    switch (indexColor) {
+        case 0:
+            return '#FFFFFF';
+        case 1:
+            return '#000000';
+        case 2:
+            return '#FF0000';
+        case 3:
+            return '#00FF00';
+        case 4:
+            return '#0000FF';
+        case 5:
+            return '#FFFF00';
+        case 6:
+            return '#FF00FF';
+        case 7:
+            return '#FFA500';
+        case 8:
+            return '#800080';
+        case 9:
+            return '#FFC0CB';
+        case 10:
+            return '#00FFFF';
+        case 11:
+            return '#808080';
+        case 12:
+            return '#008000';
+        case 13:
+            return '#800000';
+        case 14:
+            return '#FFD700';
+        default:
+            return '';
+    }
+}
+
 var angleSlider = document.getElementById('angle-slider');
 var textSlider = document.getElementById("input-text1");
 
 angleSlider.addEventListener('input', function() {
-  var newDeg = angleSlider.value;
-  book.style.transform = 'rotateY(' + newDeg + 'deg)';
+    var newDeg = angleSlider.value;
+    book.style.transform = 'rotateY(' + newDeg + 'deg)';
 });
 
 textSlider.addEventListener('click', function() {
-  angleSlider.value = 180;
-  if (book.style.transform !== 'rotateY(180deg)') {
-    book.style.transition = 'transform 1s ease';
-    book.style.transform = 'rotateY(180deg)';
-  }
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
 });
 
 book.addEventListener('transitionend', function() {
