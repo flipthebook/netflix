@@ -210,9 +210,9 @@ const coverEdit2 = document.querySelector('.cover-edit2');
 const coverEdit3 = document.querySelector('.cover-edit3');
 
 btnCoverEdit1.addEventListener('click', function() {
-    coverEdit1.style.display = 'flex';
-    coverEdit2.style.display = 'none';
-    coverEdit3.style.display = 'none';
+    coverEdit1.classList.add('selected');
+    coverEdit2.classList.remove('selected');
+    coverEdit3.classList.remove('selected');
     btnCoverEdit1.classList.add('selected');
     btnCoverEdit2.classList.remove('selected');
     btnCoverEdit3.classList.remove('selected');
@@ -224,9 +224,9 @@ btnCoverEdit1.addEventListener('click', function() {
 });
 
 btnCoverEdit2.addEventListener('click', function() {
-    coverEdit1.style.display = 'none';
-    coverEdit2.style.display = 'flex';
-    coverEdit3.style.display = 'none';
+    coverEdit1.classList.remove('selected');
+    coverEdit2.classList.add('selected');
+    coverEdit3.classList.remove('selected');
     btnCoverEdit1.classList.remove('selected');
     btnCoverEdit2.classList.add('selected');
     btnCoverEdit3.classList.remove('selected');
@@ -238,17 +238,12 @@ btnCoverEdit2.addEventListener('click', function() {
 });
 
 btnCoverEdit3.addEventListener('click', function() {
-    coverEdit1.style.display = 'none';
-    coverEdit2.style.display = 'none';
-    coverEdit3.style.display = 'flex';
+    coverEdit1.classList.remove('selected');
+    coverEdit2.classList.remove('selected');
+    coverEdit3.classList.add('selected');
     btnCoverEdit1.classList.remove('selected');
     btnCoverEdit2.classList.remove('selected');
     btnCoverEdit3.classList.add('selected');
-    angleSlider.value = 30;
-    if (book.style.transform !== 'rotateY(30deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(30deg)';
-    }
 });
 
 var cropper1;
@@ -412,7 +407,7 @@ function updatePreview1() {
 function updateCharCount() {
     var inputText1 = document.getElementById("input-text1").value;
     var charCount1 = inputText1.length;
-    var charLimit1 = 15;
+    var charLimit1 = 120;
     var charCountElement1 = document.getElementById("char-count1");
     charCountElement1.textContent = charCount1 + "/" + charLimit1;
     var replicatedTextElement1 = document.getElementById("replicated-text1");
@@ -421,7 +416,7 @@ function updateCharCount() {
 
 var $input1 = $('#input-text1');
 $input1.on('input', function(e) {
-    var max = 15;
+    var max = 120;
     setTimeout(function() {
         if ($input1.val().length > max) {
         $input1.val($input1.val().substr(0, max));
@@ -440,6 +435,41 @@ const backgroundText = document.querySelectorAll('[class^="edit-color"][class$="
 const borderThickness = document.querySelector('.border-thickness-input');
 const borderRadius = document.querySelector('.border-radius-input');
 const borderColor = document.querySelector('.border-color-input');
+
+function selectOption(optionIndex) {
+    const textContainers = document.getElementsByClassName('text-option-container');
+    const buttons = document.getElementsByClassName('text-option');
+
+    for (let i = 0; i < textContainers.length; i++) {
+      textContainers[i].classList.remove('selected');
+      buttons[i].classList.remove('selected');
+    }
+
+    textContainers[optionIndex].classList.add('selected');
+    buttons[optionIndex].classList.add('selected');
+  }
+
+function borderOption(borderIndex) {
+    const borderContainers = document.getElementsByClassName('border-option');
+    const buttons = document.getElementsByClassName('btn-border-option');
+    for (let i = 0; i < borderContainers.length; i++) {
+      borderContainers[i].classList.remove('selected');
+      buttons[i].classList.remove('selected');
+    }
+    borderContainers[borderIndex].classList.add('selected');
+    buttons[borderIndex].classList.add('selected');
+}
+
+function coverOption(coverIndex) {
+    const coverContainers = document.getElementsByClassName('cover-option-container');
+    const buttons = document.getElementsByClassName('cover-option');
+    for (let i = 0; i < coverContainers.length; i++) {
+        coverContainers[i].classList.remove('selected');
+      buttons[i].classList.remove('selected');
+    }
+    coverContainers[coverIndex].classList.add('selected');
+    buttons[coverIndex].classList.add('selected');
+}
 
 colorText.forEach((colortext, indexColor) => {
     colortext.addEventListener('click', function() {
@@ -534,6 +564,64 @@ inputColorCover.addEventListener('input', function() {
     backCover.style.backgroundColor = color;
 });
 
+// Obtenha todos os botões "cover-icon"
+const coverIcons = document.querySelectorAll('.cover-icon');
+const coverIconsClear = document.querySelector('.cover-icon-clear');
+
+coverIcons.forEach(coverIcon => {
+    coverIcon.addEventListener('click', function() {
+        coverIcons.forEach(button => {
+            button.classList.remove('selected');
+            coverIconsClear.classList.remove('selected');
+        });
+        coverIcon.classList.add('selected');
+        const svg = coverIcon.querySelector('svg');
+        clearContainers();
+        createContainersWithCopies(svg);
+    });
+});
+
+coverIconsClear.addEventListener('click', function() {
+    coverIcons.forEach(button => {
+        button.classList.remove('selected');
+    });
+    coverIconsClear.classList.add('selected');
+    clearContainers();
+});
+
+function createContainersWithCopies(svg) {
+  const copies1 = 5;
+  const copies2 = 6;
+
+  for (let i = 1; i <= 8; i++) {
+    const container = document.createElement('div');
+    container.classList.add('svg-container');
+
+    if (i % 2 !== 0) {
+      for (let j = 0; j < copies1; j++) {
+        const copy = svg.cloneNode(true);
+        container.appendChild(copy);
+      }
+    } else {
+      for (let j = 0; j < copies2; j++) {
+        const copy = svg.cloneNode(true);
+        container.appendChild(copy);
+      }
+    }
+
+    $('.front-cover-style').append(container.cloneNode(true));
+    $('.back-cover-style').append(container.cloneNode(true));
+    $('.side-cover-style').append(container);
+  }
+}
+
+function clearContainers() {
+  $('.front-cover-style').empty();
+  $('.back-cover-style').empty();
+  $('.side-cover-style').empty();
+}
+
+  
 function getColorByIndex(indexColor) {
     switch (indexColor) {
         case 0:
