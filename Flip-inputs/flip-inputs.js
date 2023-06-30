@@ -216,6 +216,20 @@ function coverEditOption(index) {
     }
     containers[index].classList.add('selected');
     buttons[index].classList.add('selected');
+    if (buttons.length >= 2 && buttons[1].classList.contains('selected')) {
+        angleSlider.value = 0;
+        if (book.style.transform !== 'rotateY(0deg)') {
+            book.style.transition = 'transform 1s ease';
+            book.style.transform = 'rotateY(0deg)';
+        }
+    }
+    if (buttons.length >= 3 && buttons[2].classList.contains('selected')) {
+        angleSlider.value = 180;
+        if (book.style.transform !== 'rotateY(180deg)') {
+            book.style.transition = 'transform 1s ease';
+            book.style.transform = 'rotateY(180deg)';
+        }
+    }
 }
 
 var cropper1;
