@@ -418,16 +418,21 @@ input[type=file]::file-selector-button {
   	transition: background .2s ease-in-out;
 }
 
-input[type=text] {
-	margin: 0px;
-	width: 100%;
-	height: 30px;
-	font-size: large;
-	font-family: sans-serif;
-	border: 3px dashed #555 !important;
-	border-radius: 10px;
+input[type="text"] {
+    margin: 0px;
+    width: 100%;
+    height: 30px;
+    font-size: large;
+    font-family: sans-serif;
+    border: 3px dashed #FF5757;
+    border-radius: 10px;
+    outline: none;
 }
-  
+
+input[type="text"]:focus {
+    border: 3px solid #FF5757;
+}
+
 .cover-edit-container {
     display: flex;
     flex-direction: row;
@@ -436,7 +441,7 @@ input[type=text] {
     margin: 0px;
 }
 
-.btn-cover-edit1, .btn-cover-edit2, .btn-cover-edit3 {
+.btn-cover-edit {
     display: block;
     width: 100%;
     height: 40px;
@@ -450,12 +455,12 @@ input[type=text] {
     transition: .3s ease;
 }
 
-.btn-cover-edit1.selected, .btn-cover-edit2.selected, .btn-cover-edit3.selected {
+.btn-cover-edit.selected {
     border: 3px solid #FF5757;
     background: floralwhite;
 }
 
-.cover-edit1, .cover-edit2, .cover-edit3 {
+.cover-edit {
     display: none;
     flex-direction: column;
     align-items: center;
@@ -463,7 +468,7 @@ input[type=text] {
     margin: 20px 0px 0px;
 }
 
-.cover-edit1.selected, .cover-edit2.selected, .cover-edit3.selected {
+.cover-edit.selected {
     display: flex;
 }
 
@@ -620,8 +625,15 @@ input[type=text] {
 .front-cover-img {
     display: none;
     height: 100%;
-    width: 100%;
     z-index: 2;
+    border-style: solid;
+    border-width: 0px;
+    border-radius: 0px;
+    border-color: #000000;
+}
+
+.front-cover-img.border {
+    height: 80%;
 }
 
 .book-page1 {
@@ -850,6 +862,79 @@ input[type=text] {
     height: 100%;
 }
 
+.btn-img-edit-container {
+    display: none;
+    flex-direction: row;
+    width: 100%;
+    margin: 10px 0px 0px;
+}
+
+.btn-img-edit {
+    display: block;
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+    margin: 0px .5em;
+    font-family: sans-serif;
+    background: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.btn-img-edit.selected {
+    border: 3px solid #FF5757;
+    background: floralwhite;
+}
+
+.img-edit-container {
+    display: none;
+}
+
+.img-edit-container.selected {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-img-border-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 10px 0px 0px;
+}
+
+.btn-img-border {
+    display: block;
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+    margin: 0px .5em;
+    font-family: sans-serif;
+    background: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.btn-img-border.selected {
+    border: 3px solid #FF5757;
+    background: floralwhite;
+}
+
+.img-border {
+    display: none;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0px 0px;
+}
+
+.img-border.selected {
+    display: flex;
+}
+
 .text_container1 {
     display: flex;
     align-items: center;
@@ -979,29 +1064,29 @@ input[type=color] {
     margin: 10px 0px 0px;
 }
 
-.border-thickness-input, .border-radius-input {
+#input-range-edit {
     height: 30px;
     -webkit-appearance: none;
-    width: 100%;
+    width: 80%;
     background: none;
     touch-action: none;
 }
   
-.border-thickness-input:focus, .border-radius-input:focus {
+#input-range-edit:focus {
     outline: none;
 }
   
-.border-thickness-input::-webkit-slider-runnable-track, .border-radius-input::-webkit-slider-runnable-track {
+#input-range-edit::-webkit-slider-runnable-track {
     width: 100%;
-    height: 10px;
+    height: 0px;
     cursor: pointer;
     box-shadow: 0px 0px 0px #000000;
     background: #ffffff;
-    border-radius: 10px;
-    border: 1px solid #000000;
+    border-radius: 3px;
+    border: 3px solid #FF5757;
 }
   
-.border-thickness-input::-webkit-slider-thumb, .border-radius-input::-webkit-slider-thumb {
+#input-range-edit::-webkit-slider-thumb {
     box-shadow: 0px 0px 0px #000000;
     border: 3px solid #ffffff;
     height: 30px;
@@ -1010,7 +1095,7 @@ input[type=color] {
     background: #FF5757;
     cursor: pointer;
     -webkit-appearance: none;
-    margin-top: -11px;
+    margin-top: -15px;
 }
 
 .border-colors {

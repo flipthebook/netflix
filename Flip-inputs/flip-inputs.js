@@ -7,6 +7,9 @@ var bookBefore = document.querySelector('.book-pages');
 var backCover = document.querySelector('.back-cover');
 var sideCover = document.querySelector('.side-cover');
 const customContainer = document.querySelector('.custom-container');
+const frontCoverImg = document.querySelector('.front-cover-img');
+const btnImgEditContainer = document.querySelector('.btn-img-edit-container');
+const backText = document.querySelector(".back-text");
 
 size1.addEventListener('click', () => {
     size1.classList.add('selected');
@@ -33,6 +36,7 @@ size1.addEventListener('click', () => {
     bookBefore.style.transform = 'translateX(162px) rotateY(90deg)';
     bookShadow68x72();
     cropAspectRatio = 17 / 18;
+    backText.style.maxWidth = '70%';
     sizechossed.value = '68x72mm';
 });
 
@@ -61,6 +65,7 @@ size2.addEventListener('click', () => {
     bookBefore.style.transform = 'translateX(258px) rotateY(90deg)';
     bookShadow48x102();
     cropAspectRatio = 17 / 8;
+    backText.style.maxWidth = '80%';
     sizechossed.value = '48x102mm';
 });
 
@@ -202,49 +207,16 @@ removeVideo.addEventListener('click', () => {
     hidePreviewContainer();
 })
 
-const btnCoverEdit1 = document.querySelector('.btn-cover-edit1');
-const btnCoverEdit2 = document.querySelector('.btn-cover-edit2');
-const btnCoverEdit3 = document.querySelector('.btn-cover-edit3');
-const coverEdit1 = document.querySelector('.cover-edit1');
-const coverEdit2 = document.querySelector('.cover-edit2');
-const coverEdit3 = document.querySelector('.cover-edit3');
-
-btnCoverEdit1.addEventListener('click', function() {
-    coverEdit1.classList.add('selected');
-    coverEdit2.classList.remove('selected');
-    coverEdit3.classList.remove('selected');
-    btnCoverEdit1.classList.add('selected');
-    btnCoverEdit2.classList.remove('selected');
-    btnCoverEdit3.classList.remove('selected');
-    angleSlider.value = 0;
-    if (book.style.transform !== 'rotateY(0deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(0deg)';
+function coverEditOption(index) {
+    const containers = document.getElementsByClassName('cover-edit');
+    const buttons = document.getElementsByClassName('btn-cover-edit');
+    for (let i = 0; i < containers.length; i++) {
+        containers[i].classList.remove('selected');
+        buttons[i].classList.remove('selected');
     }
-});
-
-btnCoverEdit2.addEventListener('click', function() {
-    coverEdit1.classList.remove('selected');
-    coverEdit2.classList.add('selected');
-    coverEdit3.classList.remove('selected');
-    btnCoverEdit1.classList.remove('selected');
-    btnCoverEdit2.classList.add('selected');
-    btnCoverEdit3.classList.remove('selected');
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
-    }
-});
-
-btnCoverEdit3.addEventListener('click', function() {
-    coverEdit1.classList.remove('selected');
-    coverEdit2.classList.remove('selected');
-    coverEdit3.classList.add('selected');
-    btnCoverEdit1.classList.remove('selected');
-    btnCoverEdit2.classList.remove('selected');
-    btnCoverEdit3.classList.add('selected');
-});
+    containers[index].classList.add('selected');
+    buttons[index].classList.add('selected');
+}
 
 var cropper1;
 const upload1 = document.getElementById('upload1');
@@ -290,8 +262,9 @@ upload1.addEventListener('change', function(e) {
     } else {
         PopupEditor1.style.display = 'none';
         document.getElementById('previewResult1').src = '';
-        document.querySelector('.front-cover-img').src = '';
-        document.querySelector('.front-cover-img').style.display = 'none';
+        frontCoverImg.src = '';
+        frontCoverImg.style.display = 'none';
+        btnImgEditContainer.style.display = "none";
         closePopup1.style.display = 'none';
         aboveUpload1.style.display = 'none';
         cropfileInput1.value = '';
@@ -312,8 +285,9 @@ document.getElementById('cropBtn1').addEventListener('click', function() {
     closePopup1.style.display = 'flex';
     var croppedImage1 = canvas.toDataURL('image/webp');
     document.getElementById('previewResult1').src = croppedImage1;
-    document.querySelector('.front-cover-img').style.display = 'block';
-    document.querySelector('.front-cover-img').src = croppedImage1;
+    frontCoverImg.style.display = 'block';
+    frontCoverImg.src = croppedImage1;
+    btnImgEditContainer.style.display = "flex";
 
     fetch(croppedImage1)
         .then(res => res.blob())
@@ -340,8 +314,9 @@ document.getElementById('remove_file_editor1').addEventListener('click', functio
     upload1.style.background = '#FF5757';
     PopupEditor1.style.display = 'none';
     document.getElementById('previewResult1').src = '';
-    document.querySelector('.front-cover-img').src = '';
-    document.querySelector('.front-cover-img').style.display = 'none';
+    frontCoverImg.src = '';
+    frontCoverImg.style.display = 'none';
+    btnImgEditContainer.style.display = "none";
     closePopup1.style.display = 'none';
     aboveUpload1.style.display = 'none';
     cropfileInput1.value = '';
@@ -385,8 +360,9 @@ removeFile1.addEventListener('click', function() {
     upload1.style.background = '#FF5757';
     PopupEditor1.style.display = 'none';
     document.getElementById('previewResult1').src = '';
-    document.querySelector('.front-cover-img').src = '';
-    document.querySelector('.front-cover-img').style.display = 'none';
+    frontCoverImg.src = '';
+    frontCoverImg.style.display = 'none';
+    btnImgEditContainer.style.display = "none";
     closePopup1.style.display = 'none';
     aboveUpload1.style.display = 'none';
     cropfileInput1.value = '';
@@ -396,8 +372,6 @@ removeFile1.addEventListener('click', function() {
         book.style.transform = 'rotateY(30deg)';
     }
 });
-
-const backText = document.querySelector(".back-text");
 
 function updatePreview1() {
     var inputText1 = document.getElementById("input-text1").value;
@@ -435,6 +409,9 @@ const backgroundText = document.querySelectorAll('[class^="edit-color"][class$="
 const borderThickness = document.querySelector('.border-thickness-input');
 const borderRadius = document.querySelector('.border-radius-input');
 const borderColor = document.querySelector('.border-color-input');
+const imgBorderWidhtInput = document.querySelector('.img-border-width-input');
+const imgBorderRadiusInput = document.querySelector('.img-border-radius-input');
+const imgBorderColorInput = document.querySelector('.img-border-color-input');
 
 function selectOption(optionIndex) {
     const textContainers = document.getElementsByClassName('text-option-container');
@@ -447,14 +424,76 @@ function selectOption(optionIndex) {
 
     textContainers[optionIndex].classList.add('selected');
     buttons[optionIndex].classList.add('selected');
-  }
+}
+
+function imgOption(imgIndex) {
+    const imgContainers = document.getElementsByClassName('img-edit-container');
+    const buttons = document.getElementsByClassName('btn-img-edit');
+    
+    for (let i = 0; i < imgContainers.length; i++) {
+      imgContainers[i].classList.remove('selected');
+      buttons[i].classList.remove('selected');
+    }
+    
+    imgContainers[imgIndex].classList.add('selected');
+    buttons[imgIndex].classList.add('selected');
+  
+    if (buttons.length >= 2 && buttons[1].classList.contains('selected')) {
+        frontCoverImg.classList.add('border');
+    } else {
+        frontCoverImg.classList.remove('border');
+        frontCoverImg.style.borderWidth = '0px';
+        frontCoverImg.style.borderRadius = '0px';
+        imgBorderWidhtInput.value = 0;
+        imgBorderRadiusInput.value = 0;
+    }
+}
+
+function imgborderOption(imgIndex) {
+    const imgContainers = document.getElementsByClassName('img-border');
+    const buttons = document.getElementsByClassName('btn-img-border');
+    for (let i = 0; i < imgContainers.length; i++) {
+        imgContainers[i].classList.remove('selected');
+        buttons[i].classList.remove('selected');
+    }
+    imgContainers[imgIndex].classList.add('selected');
+    buttons[imgIndex].classList.add('selected');
+}
+
+imgBorderWidhtInput.addEventListener('input', function() {
+    var value = imgBorderWidhtInput.value;
+    frontCoverImg.style.borderWidth = ''+ value +'px';
+    angleSlider.value = 0;
+    if (book.style.transform !== 'rotateY(0deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(0deg)';
+    }
+});
+
+imgBorderRadiusInput.addEventListener('input', function() {
+    var value = imgBorderRadiusInput.value;
+    frontCoverImg.style.borderRadius = ''+ value +'px';
+    if (book.style.transform !== 'rotateY(0deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(0deg)';
+    }
+});
+
+imgBorderColorInput.addEventListener('input', function() {
+    frontCoverImg.style.borderColor = imgBorderColorInput.value;
+    angleSlider.value = 0;
+    if (book.style.transform !== 'rotateY(0deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(0deg)';
+    }
+});
 
 function borderOption(borderIndex) {
     const borderContainers = document.getElementsByClassName('border-option');
     const buttons = document.getElementsByClassName('btn-border-option');
     for (let i = 0; i < borderContainers.length; i++) {
-      borderContainers[i].classList.remove('selected');
-      buttons[i].classList.remove('selected');
+        borderContainers[i].classList.remove('selected');
+        buttons[i].classList.remove('selected');
     }
     borderContainers[borderIndex].classList.add('selected');
     buttons[borderIndex].classList.add('selected');
@@ -564,7 +603,6 @@ inputColorCover.addEventListener('input', function() {
     backCover.style.backgroundColor = color;
 });
 
-// Obtenha todos os botões "cover-icon"
 const coverIcons = document.querySelectorAll('.cover-icon');
 const coverIconsClear = document.querySelector('.cover-icon-clear');
 
