@@ -1193,6 +1193,7 @@ input[type=color] {
     cursor: pointer;
     align-items: center;
     justify-content: center;
+    background: none;
 }
 
 .cover-icon.selected, .cover-icon-clear.selected {
