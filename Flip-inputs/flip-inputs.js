@@ -187,25 +187,21 @@ const hidePreviewContainer = () => {
 };
 
 videoInput.addEventListener('input', () => {
-  const videoFile = videoInput.files[0];
-  if (videoInput.files.length > 0) {
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      const videoDataUrl = event.target.result;
-      videoPreview.src = videoDataUrl;
-      videoPage.src = videoDataUrl;
+    const videoFile = videoInput.files[0];
+    if (videoInput.files.length > 0) {
+      const url = URL.createObjectURL(videoFile);
+      videoPreview.src = url;
+      videoPage.src = url;
       inputVideoFile.files = videoInput.files;
       videoInput.style.background = '#4BB543';
       playPreviewContainer.style.display = 'flex';
       showPreviewContainer();
-    };
-    reader.readAsDataURL(videoFile);
-  } else {
-    videoInput.style.background = '#FF5757';
-    playPreviewContainer.style.display = 'none';
-    hidePreviewContainer();
-  }
-});
+    } else {
+      videoInput.style.background = '#FF5757';
+      playPreviewContainer.style.display = 'none';
+      hidePreviewContainer();
+    }
+});  
 
 removeVideo.addEventListener('click', () => {
     videoInput.value = '';
