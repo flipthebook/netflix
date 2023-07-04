@@ -529,16 +529,23 @@ imgBorderRadiusInput.addEventListener('input', function() {
     updateCroppedImgInfo()
 });
 
-imgBorderColorInput.addEventListener('input', function() {
-    frontCoverImg.style.borderColor = imgBorderColorInput.dataset.currentColor;
-    imgBorderColor = imgBorderColorInput.dataset.currentColor;
-    angleSlider.value = 0;
-    if (book.style.transform !== 'rotateY(0deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(0deg)';
+const ColorImgborderObserver = new MutationObserver(function(mutationsList) {
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'data-current-color') {
+        frontCoverImg.style.borderColor = imgBorderColorInput.dataset.currentColor;
+        imgBorderColor = imgBorderColorInput.dataset.currentColor;
+        angleSlider.value = 0;
+        if (book.style.transform !== 'rotateY(0deg)') {
+            book.style.transition = 'transform 1s ease';
+            book.style.transform = 'rotateY(0deg)';
+        }
+        updateCroppedImgInfo()
+        break;
     }
-    updateCroppedImgInfo()
+  }
 });
+
+ColorImgborderObserver.observe(imgBorderColorInput, { attributes: true });
 
 let textColor = '#000000FF';
 let textBackground = '#FFFFFFFF';
@@ -578,29 +585,43 @@ function borderOption(borderIndex) {
     buttons[borderIndex].classList.add('selected');
 }
 
-inputColorText.addEventListener('input', function() {
-    var color = inputColorText.dataset.currentColor;
-    backText.style.color = color;
-    textColor = color;
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
+const ColorTextObserver = new MutationObserver(function(mutationsList) {
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'data-current-color') {
+        var color = inputColorText.dataset.currentColor;
+        backText.style.color = color;
+        textColor = color;
+        angleSlider.value = 180;
+        if (book.style.transform !== 'rotateY(180deg)') {
+            book.style.transition = 'transform 1s ease';
+            book.style.transform = 'rotateY(180deg)';
+        }
+        updateTextInfo();
+        break;
     }
-    updateTextInfo();
+  }
 });
 
-inputBackgroundText.addEventListener('input', function() {
-    var color = inputBackgroundText.dataset.currentColor;
-    backText.style.backgroundColor = color;
-    textBackground = color;
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
+ColorTextObserver.observe(inputColorText, { attributes: true });
+
+const ColorTextBackgroundObserver = new MutationObserver(function(mutationsList) {
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'data-current-color') {
+        var color = inputBackgroundText.dataset.currentColor;
+        backText.style.backgroundColor = color;
+        textBackground = color;
+        angleSlider.value = 180;
+        if (book.style.transform !== 'rotateY(180deg)') {
+            book.style.transition = 'transform 1s ease';
+            book.style.transform = 'rotateY(180deg)';
+        }
+        updateTextInfo();
+        break;
     }
-    updateTextInfo();
+  }
 });
+
+ColorTextBackgroundObserver.observe(inputBackgroundText, { attributes: true });
 
 borderThickness.addEventListener('input', function() {
     var newThickness = borderThickness.value;
@@ -626,17 +647,24 @@ borderRadius.addEventListener('input', function() {
     updateTextInfo();
 });
 
-borderColor.addEventListener('input', function() {
-    const Color = borderColor.dataset.currentColor;
-    backText.style.borderColor = Color;
-    textBorderColor = Color;
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
+const ColorTextborderObserver = new MutationObserver(function(mutationsList) {
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'data-current-color') {
+        const Color = borderColor.dataset.currentColor;
+        backText.style.borderColor = Color;
+        textBorderColor = Color;
+        angleSlider.value = 180;
+        if (book.style.transform !== 'rotateY(180deg)') {
+            book.style.transition = 'transform 1s ease';
+            book.style.transform = 'rotateY(180deg)';
+        }
+        updateTextInfo();
+        break;
     }
-    updateTextInfo();
+  }
 });
+
+ColorTextborderObserver.observe(borderColor, { attributes: true });
 
 function coverOption(coverIndex) {
     const coverContainers = document.getElementsByClassName('cover-option-container');
@@ -657,14 +685,21 @@ function updateCoverInfo() {
     coverInfoSVG.value = coverSvg;
 }
 
-inputColorCover.addEventListener('input', function() {
-    const color = inputColorCover.dataset.currentColor;
-    coverColor = color;
-    frontCoverStyle.style.backgroundColor = color;
-    sideCoverStyle.style.backgroundColor = color;
-    backCoverStyle.style.backgroundColor = color;
-    updateCoverInfo();
+const ColorCoverObserver = new MutationObserver(function(mutationsList) {
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'data-current-color') {
+      const color = inputColorCover.dataset.currentColor;
+      coverColor = color;
+      frontCoverStyle.style.backgroundColor = color;
+      sideCoverStyle.style.backgroundColor = color;
+      backCoverStyle.style.backgroundColor = color;
+      updateCoverInfo();
+      break;
+    }
+  }
 });
+
+ColorCoverObserver.observe(inputColorCover, { attributes: true });
 
 const coverIcons = document.querySelectorAll('.cover-icon');
 const coverIconsClear = document.querySelector('.cover-icon-clear');
