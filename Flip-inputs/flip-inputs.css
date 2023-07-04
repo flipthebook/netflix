@@ -1193,11 +1193,14 @@ input[type=color] {
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    background: none;
 }
 
 .cover-icon.selected, .cover-icon-clear.selected {
     border-color: #FF5757;
+}
+
+.cover-icon-container svg {
+    height: 40px;
 }
 
 .above_upload1 {
