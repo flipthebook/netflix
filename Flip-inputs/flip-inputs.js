@@ -121,11 +121,16 @@ const btnChoose1 = document.querySelector('#btn-choose1');
 const btnChoose2 = document.querySelector('#btn-choose2');
 const choose1 = document.querySelector('.choose1');
 const choose2 = document.querySelector('.choose2');
-const field = document.getElementById('line-property1');
+const fieldChoose = document.querySelector('.videoChooseContainer');
 const videoInput = document.querySelector('input[id="videoUpload"]');
 const videoPreview = document.querySelector('#video-preview');
 const previewContainer = document.querySelector('#video-preview-container');
 const removeVideo = document.querySelector('.remove_video');
+const notChoosed = document.querySelector('.notChoosed');
+const inputVideoFile = document.querySelector('.inputVideoFile');
+const inputVideoText = document.querySelector('.inputVideoText');
+const propertyField = document.querySelector('.line-item-property__field');
+const videolink = document.querySelector('#videolink');
 
 btnChoose1.addEventListener('click', () => {
     choose1.style.display = 'flex';
@@ -143,10 +148,12 @@ btnChoose1.addEventListener('click', () => {
     
     if (btnChoose2.classList.contains('selected')) {
         setTimeout(function() {
-            field.removeChild(choose2);
+            fieldChoose.removeChild(choose2);
+            notChoosed.appendChild(inputVideoText);
         }, 500);
         }
-        field.appendChild(choose1);
+        fieldChoose.appendChild(choose1);
+        propertyField.appendChild(inputVideoFile);
         btnChoose1.classList.add('selected');
         btnChoose2.classList.remove('selected');
 });
@@ -161,10 +168,12 @@ btnChoose2.addEventListener('click', () => {
     playPreviewContainer.style.display = 'none';
     if (btnChoose1.classList.contains('selected')) {
         setTimeout(function() {
-            field.removeChild(choose1);
+            fieldChoose.removeChild(choose1);
+            notChoosed.appendChild(inputVideoFile);
         }, 500);
     }
-    field.appendChild(choose2);
+    fieldChoose.appendChild(choose2);
+    propertyField.appendChild(inputVideoText)
     btnChoose1.classList.remove('selected');
     btnChoose2.classList.add('selected');
 });
@@ -177,20 +186,25 @@ const hidePreviewContainer = () => {
     previewContainer.style.display = 'none';	
 };
 
-videoInput.addEventListener('change', () => {
-    const videoFile = videoInput.files[0];
-    if (videoInput.files.length > 0) {
-        const url = URL.createObjectURL(videoFile);
-        videoPreview.src = url;
-        videoPage.src = url;
-        videoInput.style.background = '#4BB543';
-        playPreviewContainer.style.display = 'flex';
-        showPreviewContainer();
-    } else {
-        videoInput.style.background = '#FF5757';
-        playPreviewContainer.style.display = 'none';
-        hidePreviewContainer();
-    }
+videoInput.addEventListener('input', () => {
+  const videoFile = videoInput.files[0];
+  if (videoInput.files.length > 0) {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const videoDataUrl = event.target.result;
+      videoPreview.src = videoDataUrl;
+      videoPage.src = videoDataUrl;
+      inputVideoFile.files = videoInput.files;
+      videoInput.style.background = '#4BB543';
+      playPreviewContainer.style.display = 'flex';
+      showPreviewContainer();
+    };
+    reader.readAsDataURL(videoFile);
+  } else {
+    videoInput.style.background = '#FF5757';
+    playPreviewContainer.style.display = 'none';
+    hidePreviewContainer();
+  }
 });
 
 removeVideo.addEventListener('click', () => {
@@ -206,6 +220,10 @@ removeVideo.addEventListener('click', () => {
     }, 500);
     hidePreviewContainer();
 })
+
+videolink.addEventListener('input', () => {
+    inputVideoText.value = videolink.value;
+});
 
 function coverEditOption(index) {
     const containers = document.getElementsByClassName('cover-edit');

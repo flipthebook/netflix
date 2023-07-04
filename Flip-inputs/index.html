@@ -124,9 +124,9 @@
                 </button>
             </div>
 
-            <p class="line-item-property__field" id="line-property1">
+            <div class="videoChooseContainer">
 
-            </p>
+            </div>
 
             <div class="choose1">
             
@@ -424,7 +424,22 @@
             </div>
         </div>
     </div>
-
+    <div class="notChoosed" style="display: none;">
+        <input 
+            class="inputVideoFile" 
+            type="file"
+            name="properties[Video escolhido]" 
+            form="product-form-{{ section.id }}" 
+            required
+        >
+        <input 
+            class="inputVideoText" 
+            type="text"
+            name="properties[Video escolhido]" 
+            form="product-form-{{ section.id }}" 
+            required
+        >
+    </div>
     <p class="line-item-property__field" id="line-property2">
         <input 
             id="size-choose" 
