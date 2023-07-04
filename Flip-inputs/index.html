@@ -197,30 +197,11 @@
             </div>
             <div class="cover-edit selected">
                 <div class="btn-cover-options">
-                    <button class="cover-option selected" onclick="coverOption(0)">Cor</button>
-                    <button class="cover-option" onclick="coverOption(1)">Figurinha</button>
+                    <button class="cover-option selected" onclick="coverOption(0)">Figurinha</button>
+                    <button class="cover-option" onclick="coverOption(1)">Cor</button>
                 </div>
+
                 <div class="cover-option-container selected">
-                    <input class="cover-color-input" type="color">
-                    <div class="cover-colors">
-                        <button class="edit-color1 cover"></button>
-                        <button class="edit-color2 cover"></button>
-                        <button class="edit-color3 cover"></button>
-                        <button class="edit-color4 cover"></button>
-                        <button class="edit-color5 cover"></button>
-                        <button class="edit-color6 cover"></button>
-                        <button class="edit-color7 cover"></button>
-                        <button class="edit-color8 cover"></button>
-                        <button class="edit-color9 cover"></button>
-                        <button class="edit-color10 cover"></button>
-                        <button class="edit-color11 cover"></button>
-                        <button class="edit-color12 cover"></button>
-                        <button class="edit-color13 cover"></button>
-                        <button class="edit-color14 cover"></button>
-                        <button class="edit-color15 cover"></button>
-                    </div>
-                </div>
-                <div class="cover-option-container">
                     <button class="cover-icon-clear selected">
                         <svg viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>close [#1511]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-419.000000, -240.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="close-[#1511]" points="375.0183 90 384 98.554 382.48065 100 373.5 91.446 364.5183 100 363 98.554 371.98065 90 363 81.446 364.5183 80 373.5 88.554 382.48065 80 384 81.446"> </polygon> </g> </g> </g> </g></svg>
                     </button>
@@ -266,6 +247,15 @@
                         </button>
                     </div>
                 </div>
+
+                <div class="cover-option-container">
+                    <input class="cover-color-input" value="#FFFFFF" data-jscolor="{
+                        preset: 'dark',
+                        closeButton: true,
+                        closeText: 'OK',
+                        palette: '#C00 #0C0 #00C'
+                        }">
+                </div>
             </div>
 
             <div class="cover-edit">
@@ -277,8 +267,8 @@
                 >
                 
                 <div class="btn-img-edit-container">
-                    <button class="btn-img-edit selected" onclick="imgOption(0)">Completo</button>
-                    <button class="btn-img-edit" onclick="imgOption(1)">Parcial</button>
+                    <button class="btn-img-edit selected" value="Completo" onclick="imgOption(0)">Completo</button>
+                    <button class="btn-img-edit" value="Parcial" onclick="imgOption(1)">Parcial</button>
                 </div>
 
                 <div class="img-edit-container"></div>
@@ -295,7 +285,12 @@
                         <input class="img-border-radius-input" type="range" id="input-range-edit" min="0" max="30" value="0">
                     </div>
                     <div class="img-border color">
-                        <input class="img-border-color-input" type="color">
+                        <input class="img-border-color-input" value="#000000FF" data-jscolor="{
+                            preset: 'dark',
+                            closeButton: true,
+                            closeText: 'OK',
+                            palette: '#C00 #0C0 #00C'
+                            }">
                     </div>
                 </div>
 
@@ -388,45 +383,21 @@
                 </div>
 
                 <div class="text-option-container selected">
-                    <input class="text-color-input" type="color">
-                    <div class="text-colors">
-                        <button class="edit-color1 text"></button>
-                        <button class="edit-color2 text"></button>
-                        <button class="edit-color3 text"></button>
-                        <button class="edit-color4 text"></button>
-                        <button class="edit-color5 text"></button>
-                        <button class="edit-color6 text"></button>
-                        <button class="edit-color7 text"></button>
-                        <button class="edit-color8 text"></button>
-                        <button class="edit-color9 text"></button>
-                        <button class="edit-color10 text"></button>
-                        <button class="edit-color11 text"></button>
-                        <button class="edit-color12 text"></button>
-                        <button class="edit-color13 text"></button>
-                        <button class="edit-color14 text"></button>
-                        <button class="edit-color15 text"></button>
-                    </div>
+                    <input class="text-color-input" value="#000000FF" data-jscolor="{
+                        preset: 'dark',
+                        closeButton: true,
+                        closeText: 'OK',
+                        palette: '#C00 #0C0 #00C'
+                        }">
                 </div>
 
                 <div class="text-option-container">
-                    <input class="text-background-input" type="color">
-                    <div class="text-colors">
-                        <button class="edit-color1 background"></button>
-                        <button class="edit-color2 background"></button>
-                        <button class="edit-color3 background"></button>
-                        <button class="edit-color4 background"></button>
-                        <button class="edit-color5 background"></button>
-                        <button class="edit-color6 background"></button>
-                        <button class="edit-color7 background"></button>
-                        <button class="edit-color8 background"></button>
-                        <button class="edit-color9 background"></button>
-                        <button class="edit-color10 background"></button>
-                        <button class="edit-color11 background"></button>
-                        <button class="edit-color12 background"></button>
-                        <button class="edit-color13 background"></button>
-                        <button class="edit-color14 background"></button>
-                        <button class="edit-color15 background"></button>
-                    </div>
+                    <input class="text-background-input" value="#FFFFFFFF" data-jscolor="{
+                        preset: 'dark',
+                        closeButton: true,
+                        closeText: 'OK',
+                        palette: '#C00 #0C0 #00C'
+                        }">
                 </div>
 
                 <div class="text-option-container" style="flex-direction: column;">
@@ -442,7 +413,12 @@
                         <input class="border-radius-input" id="input-range-edit" type="range" min="0" max="40" value="0">
                     </div>
                     <div class="border-option">
-                        <input class="border-color-input" type="color">
+                        <input class="border-color-input" value="#000000FF" data-jscolor="{
+                            preset: 'dark',
+                            closeButton: true,
+                            closeText: 'OK',
+                            palette: '#C00 #0C0 #00C'
+                            }">
                     </div>
                 </div>                  
             </div>
@@ -458,9 +434,30 @@
             required
         >
         <input 
+            class="coverInfoColor" 
+            type="text"
+            name="properties[Cover Color]" 
+            form="product-form-{{ section.id }}" 
+            required
+        >
+        <input 
+            class="coverInfoSVG" 
+            type="text"
+            name="properties[Cover SVG]" 
+            form="product-form-{{ section.id }}" 
+            required
+        >
+        <input 
             id="croppedImageInput1" 
             type="file" 
             name="properties[Imagem Capa]" 
+            form="product-form-{{ section.id }}" 
+            required
+        >
+        <input 
+            class="croppedImgInfo" 
+            type="text" 
+            name="properties[Imagem Info]" 
             form="product-form-{{ section.id }}" 
             required
         >
@@ -471,11 +468,19 @@
             form="product-form-{{ section.id }}" 
             required
         >
+        <input 
+            class="replicatedTextInfo" 
+            type="text"
+            name="properties[Texto Info]" 
+            form="product-form-{{ section.id }}" 
+            required
+        >
     </p>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/cropperjs/dist/cropper.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="jscolor.js"></script>
     <script src="flip-inputs.js"></script>
 </body>
 </html>

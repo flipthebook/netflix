@@ -316,7 +316,8 @@ document.getElementById('cropBtn1').addEventListener('click', function() {
         var newFile1 = new File([file1], name1);
         fileList1.items.add(newFile1);
         return fileList1.files;
-    }    
+    }
+    updateCroppedImgInfo()    
 });
 
 closePopup1.addEventListener('click', function() {
@@ -402,6 +403,14 @@ function updateCharCount() {
     replicatedTextElement1.value = inputText1;
 }
 
+function textPreviewDisplay() {
+    if ($input1.val().length > 0) {
+        backText.style.display = 'flex';
+    } else {
+        backText.style.display = 'none';
+    }
+}
+
 var $input1 = $('#input-text1');
 $input1.on('input', function(e) {
     var max = 120;
@@ -411,6 +420,8 @@ $input1.on('input', function(e) {
         }
         updatePreview1(); // Atualiza a prévia do texto
         updateCharCount(); // Atualiza a contagem de caracteres
+        textPreviewDisplay();
+        updateTextInfo();
     }, 0);
 });
 
@@ -426,18 +437,21 @@ const borderColor = document.querySelector('.border-color-input');
 const imgBorderWidhtInput = document.querySelector('.img-border-width-input');
 const imgBorderRadiusInput = document.querySelector('.img-border-radius-input');
 const imgBorderColorInput = document.querySelector('.img-border-color-input');
+const frontCoverStyle = document.querySelector('.front-cover-style');
+const sideCoverStyle = document.querySelector('.side-cover-style');
+const backCoverStyle = document.querySelector('.back-cover-style');
+const croppedImgInfo = document.querySelector('.croppedImgInfo');
+const replicatedTextInfo = document.querySelector('.replicatedTextInfo');
+const coverInfoColor = document.querySelector('.coverInfoColor');
+const coverInfoSVG = document.querySelector('.coverInfoSVG');
 
-function selectOption(optionIndex) {
-    const textContainers = document.getElementsByClassName('text-option-container');
-    const buttons = document.getElementsByClassName('text-option');
+let imgSize = 'completo';
+let imgBorderWidth = 0;
+let imgBorderRadius = 0;
+let imgBorderColor = '#000000FF';
 
-    for (let i = 0; i < textContainers.length; i++) {
-      textContainers[i].classList.remove('selected');
-      buttons[i].classList.remove('selected');
-    }
-
-    textContainers[optionIndex].classList.add('selected');
-    buttons[optionIndex].classList.add('selected');
+function updateCroppedImgInfo() {
+    croppedImgInfo.value = 'Tamanho: '+ imgSize +', border-width: '+ imgBorderWidth +', border-radius: '+ imgBorderRadius +', border-color: '+ imgBorderColor +' ';
 }
 
 function imgOption(imgIndex) {
@@ -445,13 +459,14 @@ function imgOption(imgIndex) {
     const buttons = document.getElementsByClassName('btn-img-edit');
     
     for (let i = 0; i < imgContainers.length; i++) {
-      imgContainers[i].classList.remove('selected');
-      buttons[i].classList.remove('selected');
+        imgContainers[i].classList.remove('selected');
+        buttons[i].classList.remove('selected');
     }
     
     imgContainers[imgIndex].classList.add('selected');
     buttons[imgIndex].classList.add('selected');
-  
+    imgSize = buttons[imgIndex].value;
+
     if (buttons.length >= 2 && buttons[1].classList.contains('selected')) {
         frontCoverImg.classList.add('border');
     } else {
@@ -460,7 +475,10 @@ function imgOption(imgIndex) {
         frontCoverImg.style.borderRadius = '0px';
         imgBorderWidhtInput.value = 0;
         imgBorderRadiusInput.value = 0;
+        imgBorderWidth = 0;
+        imgBorderRadius = 0;
     }
+    updateCroppedImgInfo();
 }
 
 function imgborderOption(imgIndex) {
@@ -477,30 +495,63 @@ function imgborderOption(imgIndex) {
 imgBorderWidhtInput.addEventListener('input', function() {
     var value = imgBorderWidhtInput.value;
     frontCoverImg.style.borderWidth = ''+ value +'px';
+    imgBorderWidth = ''+ value +'px';
     angleSlider.value = 0;
     if (book.style.transform !== 'rotateY(0deg)') {
         book.style.transition = 'transform 1s ease';
         book.style.transform = 'rotateY(0deg)';
     }
+    updateCroppedImgInfo();
 });
 
 imgBorderRadiusInput.addEventListener('input', function() {
     var value = imgBorderRadiusInput.value;
     frontCoverImg.style.borderRadius = ''+ value +'px';
+    imgBorderRadius = ''+ value +'px';
     if (book.style.transform !== 'rotateY(0deg)') {
         book.style.transition = 'transform 1s ease';
         book.style.transform = 'rotateY(0deg)';
     }
+    updateCroppedImgInfo()
 });
 
 imgBorderColorInput.addEventListener('input', function() {
-    frontCoverImg.style.borderColor = imgBorderColorInput.value;
+    frontCoverImg.style.borderColor = imgBorderColorInput.dataset.currentColor;
+    imgBorderColor = imgBorderColorInput.dataset.currentColor;
     angleSlider.value = 0;
     if (book.style.transform !== 'rotateY(0deg)') {
         book.style.transition = 'transform 1s ease';
         book.style.transform = 'rotateY(0deg)';
     }
+    updateCroppedImgInfo()
 });
+
+let textColor = '#000000FF';
+let textBackground = '#FFFFFFFF';
+let textBorderWidth = 0;
+let textBorderRadius = 0;
+let textBorderColor = '#000000FF';
+
+function updateTextInfo() {
+    if ($input1.val().length > 0) {
+        replicatedTextInfo.value = 'Cor:'+ textColor +', background: '+ textBackground +', border-width: '+ textBorderWidth +', border-radius: '+ textBorderRadius +', border-color: '+ textBorderColor +'.';
+    } else {
+        replicatedTextInfo.value = '';
+    }
+}
+
+function selectOption(optionIndex) {
+    const textContainers = document.getElementsByClassName('text-option-container');
+    const buttons = document.getElementsByClassName('text-option');
+
+    for (let i = 0; i < textContainers.length; i++) {
+      textContainers[i].classList.remove('selected');
+      buttons[i].classList.remove('selected');
+    }
+
+    textContainers[optionIndex].classList.add('selected');
+    buttons[optionIndex].classList.add('selected');
+}
 
 function borderOption(borderIndex) {
     const borderContainers = document.getElementsByClassName('border-option');
@@ -513,6 +564,66 @@ function borderOption(borderIndex) {
     buttons[borderIndex].classList.add('selected');
 }
 
+inputColorText.addEventListener('input', function() {
+    var color = inputColorText.dataset.currentColor;
+    backText.style.color = color;
+    textColor = color;
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
+    updateTextInfo();
+});
+
+inputBackgroundText.addEventListener('input', function() {
+    var color = inputBackgroundText.dataset.currentColor;
+    backText.style.backgroundColor = color;
+    textBackground = color;
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
+    updateTextInfo();
+});
+
+borderThickness.addEventListener('input', function() {
+    var newThickness = borderThickness.value;
+    backText.style.borderWidth = ''+ newThickness +'px' ;
+    textBorderWidth = ''+ newThickness +'px' ;
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
+    updateTextInfo();
+});
+
+borderRadius.addEventListener('input', function() {
+    var newRadius = borderRadius.value;
+    backText.style.borderRadius = ''+ newRadius +'px' ;
+    textBorderRadius = ''+ newRadius +'px' ;
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
+    updateTextInfo();
+});
+
+borderColor.addEventListener('input', function() {
+    const Color = borderColor.dataset.currentColor;
+    backText.style.borderColor = Color;
+    textBorderColor = Color;
+    angleSlider.value = 180;
+    if (book.style.transform !== 'rotateY(180deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(180deg)';
+    }
+    updateTextInfo();
+});
+
 function coverOption(coverIndex) {
     const coverContainers = document.getElementsByClassName('cover-option-container');
     const buttons = document.getElementsByClassName('cover-option');
@@ -524,97 +635,21 @@ function coverOption(coverIndex) {
     buttons[coverIndex].classList.add('selected');
 }
 
-colorText.forEach((colortext, indexColor) => {
-    colortext.addEventListener('click', function() {
-        const color = getColorByIndex(indexColor);
-        inputColorText.value = color;
-        backText.style.color = color;
-        angleSlider.value = 180;
-        if (book.style.transform !== 'rotateY(180deg)') {
-            book.style.transition = 'transform 1s ease';
-            book.style.transform = 'rotateY(180deg)';
-        }
-    });
-});
+let coverColor = '#FFFFFFFF';
+let coverSvg = '';
 
-inputColorText.addEventListener('input', function() {
-    var color = inputColorText.value;
-    backText.style.color = color;
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
-    }
-});
-
-backgroundText.forEach((backgroundtext, indexColor) => {
-    backgroundtext.addEventListener('click', function() {
-        const color = getColorByIndex(indexColor);
-        inputBackgroundText.value = color;
-        backText.style.backgroundColor = color;
-        angleSlider.value = 180;
-        if (book.style.transform !== 'rotateY(180deg)') {
-            book.style.transition = 'transform 1s ease';
-            book.style.transform = 'rotateY(180deg)';
-        }
-    });
-});
-
-inputBackgroundText.addEventListener('input', function() {
-    var color = inputBackgroundText.value;
-    backText.style.backgroundColor = color;
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
-    }
-});
-
-borderThickness.addEventListener('input', function() {
-    var newThickness = borderThickness.value;
-    backText.style.borderWidth = ''+ newThickness +'px' ;
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
-    }
-});
-
-borderRadius.addEventListener('input', function() {
-    var newRadius = borderRadius.value;
-    backText.style.borderRadius = ''+ newRadius +'px' ;
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
-    }
-});
-
-borderColor.addEventListener('input', function() {
-    var newCorlor = borderColor.value;
-    backText.style.borderColor = ''+ newCorlor +'' ;
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
-    }
-});
-
-colorCovers.forEach((colorCover, indexColor) => {
-    colorCover.addEventListener('click', function() {
-        const color = getColorByIndex(indexColor);
-        inputColorCover.value = color;
-        frontCover.style.backgroundColor = color;
-        sideCover.style.backgroundColor = color;
-        backCover.style.backgroundColor = color;
-    });
-});
+function updateCoverInfo() {
+    coverInfoColor.value = coverColor;
+    coverInfoSVG.value = coverSvg;
+}
 
 inputColorCover.addEventListener('input', function() {
-    const color = inputColorCover.value;
-    frontCover.style.backgroundColor = color;
-    sideCover.style.backgroundColor = color;
-    backCover.style.backgroundColor = color;
+    const color = inputColorCover.dataset.currentColor;
+    coverColor = color;
+    frontCoverStyle.style.backgroundColor = color;
+    sideCoverStyle.style.backgroundColor = color;
+    backCoverStyle.style.backgroundColor = color;
+    updateCoverInfo();
 });
 
 const coverIcons = document.querySelectorAll('.cover-icon');
@@ -628,6 +663,8 @@ coverIcons.forEach(coverIcon => {
         });
         coverIcon.classList.add('selected');
         const svg = coverIcon.querySelector('svg');
+        coverSvg = svg.outerHTML;
+        updateCoverInfo();
         clearContainers();
         createContainersWithCopies(svg);
     });
@@ -639,6 +676,8 @@ coverIconsClear.addEventListener('click', function() {
     });
     coverIconsClear.classList.add('selected');
     clearContainers();
+    coverSvg = '';
+    updateCoverInfo();
 });
 
 function createContainersWithCopies(svg) {
@@ -673,44 +712,6 @@ function clearContainers() {
   $('.side-cover-style').empty();
 }
 
-  
-function getColorByIndex(indexColor) {
-    switch (indexColor) {
-        case 0:
-            return '#FFFFFF';
-        case 1:
-            return '#000000';
-        case 2:
-            return '#FF0000';
-        case 3:
-            return '#00FF00';
-        case 4:
-            return '#0000FF';
-        case 5:
-            return '#FFFF00';
-        case 6:
-            return '#FF00FF';
-        case 7:
-            return '#FFA500';
-        case 8:
-            return '#800080';
-        case 9:
-            return '#FFC0CB';
-        case 10:
-            return '#00FFFF';
-        case 11:
-            return '#808080';
-        case 12:
-            return '#008000';
-        case 13:
-            return '#800000';
-        case 14:
-            return '#FFD700';
-        default:
-            return '';
-    }
-}
-
 var angleSlider = document.getElementById('angle-slider');
 var textSlider = document.getElementById("input-text1");
 
@@ -725,6 +726,7 @@ textSlider.addEventListener('click', function() {
         book.style.transition = 'transform 1s ease';
         book.style.transform = 'rotateY(180deg)';
     }
+    updateTextInfo()
 });
 
 book.addEventListener('transitionend', function() {
