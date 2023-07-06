@@ -38,6 +38,7 @@ size1.addEventListener('click', () => {
     cropAspectRatio = 17 / 18;
     backText.style.maxWidth = '70%';
     sizechossed.value = '68x72mm';
+    angleSlider_30();
 });
 
 size2.addEventListener('click', () => {
@@ -67,6 +68,7 @@ size2.addEventListener('click', () => {
     cropAspectRatio = 17 / 8;
     backText.style.maxWidth = '80%';
     sizechossed.value = '48x102mm';
+    angleSlider_30();
 });
 
 const bookShadow = document.querySelector('.book-shadow');
@@ -89,21 +91,13 @@ const rc1 = document.getElementById('r_c1');
 const rc2 = document.getElementById('r_c2');
 
 edit1.addEventListener('click', function() {
-    rc2.style.opacity = '0';
     rc1.style.display = 'block';
-    setTimeout(function() {
-        rc2.style.display = 'none';
-        rc1.style.opacity = '1';
-    }, 500);
+    rc2.style.display = 'none';
 });
 
 edit2.addEventListener('click', function() {
-    rc1.style.opacity = '0';
+    rc1.style.display = 'none';
     rc2.style.display = 'flex';
-    setTimeout(function() {
-        rc1.style.display = 'none';
-        rc2.style.opacity = '1';
-    }, 500);
 });
 
 function changeColor(buttonId) {
@@ -133,49 +127,30 @@ const propertyField = document.querySelector('.line-item-property__field');
 const videolink = document.querySelector('#videolink');
 
 btnChoose1.addEventListener('click', () => {
-    choose1.style.display = 'flex';
-    choose2.style.opacity = '0';
-    setTimeout(function() {
-        choose1.style.opacity = '1';
-    }, 500);
     if (videoInput.files.length > 0) {
         playPreviewContainer.style.display = 'flex';
         videoPreview.play();
     }
     if (videoInput.files && videoInput.files[0]) {
         previewContainer.style.display = 'flex';
-      }
-    
-    if (btnChoose2.classList.contains('selected')) {
-        setTimeout(function() {
-            fieldChoose.removeChild(choose2);
-            notChoosed.appendChild(inputVideoText);
-        }, 500);
-        }
-        fieldChoose.appendChild(choose1);
-        propertyField.appendChild(inputVideoFile);
-        btnChoose1.classList.add('selected');
-        btnChoose2.classList.remove('selected');
+    }
+    notChoosed.appendChild(inputVideoText);
+    propertyField.appendChild(inputVideoFile);
+    btnChoose1.classList.add('selected');
+    btnChoose2.classList.remove('selected');
+    choose1.classList.add('selected');
+    choose2.classList.remove('selected');
 });
 
 btnChoose2.addEventListener('click', () => {
-    choose2.style.display = 'flex';
-    choose1.style.opacity = '0';
-    setTimeout(function() {
-        choose2.style.opacity = '1';
-    }, 500);
     previewContainer.style.display = 'none';
     playPreviewContainer.style.display = 'none';
-    if (btnChoose1.classList.contains('selected')) {
-        setTimeout(function() {
-            fieldChoose.removeChild(choose1);
-            notChoosed.appendChild(inputVideoFile);
-        }, 500);
-    }
-    fieldChoose.appendChild(choose2);
+    notChoosed.appendChild(inputVideoFile);
     propertyField.appendChild(inputVideoText)
     btnChoose1.classList.remove('selected');
     btnChoose2.classList.add('selected');
+    choose2.classList.add('selected');
+    choose1.classList.remove('selected');
 });
 
 const showPreviewContainer = () => {
@@ -231,18 +206,10 @@ function coverEditOption(index) {
     containers[index].classList.add('selected');
     buttons[index].classList.add('selected');
     if (buttons.length >= 2 && buttons[1].classList.contains('selected')) {
-        angleSlider.value = 0;
-        if (book.style.transform !== 'rotateY(0deg)') {
-            book.style.transition = 'transform 1s ease';
-            book.style.transform = 'rotateY(0deg)';
-        }
+        angleSlider_0();
     }
     if (buttons.length >= 3 && buttons[2].classList.contains('selected')) {
-        angleSlider.value = 180;
-        if (book.style.transform !== 'rotateY(180deg)') {
-            book.style.transition = 'transform 1s ease';
-            book.style.transform = 'rotateY(180deg)';
-        }
+        angleSlider_180();
     }
 }
 
@@ -304,11 +271,7 @@ document.getElementById('cropBtn1').addEventListener('click', function() {
     var canvas = cropper1.getCroppedCanvas({
         aspectRatio: cropAspectRatio
     });
-    angleSlider.value = 0;
-    if (book.style.transform !== 'rotateY(0deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(0deg)';
-    }
+    angleSlider_0();
     PopupEditor1.style.display = 'none';
     closePopup1.style.display = 'flex';
     var croppedImage1 = canvas.toDataURL('image/webp');
@@ -349,11 +312,7 @@ document.getElementById('remove_file_editor1').addEventListener('click', functio
     closePopup1.style.display = 'none';
     aboveUpload1.style.display = 'none';
     cropfileInput1.value = '';
-    angleSlider.value = 30;
-    if (book.style.transform !== 'rotateY(30deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(30deg)';
-    }
+    angleSlider_30();
 });
 
 openPopup1.addEventListener('click', function() {
@@ -395,11 +354,7 @@ removeFile1.addEventListener('click', function() {
     closePopup1.style.display = 'none';
     aboveUpload1.style.display = 'none';
     cropfileInput1.value = '';
-    angleSlider.value = 30;
-    if (book.style.transform !== 'rotateY(30deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(30deg)';
-    }
+    angleSlider_30();
 });
 
 function updatePreview1() {
@@ -459,13 +414,13 @@ const replicatedTextInfo = document.querySelector('.replicatedTextInfo');
 const coverInfoColor = document.querySelector('.coverInfoColor');
 const coverInfoSVG = document.querySelector('.coverInfoSVG');
 
-let imgSize = 'completo';
+let imgSize = '100%';
 let imgBorderWidth = 0;
 let imgBorderRadius = 0;
 let imgBorderColor = '#000000FF';
 
 function updateCroppedImgInfo() {
-    croppedImgInfo.value = 'Tamanho: '+ imgSize +', border-width: '+ imgBorderWidth +', border-radius: '+ imgBorderRadius +', border-color: '+ imgBorderColor +' ';
+    croppedImgInfo.value = 'height: '+ imgSize +'; border-width: '+ imgBorderWidth +'; border-radius: '+ imgBorderRadius +'; border-color: '+ imgBorderColor +'; ';
 }
 
 function imgOption(imgIndex) {
@@ -510,11 +465,7 @@ imgBorderWidhtInput.addEventListener('input', function() {
     var value = imgBorderWidhtInput.value;
     frontCoverImg.style.borderWidth = ''+ value +'px';
     imgBorderWidth = ''+ value +'px';
-    angleSlider.value = 0;
-    if (book.style.transform !== 'rotateY(0deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(0deg)';
-    }
+    angleSlider_0();
     updateCroppedImgInfo();
 });
 
@@ -530,19 +481,15 @@ imgBorderRadiusInput.addEventListener('input', function() {
 });
 
 const ColorImgborderObserver = new MutationObserver(function(mutationsList) {
-  for (let mutation of mutationsList) {
-    if (mutation.type === 'attributes' && mutation.attributeName === 'data-current-color') {
-        frontCoverImg.style.borderColor = imgBorderColorInput.dataset.currentColor;
-        imgBorderColor = imgBorderColorInput.dataset.currentColor;
-        angleSlider.value = 0;
-        if (book.style.transform !== 'rotateY(0deg)') {
-            book.style.transition = 'transform 1s ease';
-            book.style.transform = 'rotateY(0deg)';
+    for (let mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-current-color') {
+            frontCoverImg.style.borderColor = imgBorderColorInput.dataset.currentColor;
+            imgBorderColor = imgBorderColorInput.dataset.currentColor;
+            angleSlider_0();
+            updateCroppedImgInfo()
+            break;
         }
-        updateCroppedImgInfo()
-        break;
     }
-  }
 });
 
 ColorImgborderObserver.observe(imgBorderColorInput, { attributes: true });
@@ -555,7 +502,7 @@ let textBorderColor = '#000000FF';
 
 function updateTextInfo() {
     if ($input1.val().length > 0) {
-        replicatedTextInfo.value = 'Cor:'+ textColor +', background: '+ textBackground +', border-width: '+ textBorderWidth +', border-radius: '+ textBorderRadius +', border-color: '+ textBorderColor +'.';
+        replicatedTextInfo.value = 'Color:'+ textColor +'; background: '+ textBackground +'; border-width: '+ textBorderWidth +'; border-radius: '+ textBorderRadius +'; border-color: '+ textBorderColor +';';
     } else {
         replicatedTextInfo.value = '';
     }
@@ -591,11 +538,7 @@ const ColorTextObserver = new MutationObserver(function(mutationsList) {
         var color = inputColorText.dataset.currentColor;
         backText.style.color = color;
         textColor = color;
-        angleSlider.value = 180;
-        if (book.style.transform !== 'rotateY(180deg)') {
-            book.style.transition = 'transform 1s ease';
-            book.style.transform = 'rotateY(180deg)';
-        }
+        angleSlider_180();
         updateTextInfo();
         break;
     }
@@ -610,11 +553,7 @@ const ColorTextBackgroundObserver = new MutationObserver(function(mutationsList)
         var color = inputBackgroundText.dataset.currentColor;
         backText.style.backgroundColor = color;
         textBackground = color;
-        angleSlider.value = 180;
-        if (book.style.transform !== 'rotateY(180deg)') {
-            book.style.transition = 'transform 1s ease';
-            book.style.transform = 'rotateY(180deg)';
-        }
+        angleSlider_180();
         updateTextInfo();
         break;
     }
@@ -627,11 +566,7 @@ borderThickness.addEventListener('input', function() {
     var newThickness = borderThickness.value;
     backText.style.borderWidth = ''+ newThickness +'px' ;
     textBorderWidth = ''+ newThickness +'px' ;
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
-    }
+    angleSlider_180();
     updateTextInfo();
 });
 
@@ -639,29 +574,21 @@ borderRadius.addEventListener('input', function() {
     var newRadius = borderRadius.value;
     backText.style.borderRadius = ''+ newRadius +'px' ;
     textBorderRadius = ''+ newRadius +'px' ;
-    angleSlider.value = 180;
-    if (book.style.transform !== 'rotateY(180deg)') {
-        book.style.transition = 'transform 1s ease';
-        book.style.transform = 'rotateY(180deg)';
-    }
+    angleSlider_180();
     updateTextInfo();
 });
 
 const ColorTextborderObserver = new MutationObserver(function(mutationsList) {
-  for (let mutation of mutationsList) {
-    if (mutation.type === 'attributes' && mutation.attributeName === 'data-current-color') {
-        const Color = borderColor.dataset.currentColor;
-        backText.style.borderColor = Color;
-        textBorderColor = Color;
-        angleSlider.value = 180;
-        if (book.style.transform !== 'rotateY(180deg)') {
-            book.style.transition = 'transform 1s ease';
-            book.style.transform = 'rotateY(180deg)';
+    for (let mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-current-color') {
+            const Color = borderColor.dataset.currentColor;
+            backText.style.borderColor = Color;
+            textBorderColor = Color;
+            angleSlider_180();
+            updateTextInfo();
+            break;
         }
-        updateTextInfo();
-        break;
     }
-  }
 });
 
 ColorTextborderObserver.observe(borderColor, { attributes: true });
@@ -679,10 +606,11 @@ function coverOption(coverIndex) {
 
 let coverColor = '#FFFFFFFF';
 let coverSvg = '';
+let coverSvgAngle = 0;
 
 function updateCoverInfo() {
     coverInfoColor.value = coverColor;
-    coverInfoSVG.value = coverSvg;
+    coverInfoSVG.value = 'angle: '+ coverSvgAngle +'; '+ coverSvg +'';
 }
 
 const ColorCoverObserver = new MutationObserver(function(mutationsList) {
@@ -738,15 +666,17 @@ function createContainersWithCopies(svg) {
     container.classList.add('svg-container');
 
     if (i % 2 !== 0) {
-      for (let j = 0; j < copies1; j++) {
-        const copy = svg.cloneNode(true);
-        container.appendChild(copy);
-      }
+        for (let j = 0; j < copies1; j++) {
+            const copy = svg.cloneNode(true);
+            copy.style.transform = 'rotate('+ coverSvgAngle +'deg)';
+            container.appendChild(copy);
+        }
     } else {
-      for (let j = 0; j < copies2; j++) {
-        const copy = svg.cloneNode(true);
-        container.appendChild(copy);
-      }
+        for (let j = 0; j < copies2; j++) {
+            const copy = svg.cloneNode(true);
+            copy.style.transform = 'rotate('+ coverSvgAngle +'deg)';
+            container.appendChild(copy);
+        }
     }
 
     $('.front-cover-style').append(container.cloneNode(true));
@@ -761,21 +691,66 @@ function clearContainers() {
   $('.side-cover-style').empty();
 }
 
+const iconAngle = document.querySelectorAll('.icon-angle');
+
+iconAngle.forEach(iconAngleSelected => {
+    iconAngleSelected.addEventListener('click', function() {
+        iconAngle.forEach(button => {
+            button.classList.remove('selected');
+        });
+        iconAngleSelected.classList.add('selected');
+        coverSvgAngle = iconAngleSelected.value;
+        coverIcons.forEach(coverIcon => {
+            if (coverIcon.classList.contains('selected')) {
+                const svgContainers = document.querySelectorAll('.svg-container');
+                svgContainers.forEach(svgContainer => {
+                    const svgs = svgContainer.querySelectorAll('svg');
+                    svgs.forEach(svg => {
+                        svg.style.transform = 'rotate(' + coverSvgAngle + 'deg)';
+                    });
+                });
+            }
+        });          
+        updateCoverInfo();
+    });
+});
+
 var angleSlider = document.getElementById('angle-slider');
 var textSlider = document.getElementById("input-text1");
 
 angleSlider.addEventListener('input', function() {
     var newDeg = angleSlider.value;
     book.style.transform = 'rotateY(' + newDeg + 'deg)';
+    book.style.transition = '';
 });
 
-textSlider.addEventListener('click', function() {
+function angleSlider_0() {
+    angleSlider.value = 0;
+    if (book.style.transform !== 'rotateY(0deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(0deg)';
+    }
+}
+
+function angleSlider_30() {
+    angleSlider.value = 30;
+    if (book.style.transform !== 'rotateY(30deg)') {
+        book.style.transition = 'transform 1s ease';
+        book.style.transform = 'rotateY(30deg)';
+    }
+}
+
+function angleSlider_180() {
     angleSlider.value = 180;
     if (book.style.transform !== 'rotateY(180deg)') {
         book.style.transition = 'transform 1s ease';
         book.style.transform = 'rotateY(180deg)';
     }
-    updateTextInfo()
+}
+
+textSlider.addEventListener('click', function() {
+    angleSlider_180();
+    updateTextInfo();
 });
 
 book.addEventListener('transitionend', function() {

@@ -299,7 +299,6 @@
 
 #r_c1 {
     display: block;
-    opacity: 1;
     transition: .5s ease;
 }
   
@@ -307,7 +306,6 @@
     display: none;
     flex-direction: column;
     align-items: center;
-    opacity: 0;
     transition: .5s ease;
 }
 
@@ -398,8 +396,11 @@ button#btn-choose1.selected, button#btn-choose2.selected {
     display: none;
     flex-direction: column;
     align-items: center;
-    opacity: 0;
     transition: 0.5s ease;
+}
+
+.choose1.selected, .choose2.selected {
+    display: flex;
 }
 
 input[type=file] {
@@ -440,7 +441,12 @@ input[type="text"]:focus {
 .jscolor {
     height: 40px;
     width: 100px;
+    border: 2px solid black;
     border-radius: 20px;
+}
+
+.jscolor-wrap {
+    left: 25% !important;
 }
 
 .cover-edit-container {
@@ -615,7 +621,7 @@ input[type="text"]:focus {
     display: flex;
     position: absolute;
     width: 320px;
-    left: -20px;
+    left: 0px;
     height: 260px;
     justify-content: center;
     align-items: center;
@@ -629,7 +635,7 @@ input[type="text"]:focus {
 }
 
 .svg-container svg {
-    margin: 0px;
+    margin: 3px;
     height: 40px;
 }
 
@@ -718,7 +724,7 @@ input[type="text"]:focus {
     position: absolute;
     width: 320px;
     height: 260px;
-    left: -30px;
+    left: -2px;
     justify-content: center;
     align-items: center;
     z-index: 1;
@@ -763,7 +769,7 @@ input[type="text"]:focus {
     position: absolute;
     width: 320px;
     height: 260px;
-    left: -140px;
+    left: -136px;
     justify-content: center;
     align-items: center;
     z-index: 1;
@@ -1162,7 +1168,7 @@ input[type=color] {
 .cover-option-container {
     display: none;
     max-width: 100%;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     margin: 10px 0px;
 }
@@ -1195,6 +1201,20 @@ input[type=color] {
     overflow: scroll;
 }
 
+.cover-icon-container::-webkit-scrollbar {
+    width: 0px;
+    height: 8px;
+}
+
+.cover-icon-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.cover-icon-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
 .cover-icon, .cover-icon-clear {
     display: flex;
     height: 50px;
@@ -1213,6 +1233,33 @@ input[type=color] {
 }
 
 .cover-icon svg, .cover-icon-clear svg {
+    height: 40px;
+}
+
+.cover-icon-angle {
+    display: flex;
+    align-items: center;
+    margin: 10px 0px 0px;
+}
+
+.icon-angle {
+    display: flex;
+    height: 40px;
+    aspect-ratio: 1/1;
+    border: 2px solid;
+    border-color: #00000000;
+    border-radius: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-angle.selected {
+    border-color: #FF5757;
+}
+
+.icon-angle svg {
     height: 40px;
 }
 
