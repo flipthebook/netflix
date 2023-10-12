@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<style>
+.preview-container {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    position: relative;
+}
+
+#uploadedImage {
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    cursor: move;
+}
+
+</style>
+<body>
+    <input type="file" id="imageUpload" accept="image/*">
+    <div id="imagePreview" class="preview-container">
+        <img id="uploadedImage" src="" alt="Preview">
+    </div>
+    <input type="text" id="leftPosition" placeholder="Left Position">
+    <input type="text" id="topPosition" placeholder="Top Position">
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$(document).ready(function () {
+    // Função para carregar a imagem e permitir o movimento
+    function loadImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#uploadedImage').attr('src', e.target.result);
+
+                // Tornar a imagem móvel com toque (touch)
+                $('#uploadedImage').draggable({
+                    drag: function (event, ui) {
+                        var left = ui.position.left;
+                        var top = ui.position.top;
+                        // Atualizar os campos de entrada com as coordenadas
+                        $('#leftPosition').val(left);
+                        $('#topPosition').val(top);
+                    },
+                    touchAction: 'none' // Permite toque (touch) para mover a imagem
+                });
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Monitora a alteração no input de arquivo
+    $('#imageUpload').on('change', function () {
+        loadImage(this);
+    });
+});
+</script>
+</html>
