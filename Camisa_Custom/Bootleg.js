@@ -14,11 +14,13 @@ const TshirtContainer = document.querySelector('.TshirtContainer');
 function ZoomInLayout() {
     TshirtContainer.classList.add('Zoom');
     previewContainer.classList.add('Zoom');
+    PreviewScale = 1.88;
 }
 
 function ZoomOutLayout() {
     TshirtContainer.classList.remove('Zoom');
     previewContainer.classList.remove('Zoom');
+    PreviewScale = 1;
 }
 
 OptionCustom.forEach((button, index) => {
@@ -61,6 +63,7 @@ function loadImage(input) {
         const uniqueValue = generateUniqueValue(existingValues);
         ImageIcon.setAttribute('data-value', uniqueValue);
         newImagePreview.setAttribute('data-value', uniqueValue);
+        previewContainer.style.cursor = 'move';
         ImgControls.style.display = 'block';
         reader.onload = function (e) {
             newImagePreview.src = e.target.result;
@@ -104,6 +107,9 @@ function ImgIconSelected() {
     if (this.classList.contains('selected')) {
         document.querySelector('.PreviewImg.selected').classList.remove('selected');
         document.querySelector('.ImageIcon.selected').classList.remove('selected');
+        PreviewImgSelected = null;
+        imageIconsSelected = null;
+        previewContainer.style.cursor = 'unset';
         ImgControls.style.display = 'none';
     } else {
         PreviewImg.forEach((icon) => {
@@ -124,22 +130,25 @@ function ImgIconSelected() {
         });
         PreviewImgSelected = document.querySelector('.PreviewImg.selected');
         imageIconsSelected = document.querySelector('.imageIcon.selected');
+        previewContainer.style.cursor = 'move';
         ImgControls.style.display = 'block';
     }
 }
 
 var startX, startY, offsetX, offsetY;
+var PreviewScale = 1; // Escala inicial do elemento
+
 previewContainer.addEventListener('mousedown', function (event) {
     if (PreviewImgSelected) {
         startX = event.clientX;
         startY = event.clientY;
-        offsetX = PreviewImgSelected.offsetLeft;
-        offsetY = PreviewImgSelected.offsetTop;
+        offsetX = PreviewImgSelected.offsetLeft * PreviewScale;
+        offsetY = PreviewImgSelected.offsetTop * PreviewScale;
         document.onmousemove = function (e) {
             var left = e.clientX - startX + offsetX;
             var top = e.clientY - startY + offsetY;
-            PreviewImgSelected.style.left = left + 'px';
-            PreviewImgSelected.style.top = top + 'px';
+            PreviewImgSelected.style.left = (left / PreviewScale) + 'px';
+            PreviewImgSelected.style.top = (top / PreviewScale) + 'px';
         };
         document.onmouseup = function () {
             document.onmousemove = null;
@@ -151,14 +160,13 @@ previewContainer.addEventListener('mousedown', function (event) {
     }
 });
 
-
 previewContainer.addEventListener('touchstart', function (event) {
     if (PreviewImgSelected) {
         var touch = event.touches[0];
         startX = touch.clientX;
         startY = touch.clientY;
-        offsetX = PreviewImgSelected.offsetLeft;
-        offsetY = PreviewImgSelected.offsetTop;
+        offsetX = PreviewImgSelected.offsetLeft * PreviewScale;
+        offsetY = PreviewImgSelected.offsetTop * PreviewScale;
         event.preventDefault();
     }
 });
@@ -168,8 +176,9 @@ previewContainer.addEventListener('touchmove', function (event) {
         var touch = event.touches[0];
         var left = touch.clientX - startX + offsetX;
         var top = touch.clientY - startY + offsetY;
-        PreviewImgSelected.style.left = left + 'px';
-        PreviewImgSelected.style.top = top + 'px';
+        PreviewImgSelected.style.left = (left / PreviewScale) + 'px';
+        PreviewImgSelected.style.top = (top / PreviewScale) + 'px';
+        
         event.preventDefault();
     }
 });
