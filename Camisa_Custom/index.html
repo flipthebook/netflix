@@ -8,10 +8,10 @@
         </div>
     </div>
     <div class="PreviwLayout">
-        <button class="ZoomIn" onclick="ZoomInLayout()">
+        <button class="ZoomBtn" onclick="ZoomInLayout(this)">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9 11.5H11.5M11.5 11.5H14M11.5 11.5V14M11.5 11.5V9" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> <path d="M20 20L22 22" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> <path d="M6.75 3.27093C8.14732 2.46262 9.76964 2 11.5 2C16.7467 2 21 6.25329 21 11.5C21 16.7467 16.7467 21 11.5 21C6.25329 21 2 16.7467 2 11.5C2 9.76964 2.46262 8.14732 3.27093 6.75" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
         </button>
-        <button class="ZoomOut" onclick="ZoomOutLayout()">
+        <button class="ZoomBtn selected" onclick="ZoomOutLayout(this)">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18.5 18.5L22 22" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> <path d="M9 11.5H11.5H14" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> <path d="M6.75 3.27093C8.14732 2.46262 9.76964 2 11.5 2C16.7467 2 21 6.25329 21 11.5C21 16.7467 16.7467 21 11.5 21C6.25329 21 2 16.7467 2 11.5C2 9.76964 2.46262 8.14732 3.27093 6.75" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
         </button>
     </div>
@@ -32,7 +32,7 @@
                 </div>
             </label>
             <input type="file" id="LabelUploadImg" class="imageUpload" accept="image/*" style="display: none;">
-            <div class="FullUploaded" style="display: none;">
+            <div class="FullUploaded" style="display: none;font-size: 42px;height: 100%;aspect-ratio: 1/1;flex-direction: column;align-items: center;justify-content: center;">
                 <span>Cheio</span> 
                 <span>(8/8)</span>
             </div>
@@ -109,8 +109,11 @@
         </div>
     </div>
     <div class="CustumizationContainer">
-        <input type="text" class="TextInput">
-        <button class="TextStyle" id="Sliced"></button>
+        <input type="text" class="TextInput" placeholder="Gabriela">
+        <div class="FontSizeContainer">
+            <div style="margin: 0px 0px 45px;">Tamanho</div>
+            <input type="range" class="FontSize" value="0" min="-30" max="30">
+        </div>
     </div>
 </body>
 <script src="Bootleg.js"></script>
