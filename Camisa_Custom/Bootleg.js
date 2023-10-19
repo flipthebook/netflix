@@ -10,16 +10,25 @@ const UploadImageLabel = document.querySelector('.UploadImageLabel');
 const UploadImageLabelP = document.querySelector('.UploadImageLabel p');
 const FullUploaded = document.querySelector('.FullUploaded');
 const TshirtContainer = document.querySelector('.TshirtContainer');
+const ZoomBtn =document.querySelectorAll('.ZoomBtn');
 
-function ZoomInLayout() {
+function ZoomInLayout(button) {
     TshirtContainer.classList.add('Zoom');
     previewContainer.classList.add('Zoom');
+    ZoomBtn.forEach((icon) => {
+        icon.classList.remove('selected');
+    });
+    button.classList.add('selected');
     PreviewScale = 1.88;
 }
 
-function ZoomOutLayout() {
+function ZoomOutLayout(button) {
     TshirtContainer.classList.remove('Zoom');
     previewContainer.classList.remove('Zoom');
+    ZoomBtn.forEach((icon) => {
+        icon.classList.remove('selected');
+    });
+    button.classList.add('selected');
     PreviewScale = 1;
 }
 
@@ -73,7 +82,7 @@ function loadImage(input) {
             if (existingImageIcons.length + 1 === 8) {
                 if (UploadImageLabel) {
                     UploadImageLabel.style.display = 'none';
-                    FullUploaded.style.display = 'block';
+                    FullUploaded.style.display = 'flex';
                 }
             }
             UploadImageLabelP.style.display = 'none';
@@ -136,7 +145,7 @@ function ImgIconSelected() {
 }
 
 var startX, startY, offsetX, offsetY;
-var PreviewScale = 1; // Escala inicial do elemento
+var PreviewScale = 1;
 
 previewContainer.addEventListener('mousedown', function (event) {
     if (PreviewImgSelected) {
@@ -312,6 +321,27 @@ ImgShadow.addEventListener('input', function() {
 const TextInput = document.querySelector('.TextInput');
 const TextPreview = document.querySelector('.TextPreview');
 
-TextInput.addEventListener('input', function(){
+function TextScaleX () {
+    if (TextPreview.offsetWidth > previewContainer.offsetWidth) {
+        const scale = previewContainer.offsetWidth / TextPreview.offsetWidth;
+        TextPreview.style.transform = `scaleX(${scale})`;
+    } else {
+        TextPreview.style.transform = 'scaleX(1)';
+    }
+}
+
+TextInput.addEventListener('input', function() {
     TextPreview.textContent = TextInput.value;
+    TextScaleX();
 });
+
+const FontSize = document.querySelector('.FontSize');
+var currentSize = parseFloat(window.getComputedStyle(TextPreview).fontSize);
+
+FontSize.addEventListener('input', function() {
+    var percentageChange = parseFloat(FontSize.value);
+    var newSize = currentSize + (currentSize * (percentageChange / 100));
+    TextPreview.style.fontSize = newSize + 'px';
+    TextScaleX();
+});
+
