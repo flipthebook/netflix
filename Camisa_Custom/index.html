@@ -16,14 +16,14 @@
         </button>
     </div>
     <div class="OptionCustomization">
-        <button class="OptionCustom">
+        <button class="OptionCustom selected">
             FOTOS
         </button>
         <button class="OptionCustom">
             TEXTO
         </button>
     </div>
-    <div class="CustumizationContainer">
+    <div class="CustumizationContainer selected">
         <div class="InputContainer">
             <label for="LabelUploadImg" class="UploadImageLabel">
                 <p>ADICIONAR IMAGEM</p>
@@ -45,11 +45,11 @@
         </div>
         <div class="ImgControls">
             <div class="BtnsControlsImgContainer">
-                <button class="BtnsChooseControlsImg">Posição</button>
+                <button class="BtnsChooseControlsImg selected">Posição</button>
                 <button class="BtnsChooseControlsImg">Tamanho</button>
                 <button class="BtnsChooseControlsImg">Efeito</button>
             </div>
-            <div class="ControlImgContainer Position">
+            <div class="ControlImgContainer Position selected">
                 <div class="PositionBtns">
                     <button class="ImgUp">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Arrow / Arrow_Circle_Up"> <path id="Vector" d="M15 11L12 8M12 8L9 11M12 8V16M21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
@@ -79,39 +79,40 @@
             </div>
             <div class="ControlImgContainer Size">
                 <div class="BtnsSizeContainer">
-                    <button class="Size3xLess">
-                        3x
-                    </button>
-                    <button class="Size2xLess">
-                        2x
-                    </button>
+                    <button class="SizeLessLess">2X</button>
                     <button class="SizeLess">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 12L21 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </button>
                     <button class="SizePlus">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </button>
-                    <button class="Size2xPlus">
-                        2x
-                    </button>
-                    <button class="Size3xPlus">
-                        3x
-                    </button>
+                    <button class="SizePlusPlus">2X</button>
                 </div>
                 <input type="range" class="ImgSizeRange" value="100" min="50" max="200">
             </div>
             <div class="ControlImgContainer Effect">
-                <div class="ShadowEffect">
-                    <p>Sombra</p>
+                <div class="BtnsImgEffectContainer">
+                    <button class="BtnImgEffect selected">Contorno</button>
+                    <button class="BtnImgEffect">Gradiante</button>
+                    <button class="BtnImgEffect">Cor</button>
+                </div>
+                <div class="ImgEffect Shadow selected">
                     <input type="range" class="ImgShadow" value="0" min="0" max="8" style="width: 80%;">
+                </div>
+                <div class="ImgEffect Gradient">
+                    <button class="ImgGradient"></button>
+                    <button class="ImgGradient With"></button>
+                </div>
+                <div class="ImgEffect Color">
+
                 </div>
             </div>
         </div>
     </div>
     <div class="CustumizationContainer">
-        <input type="text" class="TextInput" placeholder="Gabriela">
+        <input type="text" class="TextInput" placeholder="Digite aqui...">
         <div class="FontSizeContainer">
-            <div style="margin: 0px 0px 45px;">Tamanho</div>
+            <div style="margin: 0px 0px 60px;">Tamanho</div>
             <input type="range" class="FontSize" value="0" min="-30" max="30">
         </div>
     </div>

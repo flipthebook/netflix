@@ -228,22 +228,92 @@ const BtnImgUp = document.querySelector('.ImgUp');
 const BtnImgDown = document.querySelector('.ImgDown');
 const BtnImgLeft = document.querySelector('.ImgLeft');
 const BtnImgRight = document.querySelector('.ImgRight');
+const Scale = 0.01;
+const sizeLess = document.querySelector('.SizeLess');
+const sizePlus = document.querySelector('.SizePlus');
+const SizeLessLess = document.querySelector('.SizeLessLess');
+const SizePlusPlus = document.querySelector('.SizePlusPlus');
 
-BtnImgUp.addEventListener('click', () => {
+function updateScale(Scale) {
+    const currentScale = parseFloat(window.getComputedStyle(PreviewImgSelected).getPropertyValue('transform').split(',')[3]);
+    PreviewImgSelected.style.transform = `scale(${currentScale + Scale})`;
+    ImgSizeRange.value = (currentScale + Scale) * 100;
+}
+
+function addTouchHoldListener(element, action) {
+    let isInteracting = false;
+    let timer = null;
+
+    function startMoving() {
+        if (isInteracting) {
+            action();
+            timer = setTimeout(startMoving, 100); // Repete a função a cada 0.5 segundos
+        }
+    }
+
+    function stopMoving() {
+        isInteracting = false;
+        clearTimeout(timer);
+    }
+
+    element.addEventListener('mousedown', () => {
+        isInteracting = true;
+        startMoving();
+    });
+
+    element.addEventListener('mouseup', stopMoving);
+    element.addEventListener('mouseleave', stopMoving);
+
+    element.addEventListener('touchstart', (event) => {
+        event.preventDefault();
+        isInteracting = true;
+        startMoving();
+    });
+
+    element.addEventListener('touchend', stopMoving);
+    element.addEventListener('touchcancel', stopMoving);
+}
+
+function moveUp() {
     PreviewImgSelected.style.top = (parseInt(PreviewImgSelected.style.top) - step) + 'px';
-});
+}
 
-BtnImgDown.addEventListener('click', () => { 
+function moveDown() {
     PreviewImgSelected.style.top = (parseInt(PreviewImgSelected.style.top) + step) + 'px';
-});
+}
 
-BtnImgLeft.addEventListener('click', () => {
+function moveLeft() {
     PreviewImgSelected.style.left = (parseInt(PreviewImgSelected.style.left) - step) + 'px';
-});
+}
 
-BtnImgRight.addEventListener('click', () => {
+function moveRight() {
     PreviewImgSelected.style.left = (parseInt(PreviewImgSelected.style.left) + step) + 'px';
-});
+}
+
+function LessLessSize() {
+    updateScale(-Scale * 2);
+}
+
+function LessSize() {
+    updateScale(-Scale);
+}
+
+function PlusSize() {
+    updateScale(Scale);
+}
+
+function PlusPlusSize() {
+    updateScale(Scale * 2);
+}
+
+addTouchHoldListener(BtnImgUp, moveUp);
+addTouchHoldListener(BtnImgDown, moveDown);
+addTouchHoldListener(BtnImgLeft, moveLeft);
+addTouchHoldListener(BtnImgRight, moveRight);
+addTouchHoldListener(sizeLess, LessSize);
+addTouchHoldListener(sizePlus, PlusSize);
+addTouchHoldListener(SizeLessLess, LessLessSize);
+addTouchHoldListener(SizePlusPlus, PlusPlusSize);
 
 const botaoSubir = document.querySelector('.LayerUp');
 const botaoDescer = document.querySelector('.LayerDown');
@@ -266,48 +336,27 @@ botaoSubir.addEventListener('click', () => {
     }
 });
 
-const Scale = 0.01;
-const size3xLess = document.querySelector('.size3xLess');
-const size2xLess = document.querySelector('.size2xLess');
-const sizeLess = document.querySelector('.SizeLess');
-const sizePlus = document.querySelector('.SizePlus');
-const size2xPlus = document.querySelector('.size2xPlus');
-const size3xPlus = document.querySelector('.size3xPlus');
-
-function updateScale(Scale) {
-    const currentScale = parseFloat(window.getComputedStyle(PreviewImgSelected).getPropertyValue('transform').split(',')[3]);
-    PreviewImgSelected.style.transform = `scale(${currentScale + Scale})`;
-    ImgSizeRange.value = (currentScale + Scale) * 100;
-}
-
-size3xLess.addEventListener('click', () => {
-    updateScale(-Scale * 3);
-});
-
-size2xLess.addEventListener('click', () => {
-    updateScale(-Scale * 2);
-});
-
-sizeLess.addEventListener('click', () => {
-    updateScale(-Scale);
-});
-
-sizePlus.addEventListener('click', () => {
-    updateScale(Scale);
-});
-
-size2xPlus.addEventListener('click', () => {
-    updateScale(Scale * 2);
-});
-
-size3xPlus.addEventListener('click', () => {
-    updateScale(Scale * 3);
-});
-
 const ImgSizeRange = document.querySelector('.ImgSizeRange');
 
 ImgSizeRange.addEventListener('input', function() {
     PreviewImgSelected.style.transform = 'scale('+ (ImgSizeRange.value / 100) +')';
+});
+
+const BtnImgEffect = document.querySelectorAll('.BtnImgEffect');
+const ImgEffect = document.querySelectorAll('.ImgEffect');
+
+BtnImgEffect.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        BtnImgEffect.forEach(element => {
+            element.classList.remove('selected');
+        });
+        BtnImgEffect[index].classList.add('selected');
+
+        ImgEffect.forEach(element => {
+            element.classList.remove('selected');
+        });
+        ImgEffect[index].classList.add('selected');
+    });
 });
 
 const ImgShadow = document.querySelector('.ImgShadow');
@@ -316,6 +365,18 @@ let ImgShadowValue = null;
 ImgShadow.addEventListener('input', function() {
     ImgShadowValue = ImgShadow.value;
     PreviewImgSelected.style.filter = 'drop-shadow(0px 0px '+ ImgShadowValue +'px white)';
+});
+
+const ImgGradient = document.querySelectorAll('.ImgGradient');
+
+ImgGradient.forEach((element) => {
+    element.addEventListener('click', function() {
+        if (this.classList.contains('With')) {
+            PreviewImgSelected.style.webkitMaskImage = 'linear-gradient(to top, transparent 2%, black 30%)';
+        } else {
+            PreviewImgSelected.style.webkitMaskImage = 'unset';
+        }
+    });
 });
 
 const TextInput = document.querySelector('.TextInput');
