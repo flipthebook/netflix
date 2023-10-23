@@ -228,34 +228,27 @@ const BtnImgUp = document.querySelector('.ImgUp');
 const BtnImgDown = document.querySelector('.ImgDown');
 const BtnImgLeft = document.querySelector('.ImgLeft');
 const BtnImgRight = document.querySelector('.ImgRight');
-const Scale = 0.01;
-const sizeLess = document.querySelector('.SizeLess');
-const sizePlus = document.querySelector('.SizePlus');
-const SizeLessLess = document.querySelector('.SizeLessLess');
-const SizePlusPlus = document.querySelector('.SizePlusPlus');
-
-function updateScale(Scale) {
-    const currentScale = parseFloat(window.getComputedStyle(PreviewImgSelected).getPropertyValue('transform').split(',')[3]);
-    PreviewImgSelected.style.transform = `scale(${currentScale + Scale})`;
-    ImgSizeRange.value = (currentScale + Scale) * 100;
-}
 
 function addTouchHoldListener(element, action) {
     let isInteracting = false;
     let timer = null;
-
+    
     function startMoving() {
+        function ContinueAction() {
+            action();
+            timer = setTimeout(ContinueAction, 100);
+        }
         if (isInteracting) {
             action();
-            timer = setTimeout(startMoving, 100); // Repete a função a cada 0.5 segundos
+            timer = setTimeout(ContinueAction, 400);
         }
     }
-
+    
     function stopMoving() {
         isInteracting = false;
         clearTimeout(timer);
     }
-
+    
     element.addEventListener('mousedown', () => {
         isInteracting = true;
         startMoving();
@@ -263,13 +256,13 @@ function addTouchHoldListener(element, action) {
 
     element.addEventListener('mouseup', stopMoving);
     element.addEventListener('mouseleave', stopMoving);
-
+    
     element.addEventListener('touchstart', (event) => {
         event.preventDefault();
         isInteracting = true;
         startMoving();
     });
-
+    
     element.addEventListener('touchend', stopMoving);
     element.addEventListener('touchcancel', stopMoving);
 }
@@ -290,6 +283,23 @@ function moveRight() {
     PreviewImgSelected.style.left = (parseInt(PreviewImgSelected.style.left) + step) + 'px';
 }
 
+addTouchHoldListener(BtnImgUp, moveUp);
+addTouchHoldListener(BtnImgDown, moveDown);
+addTouchHoldListener(BtnImgLeft, moveLeft);
+addTouchHoldListener(BtnImgRight, moveRight);
+
+const Scale = 0.01;
+const sizeLess = document.querySelector('.SizeLess');
+const sizePlus = document.querySelector('.SizePlus');
+const SizeLessLess = document.querySelector('.SizeLessLess');
+const SizePlusPlus = document.querySelector('.SizePlusPlus');
+
+function updateScale(Scale) {
+    const currentScale = parseFloat(window.getComputedStyle(PreviewImgSelected).getPropertyValue('transform').split(',')[3]);
+    PreviewImgSelected.style.transform = `scale(${currentScale + Scale})`;
+    ImgSizeRange.value = (currentScale + Scale) * 100;
+}
+
 function LessLessSize() {
     updateScale(-Scale * 2);
 }
@@ -306,10 +316,6 @@ function PlusPlusSize() {
     updateScale(Scale * 2);
 }
 
-addTouchHoldListener(BtnImgUp, moveUp);
-addTouchHoldListener(BtnImgDown, moveDown);
-addTouchHoldListener(BtnImgLeft, moveLeft);
-addTouchHoldListener(BtnImgRight, moveRight);
 addTouchHoldListener(sizeLess, LessSize);
 addTouchHoldListener(sizePlus, PlusSize);
 addTouchHoldListener(SizeLessLess, LessLessSize);
@@ -373,9 +379,28 @@ ImgGradient.forEach((element) => {
     element.addEventListener('click', function() {
         if (this.classList.contains('With')) {
             PreviewImgSelected.style.webkitMaskImage = 'linear-gradient(to top, transparent 2%, black 30%)';
+            PreviewImgSelected.style.maskImage = 'linear-gradient(to top, transparent 2%, black 30%)';
         } else {
             PreviewImgSelected.style.webkitMaskImage = 'unset';
+            PreviewImgSelected.style.maskImage = 'unset';
         }
+    });
+});
+
+const btnOptionText = document.querySelectorAll('.btnOptionText');
+const OptionTextContainer = document.querySelectorAll('.OptionTextContainer');
+
+btnOptionText.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        btnOptionText.forEach(element => {
+            element.classList.remove('selected');
+        });
+        btnOptionText[index].classList.add('selected');
+
+        OptionTextContainer.forEach(element => {
+            element.classList.remove('selected');
+        });
+        OptionTextContainer[index].classList.add('selected');
     });
 });
 
@@ -396,13 +421,68 @@ TextInput.addEventListener('input', function() {
     TextScaleX();
 });
 
-const FontSize = document.querySelector('.FontSize');
-var currentSize = parseFloat(window.getComputedStyle(TextPreview).fontSize);
+const FontSizeValue = 1;
+const TextSize2xLess = document.querySelector('.TextSize2xLess');
+const TextSizeLess = document.querySelector('.TextSizeLess');
+const TextSizePlus = document.querySelector('.TextSizePlus');
+const TextSize2xPlus = document.querySelector('.TextSize2xPlus');
 
-FontSize.addEventListener('input', function() {
-    var percentageChange = parseFloat(FontSize.value);
-    var newSize = currentSize + (currentSize * (percentageChange / 100));
-    TextPreview.style.fontSize = newSize + 'px';
+function textSize(scale) {
+    var SizeNow = parseFloat(window.getComputedStyle(TextPreview).fontSize);
+    TextPreview.style.fontSize = SizeNow + scale +'px';
     TextScaleX();
+}
+
+function Size2xLessText() {
+    textSize(-FontSizeValue * 2);
+}
+
+function SizeLessText() {
+    textSize(-FontSizeValue);
+}
+
+function SizePlusText() {
+    textSize(FontSizeValue);
+}
+
+function Size2xPlusText() {
+    textSize(FontSizeValue * 2);
+}
+
+addTouchHoldListener(TextSize2xLess, Size2xLessText);
+addTouchHoldListener(TextSizeLess, SizeLessText);
+addTouchHoldListener(TextSizePlus, SizePlusText);
+addTouchHoldListener(TextSize2xPlus, Size2xPlusText);
+
+const TextUp = document.querySelector('.TextUp');
+const TextDown = document.querySelector('.TextDown');
+const stepText = 1;
+
+function TextMoveUp() { 
+    var TextTopValue = parseFloat(window.getComputedStyle(TextPreview).top);
+    TextPreview.style.top = TextTopValue - stepText + 'px';
+}
+
+function TextMoveDown() {
+    var TextTopValue = parseFloat(window.getComputedStyle(TextPreview).top);
+    TextPreview.style.top = TextTopValue + stepText + 'px';
+}
+
+addTouchHoldListener(TextUp, TextMoveUp);
+addTouchHoldListener(TextDown, TextMoveDown);
+
+let BackgroundEffect = null;
+const btnBackgroundText = document.querySelectorAll('.btnBackgroundText');
+
+btnBackgroundText.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        btnBackgroundText.forEach(element => {
+            element.classList.remove('selected');
+        });
+        btnBackgroundText[index].classList.add('selected');
+        var BtnStyle = btnBackgroundText[index];
+        TextPreview.style.color = BtnStyle.style.color;
+        TextPreview.style.backgroundImage = BtnStyle.style.backgroundImage;
+    });
 });
 
