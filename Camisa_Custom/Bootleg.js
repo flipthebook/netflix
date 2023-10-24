@@ -234,6 +234,7 @@ function addTouchHoldListener(element, action) {
     let timer = null;
     
     function startMoving() {
+        element.style.boxShadow = '0px 0px 30px red';
         function ContinueAction() {
             action();
             timer = setTimeout(ContinueAction, 100);
@@ -247,6 +248,7 @@ function addTouchHoldListener(element, action) {
     function stopMoving() {
         isInteracting = false;
         clearTimeout(timer);
+        element.style.boxShadow = '';
     }
     
     element.addEventListener('mousedown', () => {

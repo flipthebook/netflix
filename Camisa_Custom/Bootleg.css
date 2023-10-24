@@ -1,9 +1,10 @@
 .TshirtContainer {
+    position: relative;
     display: flex;
     justify-content: center;
     width: 100%;
     aspect-ratio: 1/1;
-    margin: 0px 0px 20px;
+    margin: 0px;
     background-image: url(Preto.png);
     background-position: center;
     background-size: cover;
@@ -18,7 +19,7 @@
     top: 26%;
     height: 53%;
     aspect-ratio: 29/42;
-    border: 1px dashed white;
+    border: 0px dashed white;
     box-sizing: content-box;
     overflow: hidden;
 }
@@ -47,21 +48,27 @@
 }
 
 .PreviwLayout {
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 13%;
+    bottom: 1%;
+    left: 1%;
 }
 
 .ZoomBtn {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90px;
+    height: 100%;
     aspect-ratio: 1/1;
     background: white;
-    border-radius: 10px;
-    margin: 0px 30px 30px;
+    border-radius: 20px;
+    margin: 0px;
     padding: 10px;
+    border: 4px solid black;
+    color: black;
 }
 
 .ZoomBtn.selected {
@@ -74,20 +81,29 @@
 
 .OptionCustomization {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 
 .OptionCustom {
-    height: 100%;
-    font-size: 49px;
-    padding: 10px 30px;
-    margin: 0px 10px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90px;
+    font-size: 55px;
+    padding: 0px 30px;
+    margin: 40px 0px;
     font-family: sans-serif;
+    font-weight: 700;
+    border: 6px solid black;
+    border-radius: 50px;
+    background: white;
+    transition: box-shadow, border .3s;
 }
 
 .OptionCustom.selected {
-    border: 1px solid red;
+    border: 2px solid red;
+    box-shadow: 0px 0px 20px red;
 }
 
 .CustumizationContainer {
@@ -98,14 +114,18 @@
     display: block;
 }
 
+.CustumizationContainer svg {
+    height: 100%;
+}
+
 .InputContainer {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 200px;
     max-width: 100%;
-    border: 2px solid;
-    border-radius: 20px;
+    border: 6px solid black;
+    border-radius: 40px;
     padding: 10px;
 }
 
@@ -121,6 +141,7 @@
 .UploadImageLabel p {
     font-size: 40px;
     font-family: sans-serif;
+    font-weight: 700;
     margin: 0 10px;
 }
 
@@ -154,7 +175,9 @@
     height: 100%;
     width: 100%;
     overflow-x: scroll;
-    padding: 5px;
+    padding: 0px 10px;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
 }
 
 .ImageIcon {
@@ -196,18 +219,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    font-size: 49px;
-    padding: 10px 30px;
+    height: 90px;
+    font-size: 55px;
+    padding: 0px 30px;
     margin: 0px 10px 20px;
     font-family: sans-serif;
-    border: 1px solid;
+    font-weight: 700;
+    border: 6px solid black;
     border-radius: 50px;
     background: white;
+    transition: box-shadow, border .3s;
 }
 
 .BtnsChooseControlsImg.selected {
-    border: 1px solid red;
+    border: 2px solid red;
+    box-shadow: 0px 0px 20px red;
 }
 
 input[type="range"] {
@@ -284,8 +310,9 @@ input[type="range"]::-webkit-slider-thumb {
     aspect-ratio: 1/1;
     background: white;
     margin: -20px 55px;
-    border: 1px solid black;
-    border-radius: 75px;
+    border: 0px solid black;
+    border-radius: 80px;
+    transition: box-shadow 0.5s;
 }
 
 .LayerControls {
@@ -314,19 +341,21 @@ input[type="range"]::-webkit-slider-thumb {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin: 50px 0px 70px;
+    margin: 60px 0px 70px;
 }
 
 .BtnsSizeContainer button {
     display: flex;
-    height: 120px;
-    width: 120px;
+    height: 150px;
+    width: 150px;
     background: white;
-    border: 1px solid black;
-    border-radius: 30px;
+    border: 6px solid black;
+    border-radius: 40px;
     align-items: center;
     justify-content: center;
     font-size: 60px;
+    font-weight: 700;
+    transition: box-shadow 0.5s;
 }
 
 .BtnsImgEffectContainer {
@@ -340,18 +369,21 @@ input[type="range"]::-webkit-slider-thumb {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    font-size: 49px;
-    padding: 10px 30px;
+    height: 90px;
+    font-size: 55px;
+    padding: 0px 30px;
     margin: 0px 10px 20px;
     font-family: sans-serif;
-    border: 1px solid;
+    font-weight: 700;
+    border: 6px solid black;
     border-radius: 50px;
     background: white;
+    transition: box-shadow, border .3s;
 }
 
 .BtnImgEffect.selected {
-    border: 1px solid red;
+    border: 2px solid red;
+    box-shadow: 0px 0px 20px red;
 }
 
 .ImgEffect {
@@ -398,39 +430,46 @@ input[type="text"] {
     width: 100%;
     height: 100px;
     font-size: 75px;
-    border: 2px solid;
-    border-radius: 20px;
-    padding: 0px 20px;
+    font-family: sans-serif;
+    font-weight: 700;
     text-align: center;
+    border: 6px solid black;
+    border-radius: 20px;
+    padding: 0px 30px;
+    margin: 0px 0px 40px;
+    box-shadow: 0px 0px 0px transparent;
 }
 
-.TextInput {
-    margin: 40px 0px 40px;
+.input[type="text"]:active {
+    box-shadow: 0px 0px 20px red;
 }
 
 .BtnsOptionTextContainer {
     display: flex;
     justify-content: space-evenly;
     height: 80px;
-    margin: 30px 0px 0px;
+    margin: 10px 0px 0px;
 }
 
 .btnOptionText {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    font-size: 49px;
-    padding: 10px 30px;
+    height: 90px;
+    font-size: 55px;
+    padding: 0px 30px;
     margin: 0px 10px 20px;
     font-family: sans-serif;
-    border: 1px solid;
+    font-weight: 700;
+    border: 6px solid black;
     border-radius: 50px;
     background: white;
+    transition: box-shadow, border .3s;
 }
 
 .btnOptionText.selected {
-    border: 1px solid red;
+    border: 2px solid red;
+    box-shadow: 0px 0px 20px red;
 }
 
 .OptionTextContainer {
@@ -445,37 +484,40 @@ input[type="text"] {
 .PositionTextBtns {
     display: flex;
     align-items: center;
-    margin: 50px 0px 70px;
+    margin: 60px 0px 70px;
     justify-content: center;
 }
 
 .PositionTextBtns button {
     display: flex;
-    height: 120px;
-    width: 120px;
+    height: 150px;
+    width: 150px;
     background: white;
-    border: 1px solid black;
-    border-radius: 30px;
+    border: 6px solid black;
+    border-radius: 40px;
     align-items: center;
     justify-content: center;
     font-size: 60px;
     margin: 0px 50px;
+    transition: box-shadow 0.5s;
 }
 
 .BackgroundTextEffect {
     display: -webkit-inline-box;
     width: 100%;
-    margin: 40px 0px;
+    padding: 60px 0px 20px;
     overflow-x: scroll;
 }
 
 .btnBackgroundText {
     height: 150px;
     width: 150px;
-    border: 2px solid black;
+    border: 6px solid black;
+    border-radius: 40px;
     margin: 0px 20px;
 }
 
 .btnBackgroundText.selected {
-    border: 2px solid red;
+    border: 6px solid red;
+    box-shadow: 0px 0px 15px black;
 }
