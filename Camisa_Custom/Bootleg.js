@@ -1,8 +1,10 @@
 const OptionCustom = document.querySelectorAll('.OptionCustom');
-const CustumizationContainer = document.querySelectorAll('.CustumizationContainer');
+const CustomizationContainer = document.querySelectorAll('.CustomizationContainer');
 const clearIconContainer = document.querySelector('.clearIconContainer');
 const imgIconsContainer = document.querySelector('.imgIconsContainer');
 const previewContainer = document.querySelector('.previewContainer');
+const ImgContainer = document.querySelector('.ImgContainer');
+const PreviewBorder = document.querySelector('.PreviewBorder');
 const ImgControls = document.querySelector('.ImgControls');
 const IconsContainer = document.querySelector('.IconsContainer');
 const imageUpload = document.querySelector('.imageUpload');
@@ -10,7 +12,16 @@ const UploadImageLabel = document.querySelector('.UploadImageLabel');
 const UploadImageLabelP = document.querySelector('.UploadImageLabel p');
 const FullUploaded = document.querySelector('.FullUploaded');
 const TshirtContainer = document.querySelector('.TshirtContainer');
-const ZoomBtn =document.querySelectorAll('.ZoomBtn');
+const ZoomBtn = document.querySelectorAll('.ZoomBtn');
+const ImgSelector = document.querySelector('.ImgSelector');
+const ImgSizeControl = document.querySelector('.ImgSizeControl');
+let ImgMaskContainer = null;
+let PreviewImgContainer = null;
+let RoundedContainer = null;
+let PreviewImg = null;
+let BlendModeImg = null;
+let ImageIcon = null;
+let SelectedImgList = [ImgMaskContainer, PreviewImgContainer, RoundedContainer, PreviewImg, BlendModeImg, ImageIcon];
 
 function ZoomInLayout(button) {
     TshirtContainer.classList.add('Zoom');
@@ -32,6 +43,14 @@ function ZoomOutLayout(button) {
     PreviewScale = 1;
 }
 
+PreviewBorder.addEventListener('click', function() {
+    if (previewContainer.classList.contains('border')) {
+        previewContainer.classList.remove('border');
+    } else {
+        previewContainer.classList.add('border');
+    }
+});
+
 OptionCustom.forEach((button, index) => {
     button.addEventListener('click', () => {
         OptionCustom.forEach(element => {
@@ -39,10 +58,10 @@ OptionCustom.forEach((button, index) => {
         });
         OptionCustom[index].classList.add('selected');
 
-        CustumizationContainer.forEach(element => {
+        CustomizationContainer.forEach(element => {
             element.classList.remove('selected');
         });
-        CustumizationContainer[index].classList.add('selected');
+        CustomizationContainer[index].classList.add('selected');
     });
 });
 
@@ -58,147 +77,262 @@ function generateUniqueValue(existingValues) {
     }
 }
 
+function CenterPosition(element, container) {
+    element.style.bottom = (container.offsetHeight - element.offsetHeight) / 2;
+    element.style.left = (container.offsetWidth - element.offsetWidth) / 2;
+}
+
+function ImgSelectorUpdate() {
+    ImgSelector.classList.add('selected');
+    ImgSizeControl.classList.add('selected');
+    ImgSelector.style.height = PreviewImgContainer.offsetHeight;
+    ImgSelector.style.width = PreviewImgContainer.offsetWidth;
+    ImgSelector.style.bottom = parseFloat(window.getComputedStyle(PreviewImgContainer).bottom) - 4;
+    ImgSelector.style.left = PreviewImgContainer.offsetLeft - 4;
+    ImgSizeControl.style.left = ImgSelector.offsetLeft + ImgSelector.offsetWidth;
+    ImgSizeControl.style.top = ImgSelector.offsetTop - ImgSizeControl.offsetHeight;
+}
+
+        //  ADD IMAGE AND SELECT
+
 function loadImage(input) {
-    if (input.files && input.files[0]) {
+    if (input.files && input.files[0])  {
         var reader = new FileReader();
-        var newImagePreview = document.createElement('img');
-        var ImageIcon = document.createElement('img');
-        newImagePreview.className = 'PreviewImg';
+        // createElement
+        ImgMaskContainer = document.createElement('div');
+        PreviewImgContainer = document.createElement('div');
+        RoundedContainer = document.createElement('div');
+        PreviewImg = document.createElement('img');
+        BlendModeImg = document.createElement('div');
+        ImageIcon = document.createElement('img');
+        SelectedImgList = [ImgMaskContainer, PreviewImgContainer, RoundedContainer, PreviewImg, BlendModeImg, ImageIcon];
+        
+        // className
+        ImgMaskContainer.className = 'ImgMaskContainer masked';
+        PreviewImgContainer.className = 'PreviewImgContainer';
+        RoundedContainer.className = 'RoundedContainer';
+        PreviewImg.className = 'PreviewImg';
+        BlendModeImg.className = 'BlendModeImg';
         ImageIcon.className = 'ImageIcon';
-        newImagePreview.style = 'top: 0px; left: 0px';
-        ImageIcon.onclick = ImgIconSelected;
+
+        // add Selected
+        SelectedImgList.forEach(function(element) {
+            element.classList.add('selected');
+        });
+
+        // appendChild
+        ImgContainer.appendChild(ImgMaskContainer);
+        ImgMaskContainer.appendChild(PreviewImgContainer);
+        PreviewImgContainer.appendChild(RoundedContainer);
+        RoundedContainer.appendChild(PreviewImg);
+        RoundedContainer.appendChild(BlendModeImg);
+        imgIconsContainer.appendChild(ImageIcon);
+        
+        // Unique Value
         const existingImageIcons = document.querySelectorAll('.imgIconsContainer .ImageIcon');
         const existingValues = Array.from(existingImageIcons).map(icon => parseInt(icon.getAttribute('data-value'), 10));
         const uniqueValue = generateUniqueValue(existingValues);
-        ImageIcon.setAttribute('data-value', uniqueValue);
-        newImagePreview.setAttribute('data-value', uniqueValue);
+        SelectedImgList.forEach(function(element) {
+            element.setAttribute('data-value', uniqueValue);
+        });
+        
+        ImageIcon.onclick = ImgIconSelected;
+        
+        // Max Capacite 
+        if (existingImageIcons.length + 1 === 8) {
+            if (UploadImageLabel) {
+                UploadImageLabel.style.display = 'none';
+                FullUploaded.style.display = 'flex';
+            }
+        }
+        
+        // Styles Changes
         previewContainer.style.cursor = 'move';
         ImgControls.style.display = 'block';
+        IconsContainer.style.display = 'flex';
+        UploadImageLabelP.style.display = 'none';
+        
+        // Img File
         reader.onload = function (e) {
-            newImagePreview.src = e.target.result;
-            ImageIcon.src = e.target.result;
-            previewContainer.appendChild(newImagePreview);
-            imgIconsContainer.appendChild(ImageIcon);
-            if (existingImageIcons.length + 1 === 8) {
-                if (UploadImageLabel) {
-                    UploadImageLabel.style.display = 'none';
-                    FullUploaded.style.display = 'flex';
-                }
-            }
-            UploadImageLabelP.style.display = 'none';
+            var imageSrc = e.target.result;
+            PreviewImg.src = imageSrc;
+            ImageIcon.src = imageSrc;
+            CenterPosition(PreviewImgContainer, previewContainer);
+            updateImgCustomizations();
+            ImgSelectorUpdate();
         };
-        ImageIcon.classList.add('selected');
-        newImagePreview.classList.add('selected');
-        PreviewImgSelected = newImagePreview
-        imageIconsSelected = ImageIcon
         reader.readAsDataURL(input.files[0]);
         imageUpload.value = '';
-        IconsContainer.style.display = 'flex';
     }
 }
 
 imageUpload.addEventListener('change', function () {
-    if (document.querySelector('.PreviewImg.selected')) {
-        PreviewImgSelected.classList.remove('selected');
-        imageIconsSelected.classList.remove('selected');
-    }
+    SelectedImgList.forEach(function(element) {
+        if (element) {
+            element.classList.remove('selected');
+        }
+    });
     loadImage(this);
 });
 
-let PreviewImgSelected = null;
-let imageIconsSelected = null;
-
 function ImgIconSelected() {
-    const imageIcons = document.querySelectorAll('.ImageIcon');
-    const PreviewImg = document.querySelectorAll('.PreviewImg');
-    const dataValue = this.getAttribute('data-value');
-
     if (this.classList.contains('selected')) {
-        document.querySelector('.PreviewImg.selected').classList.remove('selected');
-        document.querySelector('.ImageIcon.selected').classList.remove('selected');
-        PreviewImgSelected = null;
-        imageIconsSelected = null;
+        SelectedImgList.forEach(function(element, index) {
+            element.classList.remove('selected');
+            SelectedImgList[index] = null;
+        });
+        ImgSelector.classList.remove('selected');
+        ImgSizeControl.classList.remove('selected');
         previewContainer.style.cursor = 'unset';
         ImgControls.style.display = 'none';
     } else {
-        PreviewImg.forEach((icon) => {
-            if (icon.classList.contains('selected')) {
-                icon.classList.remove('selected');
-            }
-            if (icon.getAttribute('data-value') === dataValue) {
-                icon.classList.add('selected');
-            }
+        const AllElements = document.querySelectorAll('.ImgMaskContainer, .PreviewImgContainer, .RoundedContainer, .PreviewImg, .BlendModeImg, .ImageIcon');
+        const dataValue = this.getAttribute('data-value');
+        AllElements.forEach((element) => {
+                if (element.classList.contains('selected')) {
+                    element.classList.remove('selected');
+                }
+                if (element.getAttribute('data-value') === dataValue) {
+                    element.classList.add('selected');
+                }
         });
-        imageIcons.forEach((icon) => {
-            if (icon.classList.contains('selected')) {
-                icon.classList.remove('selected');
-            }
-            if (icon.getAttribute('data-value') === dataValue) {
-                icon.classList.add('selected');
-            }
-        });
-        PreviewImgSelected = document.querySelector('.PreviewImg.selected');
-        imageIconsSelected = document.querySelector('.imageIcon.selected');
+        ImgMaskContainer = document.querySelector('.ImgMaskContainer.selected');
+        PreviewImgContainer = document.querySelector('.PreviewImgContainer.selected');
+        RoundedContainer = document.querySelector('.RoundedContainer.selected');
+        PreviewImg = document.querySelector('.PreviewImg.selected');
+        BlendModeImg = document.querySelector('.BlendModeImg.selected');
+        ImageIcon = document.querySelector('.ImageIcon.selected');
+        SelectedImgList = [ImgMaskContainer, PreviewImgContainer, RoundedContainer, PreviewImg, BlendModeImg, ImageIcon];
         previewContainer.style.cursor = 'move';
         ImgControls.style.display = 'block';
+        updateImgCustomizations();
+        ImgSelectorUpdate();
     }
 }
 
+        //  IMG TOUCH POSITION
+
 var startX, startY, offsetX, offsetY;
 var PreviewScale = 1;
+var TouchMoveGroup = [ImgContainer, ImgSelector];
 
-previewContainer.addEventListener('mousedown', function (event) {
-    if (PreviewImgSelected) {
-        startX = event.clientX;
+TouchMoveGroup.forEach((element) => {
+    element.addEventListener('mousedown', function (event) {
+        if (PreviewImgContainer) {
+            startY = event.clientY;
+            startX = event.clientX;
+            var currentBottom = parseFloat(window.getComputedStyle(PreviewImgContainer).bottom) * PreviewScale;
+            var currentLeft = PreviewImgContainer.offsetLeft * PreviewScale;
+            var border = parseFloat(window.getComputedStyle(ImgSelector).border);
+            document.onmousemove = function (e) {
+                var movimentY = e.clientY - startY;
+                var movimentX = e.clientX - startX;
+                PreviewImgContainer.style.bottom = ((-movimentY + currentBottom) / PreviewScale) + 'px';
+                PreviewImgContainer.style.left = ((movimentX + currentLeft) / PreviewScale) + 'px';
+                var bottom = parseFloat(window.getComputedStyle(PreviewImgContainer).bottom);
+                var left = parseFloat(window.getComputedStyle(PreviewImgContainer).left);
+                ImgSelector.style.bottom = (bottom - border) +'px';
+                ImgSelector.style.left = (left - border) +'px';
+                ImgSizeControl.style.left = ImgSelector.offsetLeft + ImgSelector.offsetWidth;
+                ImgSizeControl.style.top = ImgSelector.offsetTop - ImgSizeControl.offsetHeight;
+            };
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+            element.ondragstart = function () {
+                return false;
+            };
+        }
+    });
+    
+    element.addEventListener('touchstart', function (event) {
+        if (PreviewImgContainer) {
+            var touch = event.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            var currentBottom = parseFloat(window.getComputedStyle(PreviewImgContainer).bottom) * PreviewScale;
+            var currentLeft = PreviewImgContainer.offsetLeft * PreviewScale;
+            var border = parseFloat(window.getComputedStyle(ImgSelector).border);
+            event.preventDefault();
+            element.addEventListener('touchmove', function (event) {
+                    var touch = event.touches[0];
+                    var movimentX = touch.clientX - startX;
+                    var movimentY = touch.clientY - startY;
+                    PreviewImgContainer.style.bottom = ((-movimentY + currentBottom) / PreviewScale) + 'px';
+                    PreviewImgContainer.style.left = ((movimentX + currentLeft) / PreviewScale) + 'px';
+                    var bottom = parseFloat(window.getComputedStyle(PreviewImgContainer).bottom);
+                    var left = parseFloat(window.getComputedStyle(PreviewImgContainer).left);
+                    ImgSelector.style.bottom = (bottom - border) +'px';
+                    ImgSelector.style.left = (left - border) +'px';
+                    ImgSizeControl.style.left = ImgSelector.offsetLeft + ImgSelector.offsetWidth;
+                    ImgSizeControl.style.top = ImgSelector.offsetTop - ImgSizeControl.offsetHeight;
+                    event.preventDefault();
+            });
+        }
+    });
+});
+
+ImgSizeControl.addEventListener('mousedown', function (event) {
+    if (PreviewImgContainer) {
         startY = event.clientY;
-        offsetX = PreviewImgSelected.offsetLeft * PreviewScale;
-        offsetY = PreviewImgSelected.offsetTop * PreviewScale;
+        var currentHeight = PreviewImgContainer.offsetHeight * PreviewScale;
         document.onmousemove = function (e) {
-            var left = e.clientX - startX + offsetX;
-            var top = e.clientY - startY + offsetY;
-            PreviewImgSelected.style.left = (left / PreviewScale) + 'px';
-            PreviewImgSelected.style.top = (top / PreviewScale) + 'px';
+            var moviment = e.clientY - startY;
+            PreviewImgContainer.style.height = ((-moviment + currentHeight) / PreviewScale) + 'px';
+            ImgSelector.style.height = PreviewImgContainer.offsetHeight;
+            ImgSelector.style.width = PreviewImgContainer.offsetWidth;
+            var bottom = parseFloat(window.getComputedStyle(PreviewImgContainer).bottom);
+            var left = PreviewImgContainer.offsetLeft;
+            ImgSelector.style.bottom = (bottom - 4) +'px';
+            ImgSelector.style.left = (left - 4) +'px';
+            ImgSizeControl.style.left = ImgSelector.offsetLeft + ImgSelector.offsetWidth;
+            ImgSizeControl.style.top = ImgSelector.offsetTop - ImgSizeControl.offsetHeight;
         };
         document.onmouseup = function () {
             document.onmousemove = null;
             document.onmouseup = null;
         };
-        previewContainer.ondragstart = function () {
+        ImgSizeControl.ondragstart = function () {
             return false;
         };
     }
 });
 
-previewContainer.addEventListener('touchstart', function (event) {
-    if (PreviewImgSelected) {
+ImgSizeControl.addEventListener('touchstart', function (event) {
+    if (PreviewImgContainer) {
         var touch = event.touches[0];
-        startX = touch.clientX;
         startY = touch.clientY;
-        offsetX = PreviewImgSelected.offsetLeft * PreviewScale;
-        offsetY = PreviewImgSelected.offsetTop * PreviewScale;
+        var currentHeight = PreviewImgContainer.offsetHeight * PreviewScale;
         event.preventDefault();
+        ImgSizeControl.addEventListener('touchmove', function (event) {
+            var touch = event.touches[0];
+            var moviment = touch.clientY - startY;
+            PreviewImgContainer.style.height = ((-moviment + currentHeight) / PreviewScale) + 'px';
+            ImgSelector.style.height = PreviewImgContainer.offsetHeight;
+            ImgSelector.style.width = PreviewImgContainer.offsetWidth;
+            var bottom = parseFloat(window.getComputedStyle(PreviewImgContainer).bottom);
+            var left = PreviewImgContainer.offsetLeft;
+            ImgSelector.style.bottom = (bottom - 4) +'px';
+            ImgSelector.style.left = (left - 4) +'px';
+            ImgSizeControl.style.left = ImgSelector.offsetLeft + ImgSelector.offsetWidth;
+            ImgSizeControl.style.top = ImgSelector.offsetTop - ImgSizeControl.offsetHeight;
+            event.preventDefault();
+        });
     }
 });
 
-previewContainer.addEventListener('touchmove', function (event) {
-    if (PreviewImgSelected) {
-        var touch = event.touches[0];
-        var left = touch.clientX - startX + offsetX;
-        var top = touch.clientY - startY + offsetY;
-        PreviewImgSelected.style.left = (left / PreviewScale) + 'px';
-        PreviewImgSelected.style.top = (top / PreviewScale) + 'px';
-        
-        event.preventDefault();
-    }
-});
+        //  CLEAR IMG
 
 clearIconContainer.addEventListener('click', function() {
-    if (PreviewImgSelected) {
-        PreviewImgSelected.remove();
-        imageIconsSelected.remove();
+    if (PreviewImg) {
+        ImgMaskContainer.remove();
+        ImageIcon.remove();
         ImgControls.style.display = 'none';
         UploadImageLabel.style.display = 'flex';
         FullUploaded.style.display = 'none';
+        ImgSelector.classList.remove('selected');
+        ImgSizeControl.classList.remove('selected');
     }
     if (imgIconsContainer.childElementCount === 0) {
         IconsContainer.style.display = 'none';
@@ -208,6 +342,8 @@ clearIconContainer.addEventListener('click', function() {
 
 const BtnsChooseControlsImg = document.querySelectorAll('.BtnsChooseControlsImg');
 const ControlImgContainer = document.querySelectorAll('.ControlImgContainer');
+
+        //  IMG CONSTROLS
 
 BtnsChooseControlsImg.forEach((button, index) => {
     button.addEventListener('click', () => {
@@ -228,6 +364,7 @@ const BtnImgUp = document.querySelector('.ImgUp');
 const BtnImgDown = document.querySelector('.ImgDown');
 const BtnImgLeft = document.querySelector('.ImgLeft');
 const BtnImgRight = document.querySelector('.ImgRight');
+
 
 function addTouchHoldListener(element, action) {
     let isInteracting = false;
@@ -270,19 +407,27 @@ function addTouchHoldListener(element, action) {
 }
 
 function moveUp() {
-    PreviewImgSelected.style.top = (parseInt(PreviewImgSelected.style.top) - step) + 'px';
+    PreviewImgContainer.style.bottom = (parseInt(PreviewImgContainer.style.bottom) + step) + 'px';
+    ImgSelector.style.bottom = (parseInt(ImgSelector.style.bottom) + step) + 'px';
+    ImgSizeControl.style.top = ImgSelector.offsetTop - ImgSizeControl.offsetHeight;
 }
 
 function moveDown() {
-    PreviewImgSelected.style.top = (parseInt(PreviewImgSelected.style.top) + step) + 'px';
+    PreviewImgContainer.style.bottom = (parseInt(PreviewImgContainer.style.bottom) - step) + 'px';
+    ImgSelector.style.bottom = (parseInt(ImgSelector.style.bottom) - step) + 'px';
+    ImgSizeControl.style.top = ImgSelector.offsetTop - ImgSizeControl.offsetHeight;
 }
 
 function moveLeft() {
-    PreviewImgSelected.style.left = (parseInt(PreviewImgSelected.style.left) - step) + 'px';
+    PreviewImgContainer.style.left = (parseInt(PreviewImgContainer.style.left) - step) + 'px';
+    ImgSelector.style.left = (parseInt(ImgSelector.style.left) - step) + 'px';
+    ImgSizeControl.style.left = ImgSelector.offsetLeft + ImgSelector.offsetWidth;
 }
 
 function moveRight() {
-    PreviewImgSelected.style.left = (parseInt(PreviewImgSelected.style.left) + step) + 'px';
+    PreviewImgContainer.style.left = (parseInt(PreviewImgContainer.style.left) + step) + 'px';
+    ImgSelector.style.left = (parseInt(ImgSelector.style.left) + step) + 'px';
+    ImgSizeControl.style.left = ImgSelector.offsetLeft + ImgSelector.offsetWidth;
 }
 
 addTouchHoldListener(BtnImgUp, moveUp);
@@ -290,16 +435,23 @@ addTouchHoldListener(BtnImgDown, moveDown);
 addTouchHoldListener(BtnImgLeft, moveLeft);
 addTouchHoldListener(BtnImgRight, moveRight);
 
-const Scale = 0.01;
+const Scale = 1;
 const sizeLess = document.querySelector('.SizeLess');
 const sizePlus = document.querySelector('.SizePlus');
 const SizeLessLess = document.querySelector('.SizeLessLess');
 const SizePlusPlus = document.querySelector('.SizePlusPlus');
 
 function updateScale(Scale) {
-    const currentScale = parseFloat(window.getComputedStyle(PreviewImgSelected).getPropertyValue('transform').split(',')[3]);
-    PreviewImgSelected.style.transform = `scale(${currentScale + Scale})`;
-    ImgSizeRange.value = (currentScale + Scale) * 100;
+    var currentHeight = PreviewImgContainer.offsetHeight;
+    PreviewImgContainer.style.height = currentHeight + Scale + 'px';
+    var bottom = parseFloat(window.getComputedStyle(PreviewImgContainer).bottom);
+    var left = PreviewImgContainer.offsetLeft;
+    ImgSelector.style.height = PreviewImgContainer.offsetHeight;
+    ImgSelector.style.width = PreviewImgContainer.offsetWidth;
+    ImgSelector.style.bottom = (bottom - 4) +'px';
+    ImgSelector.style.left = (left - 4) +'px';
+    ImgSizeControl.style.left = ImgSelector.offsetLeft + ImgSelector.offsetWidth;
+    ImgSizeControl.style.top = ImgSelector.offsetTop - ImgSizeControl.offsetHeight;
 }
 
 function LessLessSize() {
@@ -323,32 +475,45 @@ addTouchHoldListener(sizePlus, PlusSize);
 addTouchHoldListener(SizeLessLess, LessLessSize);
 addTouchHoldListener(SizePlusPlus, PlusPlusSize);
 
+        //  LAYER BUTTONS
+
 const botaoSubir = document.querySelector('.LayerUp');
 const botaoDescer = document.querySelector('.LayerDown');
 
 botaoDescer.addEventListener('click', () => {
-    const pai = PreviewImgSelected.parentNode;
-    const irmaoAnterior = PreviewImgSelected.previousElementSibling;
+    const pai = PreviewImgContainer.parentNode;
+    const paipai = pai.parentNode;
+    const irmaoAnterior = pai.previousElementSibling;
 
     if (irmaoAnterior) {
-        pai.insertBefore(PreviewImgSelected, irmaoAnterior);
+        paipai.insertBefore(pai, irmaoAnterior);
     }
 });
 
 botaoSubir.addEventListener('click', () => {
-    const pai = PreviewImgSelected.parentNode;
-    const irmaoSeguinte = PreviewImgSelected.nextElementSibling;
+    const pai = PreviewImgContainer.parentNode;
+    const paipai = pai.parentNode;
+    const irmaoSeguinte = pai.nextElementSibling;
 
     if (irmaoSeguinte) {
-        pai.insertBefore(irmaoSeguinte, PreviewImgSelected);
+        paipai.insertBefore(irmaoSeguinte, pai);
     }
 });
 
-const ImgSizeRange = document.querySelector('.ImgSizeRange');
+        //  IMG MASK SELECTOR
 
-ImgSizeRange.addEventListener('input', function() {
-    PreviewImgSelected.style.transform = 'scale('+ (ImgSizeRange.value / 100) +')';
+const MaskImgFalse = document.querySelector('.MaskImgFalse');
+const MaskImgTrue = document.querySelector('.MaskImgTrue');
+
+MaskImgFalse.addEventListener('click', () => {
+    PreviewImgContainer.parentNode.classList.remove('masked');
 });
+
+MaskImgTrue.addEventListener('click', () => {
+    PreviewImgContainer.parentNode.classList.add('masked');
+});
+
+        //  IMG EFFECTS
 
 const BtnImgEffect = document.querySelectorAll('.BtnImgEffect');
 const ImgEffect = document.querySelectorAll('.ImgEffect');
@@ -367,27 +532,263 @@ BtnImgEffect.forEach((button, index) => {
     });
 });
 
-const ImgShadow = document.querySelector('.ImgShadow');
-let ImgShadowValue = null;
+        //  UPDATE IMG CUSTOMIZATION
 
-ImgShadow.addEventListener('input', function() {
-    ImgShadowValue = ImgShadow.value;
-    PreviewImgSelected.style.filter = 'drop-shadow(0px 0px '+ ImgShadowValue +'px white)';
-});
+function updateImgCustomizations() {
+    actualImgFilter();
+    actualImgColor();
+    actualRoundedStyle();
+}
+
+        //  ALL INPUT RANGE FUNCTION
+
+function InputRangeFunction(InputRange, Attribute, update) {
+    InputRange.addEventListener('input', function() {
+        NewValue = InputRange.value;
+        PreviewImg.setAttribute(Attribute, NewValue);
+        update();
+    });
+}
+
+        //  ALL JSCOLOR INPUT FUNCTION
+
+function InputJsColorFunction(InputJsColor, getSelectedElement, Attribute, update) {
+    InputJsColor.addEventListener('input', function() {
+        NewValue = InputJsColor.value;
+        const SelectedElement = getSelectedElement();
+        SelectedElement.setAttribute(Attribute, NewValue);
+        update(NewValue);
+    });
+}
+
+function changeInputColor(InputColor, color) {
+    InputColor.value = color;
+    var event = new Event('input', {
+        bubbles: true,
+        cancelable: true
+    });
+    InputColor.dispatchEvent(event);
+}
+
+        //  DROP-SHADOW IMG EFFECT
+
+const ImgShadow = document.querySelector('.ImgShadow');
+const InputImgShadowColor = document.querySelector('.InputImgShadowColor');
+
+InputRangeFunction(ImgShadow,'dropshadowvalue', updateImgDropShadow);
+InputJsColorFunction(InputImgShadowColor, () => PreviewImg, 'DropShadowColor', updateImgDropShadow);
+
+function updateImgDropShadow() {
+    ImgShadowValue = PreviewImg.getAttribute('DropShadowValue');
+    ImgShadowColorValue = PreviewImg.getAttribute('DropShadowColor');
+    PreviewImg.style.filter = 'drop-shadow('+ ImgShadowColorValue +' 0px 0px '+ ImgShadowValue +'px)';
+}
+
+function actualImgFilter() {
+    if (PreviewImg.getAttribute('DropShadowValue')) {
+        ImgShadow.value = PreviewImg.getAttribute('DropShadowValue');
+    } else {
+        PreviewImg.setAttribute('DropShadowValue', 0)
+        ImgShadow.value = 0;
+    }
+    if (PreviewImg.getAttribute('DropShadowColor')) {
+        var DropShadowColor = PreviewImg.getAttribute('DropShadowColor');
+        changeInputColor(InputImgShadowColor, DropShadowColor);
+    } else {
+        PreviewImg.getAttribute('DropShadowColor', '#FFFFFF')
+        changeInputColor(InputImgShadowColor, '#FFFFFF');
+    }
+}
+
+        //  GRADIENT IMG EFFECT  
 
 const ImgGradient = document.querySelectorAll('.ImgGradient');
 
 ImgGradient.forEach((element) => {
     element.addEventListener('click', function() {
         if (this.classList.contains('With')) {
-            PreviewImgSelected.style.webkitMaskImage = 'linear-gradient(to top, transparent 2%, black 30%)';
-            PreviewImgSelected.style.maskImage = 'linear-gradient(to top, transparent 2%, black 30%)';
+            PreviewImg.classList.add('gradient');
+            updateImgColor();
         } else {
-            PreviewImgSelected.style.webkitMaskImage = 'unset';
-            PreviewImgSelected.style.maskImage = 'unset';
+            PreviewImg.classList.remove('gradient');
+            updateImgColor();
         }
     });
 });
+
+        //  COLOR IMG EFFECT
+
+const OptionImgColorEffect = document.querySelectorAll('.OptionImgColorEffect');
+const ImgColorEffectContainer = document.querySelector('.ImgColorEffectContainer');
+const InputImgColor = document.querySelector('.InputImgColor');
+const BlendModeColor = '#7fffd4';
+const BlendModeStyle = 'hue';
+
+OptionImgColorEffect.forEach((element) => {
+    element.addEventListener('click', function() {
+        if (this.classList.contains('With')) {
+            if (!BlendModeImg.classList.contains('blended')) {
+                BlendModeImg.classList.add('blended');
+                BlendModeImg.style.webkitMaskImage = `url(${PreviewImg.src})`;
+                BlendModeImg.style.maskImage = `url(${PreviewImg.src})`;
+                updateImgColor();
+                ImgColorEffectContainer.classList.add('selected');
+                OptionImgColorEffect[0].classList.remove('selected');
+                OptionImgColorEffect[1].classList.add('selected');
+            }
+        } else {
+            if (BlendModeImg.classList.contains('blended')) {
+                BlendModeImg.classList.remove('blended')
+                ImgColorEffectContainer.classList.remove('selected');
+                OptionImgColorEffect[0].classList.add('selected');
+                OptionImgColorEffect[1].classList.remove('selected');
+            }
+        }
+    });
+});
+
+InputJsColorFunction(InputImgColor, () => PreviewImg, 'BlendModeColor', updateImgColor);
+
+function updateImgColor() {
+    if (BlendModeImg) {
+        var Color = PreviewImg.getAttribute('BlendModeColor');
+        var Style = PreviewImg.getAttribute('BlendModeStyle');
+        if (PreviewImg.classList.contains('gradient')) {
+            BlendModeImg.style.background = 'linear-gradient(to top, transparent 10%, '+Color+' 30%)';
+        } else {
+            BlendModeImg.style.background = Color;
+        }
+        BlendModeImg.style.mixBlendMode = Style;
+    }
+}
+
+function actualImgColor() {
+    if (BlendModeImg.classList.contains('blended')) {
+        var Color = PreviewImg.getAttribute('BlendModeColor');
+        changeInputColor(InputImgColor, Color);
+        ImgColorEffectContainer.classList.add('selected');
+        OptionImgColorEffect[0].classList.remove('selected');
+        OptionImgColorEffect[1].classList.add('selected');
+    } else {
+        if (!PreviewImg.getAttribute('BlendModeColor')) {
+            PreviewImg.setAttribute('BlendModeColor', BlendModeColor);
+            PreviewImg.setAttribute('BlendModeStyle', BlendModeStyle);
+        }
+        var Color = PreviewImg.getAttribute('BlendModeColor');
+        changeInputColor(InputImgColor, Color);
+        ImgColorEffectContainer.classList.remove('selected');
+        OptionImgColorEffect[0].classList.add('selected');
+        OptionImgColorEffect[1].classList.remove('selected');
+    }
+}
+
+        //  ROUDENDED IMG EFFECT
+
+const RoundedSelector = document.querySelector('.RoundedSelector');
+const RoundedEffectOptions = document.querySelector('.RoundedEffectOptions');
+const RoundedOptions = document.querySelectorAll('.RoundedOptions');
+const RoundedCustomContainer = document.querySelectorAll('.RoundedCustomContainer');
+const InputRoundedBorderColor = document.querySelector('.InputRoundedBorderColor');
+const InputRoundedBGColor = document.querySelector('.InputRoundedBGColor');
+
+RoundedSelector.addEventListener('click', function() {
+    if (RoundedSelector.classList.contains('selected')) {
+        RoundedSelector.classList.remove('selected');
+        var RoundedSelected = PreviewImg.parentNode;
+        RoundedSelected.classList.remove('rounded');
+        PreviewImg.classList.remove('rounded');
+        RoundedEffectOptions.classList.remove('selected');
+        RoundedOptions.forEach(element => {
+            element.classList.remove('selected');
+        });
+        RoundedCustomContainer.forEach(element => {
+            element.classList.remove('selected');
+        });
+        const Childrens = RoundedSelected.children;
+        for (let i = 0; i < Childrens.length; i++) {
+            Childrens[i].style.borderRadius = '';
+        }
+        updateRounded();
+        ImgSelectorUpdate();
+    } else {
+        RoundedSelector.classList.add('selected');
+        var RoundedSelected = PreviewImg.parentNode;
+        RoundedSelected.classList.add('rounded');
+        PreviewImg.classList.add('rounded');
+        RoundedEffectOptions.classList.add('selected');
+        RoundedOptions[0].classList.add('selected');
+        RoundedCustomContainer[0].classList.add('selected');
+        var width = RoundedSelected.offsetWidth;
+        const Childrens = RoundedSelected.children;
+        for (let i = 0; i < Childrens.length; i++) {
+            Childrens[i].style.borderRadius = '50%';
+        }
+        updateRounded();
+        ImgSelectorUpdate();
+    }
+});
+
+RoundedOptions.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        RoundedOptions.forEach(element => {
+            element.classList.remove('selected');
+        });
+        RoundedOptions[index].classList.add('selected');
+
+        RoundedCustomContainer.forEach(element => {
+            element.classList.remove('selected');
+        });
+        RoundedCustomContainer[index].classList.add('selected');
+    });
+});
+
+InputJsColorFunction(InputRoundedBorderColor, () => PreviewImg, 'RoundedBorder', updateRounded);
+InputJsColorFunction(InputRoundedBGColor, () => PreviewImg, 'RoundedBG', updateRounded);
+let DefaultRoundedBorder = '#ffd700';
+let DefaultRoundedBG = '#000000';
+
+
+function updateRounded() {
+    var RoundedContainer = PreviewImg.parentNode;
+    var background = PreviewImg.getAttribute('RoundedBG');
+    var Border = PreviewImg.getAttribute('RoundedBorder');
+    if (RoundedContainer.classList.contains('rounded')) {
+        RoundedContainer.style.borderColor = Border;
+        RoundedContainer.style.background = background;
+    } else {
+        RoundedContainer.style.borderColor = '';
+        RoundedContainer.style.background = '';
+    }
+}
+
+function actualRoundedStyle() {
+    if (PreviewImg.getAttribute('RoundedBorder')) {
+        var ActualValueBorder = PreviewImg.getAttribute('RoundedBorder');
+        changeInputColor(InputRoundedBorderColor, ActualValueBorder);
+        var ActualValueBG = PreviewImg.getAttribute('RoundedBG');
+        changeInputColor(InputRoundedBGColor, ActualValueBG);
+    } else {
+        PreviewImg.setAttribute('RoundedBorder', DefaultRoundedBorder);
+        changeInputColor(InputRoundedBorderColor, DefaultRoundedBorder);
+        PreviewImg.setAttribute('RoundedBG', DefaultRoundedBG);
+        changeInputColor(InputRoundedBGColor, DefaultRoundedBG);
+    }
+    if (!PreviewImg.classList.contains('rounded')) {
+        RoundedSelector.classList.remove('selected');
+        RoundedEffectOptions.classList.remove('selected');
+        RoundedOptions.forEach(element => {
+            element.classList.remove('selected');
+        });
+        RoundedCustomContainer.forEach(element => {
+            element.classList.remove('selected');
+        });
+    } else {
+        RoundedSelector.classList.add('selected');
+        RoundedEffectOptions.classList.add('selected');
+    }
+}
+
+        //  TEXT CUSTOMIZATION 
 
 const btnOptionText = document.querySelectorAll('.btnOptionText');
 const OptionTextContainer = document.querySelectorAll('.OptionTextContainer');
@@ -408,10 +809,21 @@ btnOptionText.forEach((button, index) => {
 
 const TextInput = document.querySelector('.TextInput');
 const TextPreview = document.querySelector('.TextPreview');
+let minLeft = null; 
+let minRight = null;
 
 function TextScaleX () {
-    if (TextPreview.offsetWidth > previewContainer.offsetWidth) {
-        const scale = previewContainer.offsetWidth / TextPreview.offsetWidth;
+    var fontSize = parseFloat(window.getComputedStyle(TextPreview).fontSize);
+    if (!minLeft == 0) {
+        TextPreview.style.paddingLeft = fontSize * minLeft + "px";
+    }
+    
+    if (!minRight == 0) {
+        TextPreview.style.paddingRight = fontSize * minRight + "px";
+    }    
+
+    if (TextPreview.offsetWidth > ImgContainer.offsetWidth) {
+        const scale = ImgContainer.offsetWidth / TextPreview.offsetWidth;
         TextPreview.style.transform = `scaleX(${scale})`;
     } else {
         TextPreview.style.transform = 'scaleX(1)';
@@ -456,6 +868,32 @@ addTouchHoldListener(TextSizeLess, SizeLessText);
 addTouchHoldListener(TextSizePlus, SizePlusText);
 addTouchHoldListener(TextSize2xPlus, Size2xPlusText);
 
+const LessLetterSpacing = document.querySelector('.LessLetterSpacing');
+const MoreLetterSpacing = document.querySelector('.MoreLetterSpacing');
+const LetterSpacingValue = 1;
+
+function LetterSpacing(Spacing) {
+    var SpacingNow = parseFloat(window.getComputedStyle(TextPreview).letterSpacing);
+    var newSpacing = SpacingNow + Spacing;
+    if (newSpacing < LetterSpacingValue) {
+        newSpacing = LetterSpacingValue;
+    }
+    TextPreview.style.letterSpacing = newSpacing + 'px';
+    TextPreview.style.marginRight = -newSpacing + 'px';
+    TextScaleX();
+}
+
+function LetterSpacingLess() {
+    LetterSpacing(-LetterSpacingValue);
+}
+
+function LetterSpacingMore() {
+    LetterSpacing(LetterSpacingValue);
+}
+
+addTouchHoldListener(LessLetterSpacing, LetterSpacingLess);
+addTouchHoldListener(MoreLetterSpacing, LetterSpacingMore);
+
 const TextUp = document.querySelector('.TextUp');
 const TextDown = document.querySelector('.TextDown');
 const stepText = 1;
@@ -475,6 +913,7 @@ addTouchHoldListener(TextDown, TextMoveDown);
 
 let BackgroundEffect = null;
 const btnBackgroundText = document.querySelectorAll('.btnBackgroundText');
+const TextPreviewBackground = document.querySelectorAll('.TextPreviewBackground');
 
 btnBackgroundText.forEach((button, index) => {
     button.addEventListener('click', () => {
@@ -483,8 +922,35 @@ btnBackgroundText.forEach((button, index) => {
         });
         btnBackgroundText[index].classList.add('selected');
         var BtnStyle = btnBackgroundText[index];
-        TextPreview.style.color = BtnStyle.style.color;
         TextPreview.style.backgroundImage = BtnStyle.style.backgroundImage;
     });
 });
 
+const FontFamilySelector = document.querySelectorAll('.FontFamilySelector');
+
+FontFamilySelector.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        FontFamilySelector.forEach(element => {
+            element.classList.remove('selected');
+        });
+        FontFamilySelector[index].classList.add('selected');
+        var BtnStyle = FontFamilySelector[index];
+        TextPreview.style.fontFamily = BtnStyle.style.fontFamily;
+        minLeft = BtnStyle.getAttribute('min-left');
+        minRight = BtnStyle.getAttribute('min-right');
+        TextPreview.setAttribute('min-left', minLeft);
+        TextPreview.setAttribute('min-right', minRight);
+        TextScaleX();
+    });
+});
+
+        //  BACKGROUND CUSTOMIZATION
+
+const InputBgColor = document.querySelector('.InputBgColor');
+const ImgContainerMasked = document.querySelector('.ImgContainerMasked');
+
+InputJsColorFunction(InputBgColor, () => ImgContainerMasked, 'BgColor', updateBgColor);
+
+function updateBgColor() {
+    ImgContainerMasked.style.backgroundColor = NewValue;
+}
