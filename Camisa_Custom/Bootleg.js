@@ -550,7 +550,34 @@ function InputRangeFunction(InputRange, Attribute, update) {
     });
 }
 
+
+        //  COPY AND PASTE FUNCTIONS
+
+const CopyColorBtn = document.querySelectorAll('.CopyColorBtn');
+const PasteColorBtn = document.querySelectorAll('.PasteColorBtn');
+
+CopyColorBtn.forEach(function(CopyBtn) {
+    CopyBtn.addEventListener('click', function() {
+        if (this) {
+            var value = this.previousElementSibling.getAttribute('data-current-color');
+            PasteColorBtn.forEach(function(PasteBtn) {
+                PasteBtn.style.background = value;
+                PasteBtn.setAttribute('color', value);
+            });
+        }
+    });
+});
+
+function PastColor(button, inputColor) {
+    var color = button.getAttribute('color');
+    changeInputColor(inputColor, color);
+}
+
         //  ALL JSCOLOR INPUT FUNCTION
+
+function updateJSColor(picker, selector) {
+    document.querySelector(selector).style.background = picker.toBackground();
+}
 
 function InputJsColorFunction(InputJsColor, getSelectedElement, Attribute, update) {
     InputJsColor.addEventListener('input', function() {
@@ -943,6 +970,7 @@ FontFamilySelector.forEach((button, index) => {
         TextScaleX();
     });
 });
+
 
         //  BACKGROUND CUSTOMIZATION
 
