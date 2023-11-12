@@ -179,7 +179,7 @@
 .ImgSizeControl {
     display: none;
     position: absolute;
-    height: 40px;
+    height: 80px;
     aspect-ratio: 1/1;
     cursor: ne-resize;
 }
@@ -343,10 +343,10 @@
 }
 
 .ImageIcon {
-    max-height: 100%;
+    height: 100%;
     aspect-ratio: 1/1;
-    border: 2px solid transparent;
-    object-fit: cover;
+    border: 2px solid #0000003b;
+    margin: 0px 5px;
 }
 
 .ImageIcon.selected {
@@ -454,7 +454,7 @@ input[type="range"]::-webkit-slider-thumb {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr auto auto;
-    padding: 65px 0px 0px;
+    padding: 50px 0px 0px;
 }
 
 .PositionBtns {
@@ -481,21 +481,23 @@ input[type="range"]::-webkit-slider-thumb {
 .LayerControls {
     display: flex;
     flex-direction: column;
-    max-height: 100%;
+    width: fit-content;
     align-items: center;
+    margin: auto;
 }
 
 .LayerControls button {
     display: flex;
-    height: 120px;
-    width: 260px;
+    height: 140px;
+    width: 100%;
     align-items: center;
-    font-size: 30px;
+    font-size: 40px;
+    font-weight: 700;
     justify-content: space-between;
     text-transform: uppercase;
     font-family: sans-serif;
     background: white;
-    border: 1px solid black;
+    border: 6px solid black;
     border-radius: 25px;
     margin: 18px 0px;
     padding-left: 8px;
