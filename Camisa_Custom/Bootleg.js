@@ -575,6 +575,10 @@ function PastColor(button, inputColor) {
 
         //  ALL JSCOLOR INPUT FUNCTION
 
+jscolor.presets.default = {
+    width:600, height:330, closeButton:true, closeText:'', sliderSize:40
+};
+
 function updateJSColor(picker, selector) {
     document.querySelector(selector).style.background = picker.toBackground();
 }
@@ -976,9 +980,60 @@ FontFamilySelector.forEach((button, index) => {
 
 const InputBgColor = document.querySelector('.InputBgColor');
 const ImgContainerMasked = document.querySelector('.ImgContainerMasked');
+const ImgContainerColor = document.querySelector('.ImgContainerColor');
+const BgOptionMask = document.querySelectorAll('.BgOption.Mask');
+const BgOptionTexture = document.querySelectorAll('.BgOption.Texture');
 
-InputJsColorFunction(InputBgColor, () => ImgContainerMasked, 'BgColor', updateBgColor);
+InputJsColorFunction(InputBgColor, () => ImgContainerColor, 'BgColor', updateBgColor);
 
 function updateBgColor() {
-    ImgContainerMasked.style.backgroundColor = NewValue;
+    ImgContainerColor.style.backgroundColor = NewValue;
 }
+const maskLinks = [
+    'Background/5-Soft-Grunge-Textures/1.png',
+    'Background/5-Soft-Grunge-Textures/2.png',
+    'Background/5-Soft-Grunge-Textures/3.png',
+    'Background/5-Soft-Grunge-Textures/4.png',
+    'Background/5-Soft-Grunge-Textures/5.png',
+    '',
+    '',
+    '',
+    '',
+    '',
+];
+
+BgOptionMask.forEach((element, index) => {
+    element.style.maskImage = `url(${maskLinks[index]})`;
+    element.style.webkitMaskImage = `url(${maskLinks[index]})`;
+});
+
+BgOptionMask.forEach((button, index) => {
+    button.addEventListener('click', function() {
+        var Mask = `url(${maskLinks[index]})`;
+        document.documentElement.style.setProperty('--mask-image', Mask);
+    });
+});
+
+const TextureLinks = [
+    'https://i.pinimg.com/236x/1b/c2/78/1bc278fa51bee2cf5b0c31d7661ed213.jpg',
+    'https://i.pinimg.com/236x/c6/a7/1d/c6a71d1e0b407796e21ced5e9ca035da.jpg',
+    'https://i.pinimg.com/originals/b3/35/8e/b3358eaf5e1972467a502edd2a367f40.jpg',
+    'Background/Textures/1.jpg',
+    'Background/Textures/2.jpg',
+    'Background/Textures/3.jpg',
+    'Background/Textures/4.jpg',
+    'Background/Textures/5.jpg',
+    'Background/Textures/6.jpg',
+    'Background/Textures/7.jpg',
+    '',
+];
+
+BgOptionTexture.forEach((element, index) => {
+    element.style.backgroundImage = `url(${TextureLinks[index]})`;
+});
+
+BgOptionTexture.forEach((button, index) => {
+    button.addEventListener('click', function() {
+        ImgContainerMasked.style.backgroundImage = `url(${TextureLinks[index]})`;
+    });
+});

@@ -11,6 +11,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     border: 1px solid;
+    overflow: hidden;
     z-index: 2;
 }
 
@@ -39,16 +40,39 @@
     transform: scale(1.88);
 }
 
+:root {
+    --mask-image: url(https://cdn.shopify.com/s/files/1/0835/7966/6725/files/BG_Grunge.png?v=1698710304);
+}
+
 .ImgContainerMasked {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #7fffd4;
-    -webkit-mask-image: url(https://cdn.shopify.com/s/files/1/0835/7966/6725/files/BG_Grunge.png?v=1698710304);
+    filter: grayscale(1);
+    background-image: url(https://images.unsplash.com/photo-1617967398617-a08eea39aa48?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3J1bmdlJTIwdGV4dHVyZXxlbnwwfHwwfHx8MA%3D%3D);
+    background-size: cover;
+    background-repeat: no-repeat;
+    -webkit-mask-image: var(--mask-image);
     -webkit-mask-size: contain;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
-    mask-image: url(https://cdn.shopify.com/s/files/1/0835/7966/6725/files/BG_Grunge.png?v=1698710304);
+    mask-image: var(--mask-image);;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+.ImgContainerColor {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #7FFFD4;
+    mix-blend-mode: color;
+    -webkit-mask-image: var(--mask-image);;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: var(--mask-image);;
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;
@@ -70,11 +94,11 @@
 }
 
 .ImgMaskContainer.masked {
-    -webkit-mask-image: url(https://cdn.shopify.com/s/files/1/0835/7966/6725/files/BG_Grunge.png?v=1698710304);
+    -webkit-mask-image: var(--mask-image);;
     -webkit-mask-size: contain;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
-    mask-image: url(https://cdn.shopify.com/s/files/1/0835/7966/6725/files/BG_Grunge.png?v=1698710304);
+    mask-image: var(--mask-image);;
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;
@@ -256,27 +280,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-}
-
-.OptionCustom {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90px;
-    font-size: 55px;
-    padding: 0px 30px;
-    margin: 40px 0px;
-    font-family: sans-serif;
-    font-weight: 700;
-    border: 6px solid black;
-    border-radius: 50px;
-    background: white;
-    transition: box-shadow, border .3s;
-}
-
-.OptionCustom.selected {
-    border: 2px solid red;
-    box-shadow: 0px 0px 20px red;
+    margin: 30px 0px;
 }
 
 .CustomizationContainer {
@@ -312,7 +316,7 @@
 }
 
 .UploadImageLabel p {
-    font-size: 40px;
+    font-size: 50px;
     font-family: sans-serif;
     font-weight: 700;
     margin: 0 10px;
@@ -375,27 +379,6 @@
     justify-content: space-evenly;
     align-items: center;
     margin: 30px 0px 0px;
-}
-
-.BtnsChooseControlsImg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90px;
-    font-size: 55px;
-    padding: 0px 30px;
-    margin: 0px 20px;
-    font-family: sans-serif;
-    font-weight: 700;
-    border: 6px solid black;
-    border-radius: 50px;
-    background: white;
-    transition: box-shadow, border .3s;
-}
-
-.BtnsChooseControlsImg.selected {
-    border: 2px solid red;
-    box-shadow: 0px 0px 20px red;
 }
 
 input[type="range"] {
@@ -559,27 +542,6 @@ input[type="range"]::-webkit-slider-thumb {
     overflow-x: scroll;
 }
 
-.BtnImgEffect {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90px;
-    font-size: 55px;
-    padding: 0px 30px;
-    margin: 0px 20px;
-    font-family: sans-serif;
-    font-weight: 700;
-    border: 6px solid black;
-    border-radius: 50px;
-    background: white;
-    transition: box-shadow, border .3s;
-}
-
-.BtnImgEffect.selected {
-    border: 2px solid red;
-    box-shadow: 0px 0px 20px red;
-}
-
 .ImgEffect {
     display: none;
     flex-direction: column;
@@ -597,7 +559,7 @@ input[type="range"]::-webkit-slider-thumb {
 } 
 
 .ImgEffect.Shadow p {
-    font-size: 55px;
+    font-size: 60px;
     font-family: sans-serif;
     font-weight: 700;
     margin: 0px 0px 20px;
@@ -715,27 +677,6 @@ input[type="range"]::-webkit-slider-thumb {
     display: flex;
 }
 
-.RoundedOptions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90px;
-    font-size: 55px;
-    padding: 0px 30px;
-    margin: 0px 15px;
-    font-family: sans-serif;
-    font-weight: 700;
-    border: 6px solid black;
-    border-radius: 50px;
-    background: white;
-    transition: box-shadow, border .3s;
-}
-
-.RoundedOptions.selected {
-    border: 2px solid red;
-    box-shadow: 0px 0px 20px red;
-}
-
 .RoundedCustomContainer {
     display: none;
     margin: 50px 0px 0px;
@@ -768,26 +709,6 @@ input[type="text"] {
     justify-content: space-evenly;
 }
 
-.btnOptionText {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90px;
-    font-size: 55px;
-    padding: 0px 30px;
-    font-family: sans-serif;
-    font-weight: 700;
-    border: 6px solid black;
-    border-radius: 50px;
-    background: white;
-    transition: box-shadow, border .3s;
-}
-
-.btnOptionText.selected {
-    border: 2px solid red;
-    box-shadow: 0px 0px 20px red;
-}
-
 .OptionTextContainer {
     display: none;
 }
@@ -805,7 +726,7 @@ input[type="text"] {
 
 .TextSettingsTiltle {
     display: flex;
-    font-size: 55px;
+    font-size: 60px;
     font-family: sans-serif;
     font-weight: 700;
     align-items: center;
@@ -858,7 +779,7 @@ input[type="text"] {
 }
 
 .FontFamilyContainer {
-    display: -webkit-inline-box;
+    display: flex;
     width: 100%;
     padding: 60px 0px 20px;
     overflow-x: scroll;
@@ -870,6 +791,7 @@ input[type="text"] {
     align-items: center;
     height: 150px;
     width: 150px;
+    flex-shrink: 0;
     border: 6px solid black;
     border-radius: 40px;
     margin: 0px 20px;
@@ -883,7 +805,7 @@ input[type="text"] {
 }
 
 .BackgroundTextEffect {
-    display: -webkit-inline-box;
+    display: flex;
     width: 100%;
     padding: 60px 0px 20px;
     overflow-x: scroll;
@@ -892,6 +814,7 @@ input[type="text"] {
 .btnBackgroundText {
     height: 150px;
     width: 150px;
+    flex-shrink: 0;
     border: 6px solid black;
     border-radius: 40px;
     margin: 0px 20px;
@@ -900,6 +823,55 @@ input[type="text"] {
 .btnBackgroundText.selected {
     border: 6px solid red;
     box-shadow: 0px 0px 15px black;
+}
+
+.BackgroundCustom {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0px 0px 45px;
+}
+
+.BackgroundCustomTittle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    font-family: sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.BackgroundCustomOptions {
+    position: relative;
+    display: flex;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.BgOption {
+    flex-shrink: 0;
+    position: relative;
+    height: 340px;
+    width: 234px;
+    margin: 0px 30px;
+    background: aqua;
+    cursor: pointer;
+}
+
+.BgOption.Mask {
+    background: #000000;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+.BgOption.Texture {
+    filter: grayscale(1);
+    background-size: cover;
 }
 
 .jscolor {
@@ -911,7 +883,33 @@ input[type="text"] {
 }
 
 .jscolor-wrap {
-    left: calc(50% - 119px) !important;
+    left: calc(50% - 341px) !important;
+}
+
+.jscolor-wrap .jscolor-btn {
+    width: 100%;
+    border: none !important;
+}
+
+.BTNOPTIONS {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    font-size: 60px;
+    font-family: sans-serif;
+    font-weight: 700;
+    background: white;
+    color: black;
+    border: 6px solid black;
+    border-radius: 30px;
+    padding: 10px 20px;
+    margin: 0px 20px;
+}
+
+.BTNOPTIONS.selected {
+    border: 2px solid red;
+    box-shadow: 0px 0px 20px red;
 }
 
 @font-face {

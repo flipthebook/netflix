@@ -6,6 +6,7 @@
         <div class="TshirtContainer">
             <div class="previewContainer">
                 <div class="ImgContainerMasked"></div>
+                <div class="ImgContainerColor"></div>
                 <div class="ImgContainer">
                     <div class="TextPreview" min-left="0" min-right="0"></div>
                 </div>
@@ -27,9 +28,9 @@
         </div>
         <div class="ContainerCustomization">
             <div class="OptionCustomization">
-                <button class="OptionCustom selected">FOTOS</button>
-                <button class="OptionCustom">TEXTO</button>
-                <button class="OptionCustom">FUNDO</button>
+                <button class="OptionCustom BTNOPTIONS selected">FOTOS</button>
+                <button class="OptionCustom BTNOPTIONS">TEXTO</button>
+                <button class="OptionCustom BTNOPTIONS">FUNDO</button>
             </div>
             <div class="CustomizationContainer selected">
                 <div class="InputContainer">
@@ -53,8 +54,8 @@
                 </div>
                 <div class="ImgControls">
                     <div class="BtnsControlsImgContainer">
-                        <button class="BtnsChooseControlsImg selected">Ajustes</button>
-                        <button class="BtnsChooseControlsImg">Efeito</button>
+                        <button class="BtnsChooseControlsImg BTNOPTIONS selected">Ajustes</button>
+                        <button class="BtnsChooseControlsImg BTNOPTIONS">Efeito</button>
                     </div>
                     <div class="ControlImgContainer Position selected">
                         <div class="PositionBtns">
@@ -104,10 +105,10 @@
                     </div>
                     <div class="ControlImgContainer Effect">
                         <div class="BtnsImgEffectContainer">
-                            <button class="BtnImgEffect selected">Contorno</button>
-                            <button class="BtnImgEffect">Gradiante</button>
-                            <button class="BtnImgEffect">Cor</button>
-                            <button class="BtnImgEffect">Arredondado</button>
+                            <button class="BtnImgEffect BTNOPTIONS selected">Contorno</button>
+                            <button class="BtnImgEffect BTNOPTIONS">Gradiante</button>
+                            <button class="BtnImgEffect BTNOPTIONS">Cor</button>
+                            <button class="BtnImgEffect BTNOPTIONS">Arredondado</button>
                         </div>
                         <div class="ImgEffect Shadow selected">
                             <div style="display: flex; flex-direction: column; align-items: center; width: 100%; font-size: 50px; margin: 0px 0px 40px;">
@@ -191,8 +192,8 @@
                                     <img src="imagens/1.png" style="height: 100%;">
                                 </div>
                                 <div class="RoundedEffectOptions">
-                                    <button class="RoundedOptions selected">Borda</button>
-                                    <button class="RoundedOptions">Fundo</button>
+                                    <button class="RoundedOptions BTNOPTIONS selected">Borda</button>
+                                    <button class="RoundedOptions BTNOPTIONS">Fundo</button>
                                 </div>
                             </div>
                             <div class="RoundedCustomContainer selected">
@@ -234,8 +235,8 @@
             <div class="CustomizationContainer">
                 <input type="text" class="TextInput" placeholder="Digite aqui...">
                 <div class="BtnsOptionTextContainer">
-                    <button class="btnOptionText selected">Ajustes</button>
-                    <button class="btnOptionText">Estilo</button>
+                    <button class="btnOptionText BTNOPTIONS selected">Ajustes</button>
+                    <button class="btnOptionText BTNOPTIONS">Estilo</button>
                 </div>
                 <div class="OptionTextContainer selected">
                     <div class="TextSettingsContainer FontSize">
@@ -321,19 +322,55 @@
                 <div class="OptionTextContainer"></div>
             </div>
             <div class="CustomizationContainer">
-                <div class="InputColorContainer">
-                    <div class="CopyandPasteColor PasteColorBtn" onclick="PastColor(this, InputBgColor)" color="#FFFFFF">
-                        <div class="TittleCopyandPast">
-                            Colar
-                        </div>
+                <div class="BackgroundCustom Color">
+                    <div class="BackgroundCustomTittle Mask">
+                        Cor
                     </div>
-                    <button data-jscolor="{valueElement:'#InputBgColor', onInput: 'updateJSColor(this, \'#CopyColor-InputBgColor\')'}"></button>
-                    <div class="CopyandPasteColor CopyColorBtn" id="CopyColor-InputBgColor">
-                        <div class="TittleCopyandPast">
-                            Copiar
+                    <div class="InputColorContainer">
+                        <div class="CopyandPasteColor PasteColorBtn" onclick="PastColor(this, InputBgColor)" color="#FFFFFF">
+                            <div class="TittleCopyandPast">
+                                Colar
+                            </div>
                         </div>
+                        <button data-jscolor="{valueElement:'#InputBgColor', onInput: 'updateJSColor(this, \'#CopyColor-InputBgColor\')'}"></button>
+                        <div class="CopyandPasteColor CopyColorBtn" id="CopyColor-InputBgColor">
+                            <div class="TittleCopyandPast">
+                                Copiar
+                            </div>
+                        </div>
+                        <input class="InputBgColor" id="InputBgColor" value="#7fffd4" type="text" style="display: none;">
                     </div>
-                    <input class="InputBgColor" id="InputBgColor" value="#7fffd4" type="text" style="display: none;">
+                </div>
+                <div class="BackgroundCustom Mask">
+                    <div class="BackgroundCustomTittle Mask">
+                        Fundo
+                    </div>
+                    <div class="BackgroundCustomOptions Mask">
+                        <div class="BgOption Mask"></div>
+                        <div class="BgOption Mask"></div>
+                        <div class="BgOption Mask"></div>
+                        <div class="BgOption Mask"></div>
+                        <div class="BgOption Mask"></div>
+                        <div class="BgOption Mask"></div>
+                        <div class="BgOption Mask"></div>
+                        <div class="BgOption Mask"></div>
+                    </div>
+                </div>
+                <div class="BackgroundCustom Texture">
+                    <div class="BackgroundCustomTittle Texture">
+                        Textura
+                    </div>
+                    <div class="BackgroundCustomOptions Texture">
+                        <div class="BgOption Texture"></div>
+                        <div class="BgOption Texture"></div>
+                        <div class="BgOption Texture"></div>
+                        <div class="BgOption Texture"></div>
+                        <div class="BgOption Texture"></div>
+                        <div class="BgOption Texture"></div>
+                        <div class="BgOption Texture"></div>
+                        <div class="BgOption Texture"></div>
+                        <div class="BgOption Texture"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -344,5 +381,5 @@
         </button>
     </div>
 </body>
-<script src="Bootleg.js"></script>
 <script src="jscolor.js"></script>
+<script src="Bootleg.js"></script>
