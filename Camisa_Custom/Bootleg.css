@@ -41,7 +41,7 @@
 }
 
 :root {
-    --mask-image: url(https://cdn.shopify.com/s/files/1/0835/7966/6725/files/BG_Grunge.png?v=1698710304);
+    --mask-image: none;
 }
 
 .ImgContainerMasked {
@@ -49,7 +49,6 @@
     width: 100%;
     height: 100%;
     filter: grayscale(1);
-    background-image: url(https://images.unsplash.com/photo-1617967398617-a08eea39aa48?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3J1bmdlJTIwdGV4dHVyZXxlbnwwfHwwfHx8MA%3D%3D);
     background-size: cover;
     background-repeat: no-repeat;
     -webkit-mask-image: var(--mask-image);
@@ -870,6 +869,7 @@ input[type="text"] {
 .BackgroundCustomOptions {
     position: relative;
     display: flex;
+    align-items: center;
     width: 100%;
     overflow-x: scroll;
 }
@@ -880,7 +880,6 @@ input[type="text"] {
     height: 340px;
     width: 234px;
     margin: 0px 30px;
-    background: aqua;
     cursor: pointer;
 }
 
@@ -890,7 +889,6 @@ input[type="text"] {
 }
 
 .BgOption.Mask {
-    background: #000000;
     -webkit-mask-size: contain;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;

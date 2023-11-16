@@ -1087,21 +1087,25 @@ function updateBgColor() {
         //  BG MASK
 
 const maskLinks = [
-    '',
-    '',
-    '',
-    '',
-    '',
+    'Background/5-Soft-Grunge-Textures/01.png',
+    'Background/5-Soft-Grunge-Textures/02.png',
+    'Background/5-Soft-Grunge-Textures/03.png',
+    'Background/5-Soft-Grunge-Textures/04.png',
+    'Background/5-Soft-Grunge-Textures/05.png',
 ];
 
 const ContMask = document.querySelector('.BackgroundCustomOptions.Mask');
 
 function CreatMaskOptions() {
-    maskLinks.forEach(link => {
-        var divMask = document.createElement('div')
+    maskLinks.forEach((link, index) => {
+        var divMask = document.createElement('img')
         divMask.className = 'BgOption Mask';
-        divMask.style.maskImage = `url(${link})`;
-        divMask.style.webkitMaskImage = `url(${link})`;
+        divMask.src = link;
+        if (index === 0) {
+            divMask.classList.add('selected');
+            var Mask = `url(${link})`;
+            document.documentElement.style.setProperty('--mask-image', Mask)
+        }
         ContMask.appendChild(divMask);
     });
 }
@@ -1111,6 +1115,10 @@ CreatMaskOptions();
 const BgOptionMask = document.querySelectorAll('.BgOption.Mask');
 BgOptionMask.forEach((button, index) => {
     button.addEventListener('click', function() {
+        BgOptionMask.forEach(button => {
+            button.classList.remove('selected');
+        });
+        button.classList.add('selected');
         var Mask = `url(${maskLinks[index]})`;
         document.documentElement.style.setProperty('--mask-image', Mask);
     });
@@ -1137,11 +1145,11 @@ function CreatTextureOptions() {
         Texture.className = 'BgOption Texture';
         if (index === 0) {
             Texture.classList.add('selected');
+            ImgContainerMasked.style.backgroundImage = `url(${link})`;
         }
         Texture.style.backgroundImage = `url(${link})`;
         ContTexture.appendChild(Texture);
     });
-    ImgContainerMasked.style.backgroundImage = `url(${TextureLinks[0]})`;
 }
 
 
@@ -1154,7 +1162,7 @@ BgOptionTexture.forEach((button, index) => {
         BgOptionTexture.forEach(button => {
             button.classList.remove('selected');
         });
-        this.classList.add('selected');
+        button.classList.add('selected');
         ImgContainerMasked.style.backgroundImage = `url(${TextureLinks[index]})`;
     });
 });
