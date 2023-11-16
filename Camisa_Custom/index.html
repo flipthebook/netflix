@@ -8,7 +8,10 @@
                 <div class="ImgContainerMasked"></div>
                 <div class="ImgContainerColor"></div>
                 <div class="ImgContainer">
-                    <div class="TextPreview" min-left="0" min-right="0"></div>
+                    <div class="TextPreview" min-left="0" min-right="0">
+                        <p style="margin: 0; padding: 0;"></p>
+                        <div class="TextPreviewColor"></div>
+                    </div>
                 </div>
                 <div class="ImgSelector"></div>
                 <div class="ImgSizeControl">
@@ -41,7 +44,7 @@
                         </div>
                     </label>
                     <input type="file" id="LabelUploadImg" class="imageUpload" accept="image/*" style="display: none;">
-                    <div class="FullUploaded" style="display: none;font-size: 42px;height: 100%;aspect-ratio: 1/1;flex-direction: column;align-items: center;justify-content: center;">
+                    <div class="FullUploaded" style="display: none; font-size: 42px; font-family: sans-serif; font-weight: 700; height: 100%;aspect-ratio: 1/1;flex-direction: column;align-items: center;justify-content: center;">
                         <span>Cheio</span> 
                         <span>(8/8)</span>
                     </div>
@@ -282,41 +285,34 @@
                     </div>
                 </div>
                 <div class="OptionTextContainer">
-                    <div class="FontFamilyContainer">
-                        <div class="FontFamilySelector" style="font-family: AlfaSlabOne;">A</div>
-                        <div class="FontFamilySelector" style="font-family: AmosNormal;">A</div>
-                        <div class="FontFamilySelector" style="font-family: ARMYRUST;">A</div>
-                        <div class="FontFamilySelector" style="font-family: Ataxia;">A</div>
-                        <div class="FontFamilySelector" style="font-family: BLACEB;">A</div>
-                        <div class="FontFamilySelector" style="font-family: BodoniPoster;">A</div>
-                        <div class="FontFamilySelector" style="font-family: BrushScriptStdMedium;">A</div>
-                        <div class="FontFamilySelector" style="font-family: ChocStdRegular;">A</div>
-                        <div class="FontFamilySelector" style="font-family: CloisterBlack;">A</div>
-                        <div class="FontFamilySelector" style="font-family: CooperStdBlack;">A</div>
-                        <div class="FontFamilySelector" style="font-family: CoverfaceSeBold;">A</div>
-                        <div class="FontFamilySelector" style="font-family: Detonate;" min-left="0.0176" min-right="0.16">A</div>
-                        <div class="FontFamilySelector" style="font-family: PFFusionSansPro;">A</div>
-                        <div class="FontFamilySelector" style="font-family: Mistral;">A</div>
-                        <div class="FontFamilySelector" style="font-family: Revue;">A</div>
-                        <div class="FontFamilySelector" style="font-family: SoccerLeagueCollege;">A</div>
-                        <div class="FontFamilySelector" style="font-family: StencilStd;">A</div>
-                        <div class="FontFamilySelector" style="font-family: OleIngrish;">A</div>
-                        <div class="FontFamilySelector" style="font-family: TopSecret;">A</div>
-                        <div class="FontFamilySelector" style="font-family: WantedM54;">A</div>
-                        <div class="FontFamilySelector" style="font-family: WideLatin;">A</div>
+                    <div class="OptionText">
+                        <div class="OptionTextTitle">Fonte</div>
+                        <div class="FontFamilyContainer">
+                            
+                        </div>
                     </div>
-                    <div class="BackgroundTextEffect">
-                        <div class="btnBackgroundText selected" style="background-image: url(gggrain\ 1.svg)"></div>
-                        <div class="btnBackgroundText" style="background-image: url(gggrain\ 2.svg);"></div>
-                        <div class="btnBackgroundText" style="background-image: url(pattern.svg);"></div>
-                        <div class="btnBackgroundText" style="background-image: url(subtle-prism.svg);"></div>
-                        <div class="btnBackgroundText"></div>
-                        <div class="btnBackgroundText"></div>
-                        <div class="btnBackgroundText"></div>
-                        <div class="btnBackgroundText"></div>
+                    <div class="OptionText">
+                        <div class="OptionTextTitle">Cor</div>
+                        <div class="InputColorContainer">
+                            <div class="CopyandPasteColor PasteColorBtn" onclick="PastColor(this, InputTextColor)" color="#FFFFFF">
+                                <div class="TittleCopyandPast">
+                                    Colar
+                                </div>
+                            </div>
+                            <button data-jscolor="{valueElement:'#InputTextColor', onInput: 'updateJSColor(this, \'#CopyColor-TextColor\')'}"></button>
+                            <div class="CopyandPasteColor CopyColorBtn" id="CopyColor-TextColor">
+                                <div class="TittleCopyandPast">
+                                    Copiar
+                                </div>
+                            </div>
+                            <input class="InputTextColor" id="InputTextColor" value="#ffd700" type="text" style="display: none;">
+                        </div>
                     </div>
-                    <div class="FontFamilyContainer">
-                        
+                    <div class="OptionText">
+                        <div class="OptionTextTitle">Fundo</div>
+                        <div class="BackgroundTextEffect">
+    
+                        </div>
                     </div>
                 </div>
                 <div class="OptionTextContainer"></div>
@@ -346,14 +342,7 @@
                         Fundo
                     </div>
                     <div class="BackgroundCustomOptions Mask">
-                        <div class="BgOption Mask"></div>
-                        <div class="BgOption Mask"></div>
-                        <div class="BgOption Mask"></div>
-                        <div class="BgOption Mask"></div>
-                        <div class="BgOption Mask"></div>
-                        <div class="BgOption Mask"></div>
-                        <div class="BgOption Mask"></div>
-                        <div class="BgOption Mask"></div>
+
                     </div>
                 </div>
                 <div class="BackgroundCustom Texture">
@@ -361,15 +350,7 @@
                         Textura
                     </div>
                     <div class="BackgroundCustomOptions Texture">
-                        <div class="BgOption Texture"></div>
-                        <div class="BgOption Texture"></div>
-                        <div class="BgOption Texture"></div>
-                        <div class="BgOption Texture"></div>
-                        <div class="BgOption Texture"></div>
-                        <div class="BgOption Texture"></div>
-                        <div class="BgOption Texture"></div>
-                        <div class="BgOption Texture"></div>
-                        <div class="BgOption Texture"></div>
+                        
                     </div>
                 </div>
             </div>

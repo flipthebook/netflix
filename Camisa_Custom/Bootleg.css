@@ -139,6 +139,7 @@
     margin: -20px;
     -webkit-mask-composite: source-in;
     mask-composite: intersect;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -177,17 +178,26 @@
     position: absolute;
     font-size: 90px;
     font-weight: 700;
-    font-family: wanted m54;
     text-transform: uppercase;
     text-align: center;
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    background-image: url(gggrain\ 1.svg);
     background-repeat: no-repeat;
     -webkit-text-stroke: 0.1px white;
     filter: drop-shadow(0px 0px 0px white);
     letter-spacing: 3px;
+}
+
+.TextPreviewColor {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    background-color: #ffd700;
+    mix-blend-mode: color;
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
 .ImgSelector {
@@ -778,10 +788,26 @@ input[type="text"] {
     transition: box-shadow 0.5s;
 }
 
+.OptionText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px 0px 0px;
+}
+
+.OptionTextTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    font-family: sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
 .FontFamilyContainer {
     display: flex;
     width: 100%;
-    padding: 60px 0px 20px;
     overflow-x: scroll;
 }
 
@@ -794,7 +820,7 @@ input[type="text"] {
     flex-shrink: 0;
     border: 6px solid black;
     border-radius: 40px;
-    margin: 0px 20px;
+    margin: 15px 20px;
     font-size: 110px;
     cursor: pointer;
 }
@@ -807,7 +833,6 @@ input[type="text"] {
 .BackgroundTextEffect {
     display: flex;
     width: 100%;
-    padding: 60px 0px 20px;
     overflow-x: scroll;
 }
 
@@ -817,7 +842,7 @@ input[type="text"] {
     flex-shrink: 0;
     border: 6px solid black;
     border-radius: 40px;
-    margin: 0px 20px;
+    margin: 15px 20px;
 }
 
 .btnBackgroundText.selected {
@@ -859,6 +884,11 @@ input[type="text"] {
     cursor: pointer;
 }
 
+.BgOption.selected {
+    border: 6px solid red;
+    border-radius: 20px;
+}
+
 .BgOption.Mask {
     background: #000000;
     -webkit-mask-size: contain;
@@ -870,7 +900,6 @@ input[type="text"] {
 }
 
 .BgOption.Texture {
-    filter: grayscale(1);
     background-size: cover;
 }
 

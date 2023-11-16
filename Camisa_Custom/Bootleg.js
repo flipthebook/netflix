@@ -23,6 +23,10 @@ let BlendModeImg = null;
 let ImageIcon = null;
 let SelectedImgList = [ImgMaskContainer, PreviewImgContainer, RoundedContainer, PreviewImg, BlendModeImg, ImageIcon];
 
+var StyleCss = document.createElement('style');
+StyleCss.type = 'text/css';
+document.head.appendChild(StyleCss);
+
 function ZoomInLayout(button) {
     TshirtContainer.classList.add('Zoom');
     previewContainer.classList.add('Zoom');
@@ -78,8 +82,12 @@ function generateUniqueValue(existingValues) {
 }
 
 function CenterPosition(element, container) {
-    element.style.bottom = (container.offsetHeight - element.offsetHeight) / 2;
-    element.style.left = (container.offsetWidth - element.offsetWidth) / 2;
+    var heightElement = parseFloat(window.getComputedStyle(element).height);
+    var widthElement = parseFloat(window.getComputedStyle(element).width);
+    var heightContainer = parseFloat(window.getComputedStyle(container).height);
+    var widthContainer = parseFloat(window.getComputedStyle(container).width);
+    element.style.bottom = (heightContainer - heightElement) / 2;
+    element.style.left = (widthContainer - widthElement) / 2;
 }
 
 function ImgSelectorUpdate() {
@@ -93,7 +101,7 @@ function ImgSelectorUpdate() {
     ImgSizeControl.style.top = ImgSelector.offsetTop - ImgSizeControl.offsetHeight;
 }
 
-        //  ADD IMAGE AND SELECT
+//  ADD IMAGE AND SELECT
 
 function loadImage(input) {
     if (input.files && input.files[0])  {
@@ -157,8 +165,8 @@ function loadImage(input) {
             var imageSrc = e.target.result;
             PreviewImg.src = imageSrc;
             ImageIcon.src = imageSrc;
-            CenterPosition(PreviewImgContainer, previewContainer);
             updateImgCustomizations();
+            CenterPosition(PreviewImgContainer, ImgContainer);
             ImgSelectorUpdate();
         };
         reader.readAsDataURL(input.files[0]);
@@ -210,7 +218,7 @@ function ImgIconSelected() {
     }
 }
 
-        //  IMG TOUCH POSITION
+//  IMG TOUCH POSITION
 
 var startX, startY, offsetX, offsetY;
 var PreviewScale = 1;
@@ -322,7 +330,7 @@ ImgSizeControl.addEventListener('touchstart', function (event) {
     }
 });
 
-        //  CLEAR IMG
+//  CLEAR IMG
 
 clearIconContainer.addEventListener('click', function() {
     if (PreviewImg) {
@@ -343,7 +351,7 @@ clearIconContainer.addEventListener('click', function() {
 const BtnsChooseControlsImg = document.querySelectorAll('.BtnsChooseControlsImg');
 const ControlImgContainer = document.querySelectorAll('.ControlImgContainer');
 
-        //  IMG CONSTROLS
+//  IMG CONSTROLS
 
 BtnsChooseControlsImg.forEach((button, index) => {
     button.addEventListener('click', () => {
@@ -475,7 +483,7 @@ addTouchHoldListener(sizePlus, PlusSize);
 addTouchHoldListener(SizeLessLess, LessLessSize);
 addTouchHoldListener(SizePlusPlus, PlusPlusSize);
 
-        //  LAYER BUTTONS
+//  LAYER BUTTONS
 
 const botaoSubir = document.querySelector('.LayerUp');
 const botaoDescer = document.querySelector('.LayerDown');
@@ -500,7 +508,7 @@ botaoSubir.addEventListener('click', () => {
     }
 });
 
-        //  IMG MASK SELECTOR
+//  IMG MASK SELECTOR
 
 const MaskImgFalse = document.querySelector('.MaskImgFalse');
 const MaskImgTrue = document.querySelector('.MaskImgTrue');
@@ -513,7 +521,7 @@ MaskImgTrue.addEventListener('click', () => {
     PreviewImgContainer.parentNode.classList.add('masked');
 });
 
-        //  IMG EFFECTS
+//  IMG EFFECTS
 
 const BtnImgEffect = document.querySelectorAll('.BtnImgEffect');
 const ImgEffect = document.querySelectorAll('.ImgEffect');
@@ -532,7 +540,7 @@ BtnImgEffect.forEach((button, index) => {
     });
 });
 
-        //  UPDATE IMG CUSTOMIZATION
+//  UPDATE IMG CUSTOMIZATION
 
 function updateImgCustomizations() {
     actualImgFilter();
@@ -540,7 +548,7 @@ function updateImgCustomizations() {
     actualRoundedStyle();
 }
 
-        //  ALL INPUT RANGE FUNCTION
+//  ALL INPUT RANGE FUNCTION
 
 function InputRangeFunction(InputRange, Attribute, update) {
     InputRange.addEventListener('input', function() {
@@ -550,8 +558,7 @@ function InputRangeFunction(InputRange, Attribute, update) {
     });
 }
 
-
-        //  COPY AND PASTE FUNCTIONS
+//  COPY AND PASTE FUNCTIONS
 
 const CopyColorBtn = document.querySelectorAll('.CopyColorBtn');
 const PasteColorBtn = document.querySelectorAll('.PasteColorBtn');
@@ -573,7 +580,7 @@ function PastColor(button, inputColor) {
     changeInputColor(inputColor, color);
 }
 
-        //  ALL JSCOLOR INPUT FUNCTION
+//  ALL JSCOLOR INPUT FUNCTION
 
 jscolor.presets.default = {
     width:600, height:330, closeButton:true, closeText:'', sliderSize:40
@@ -586,8 +593,12 @@ function updateJSColor(picker, selector) {
 function InputJsColorFunction(InputJsColor, getSelectedElement, Attribute, update) {
     InputJsColor.addEventListener('input', function() {
         NewValue = InputJsColor.value;
-        const SelectedElement = getSelectedElement();
-        SelectedElement.setAttribute(Attribute, NewValue);
+        if (getSelectedElement){
+            const SelectedElement = getSelectedElement();
+            if (Attribute) {
+                SelectedElement.setAttribute(Attribute, NewValue);
+            }
+        }
         update(NewValue);
     });
 }
@@ -601,7 +612,7 @@ function changeInputColor(InputColor, color) {
     InputColor.dispatchEvent(event);
 }
 
-        //  DROP-SHADOW IMG EFFECT
+//  DROP-SHADOW IMG EFFECT
 
 const ImgShadow = document.querySelector('.ImgShadow');
 const InputImgShadowColor = document.querySelector('.InputImgShadowColor');
@@ -631,7 +642,7 @@ function actualImgFilter() {
     }
 }
 
-        //  GRADIENT IMG EFFECT  
+//  GRADIENT IMG EFFECT  
 
 const ImgGradient = document.querySelectorAll('.ImgGradient');
 
@@ -647,7 +658,7 @@ ImgGradient.forEach((element) => {
     });
 });
 
-        //  COLOR IMG EFFECT
+//  COLOR IMG EFFECT
 
 const OptionImgColorEffect = document.querySelectorAll('.OptionImgColorEffect');
 const ImgColorEffectContainer = document.querySelector('.ImgColorEffectContainer');
@@ -713,7 +724,7 @@ function actualImgColor() {
     }
 }
 
-        //  ROUDENDED IMG EFFECT
+//  ROUDENDED IMG EFFECT
 
 const RoundedSelector = document.querySelector('.RoundedSelector');
 const RoundedEffectOptions = document.querySelector('.RoundedEffectOptions');
@@ -819,7 +830,7 @@ function actualRoundedStyle() {
     }
 }
 
-        //  TEXT CUSTOMIZATION 
+//  TEXT CUSTOMIZATION 
 
 const btnOptionText = document.querySelectorAll('.btnOptionText');
 const OptionTextContainer = document.querySelectorAll('.OptionTextContainer');
@@ -840,6 +851,8 @@ btnOptionText.forEach((button, index) => {
 
 const TextInput = document.querySelector('.TextInput');
 const TextPreview = document.querySelector('.TextPreview');
+const TextPreviewP = document.querySelector('.TextPreview p');
+const TextPreviewColor = document.querySelector('.TextPreviewColor');
 let minLeft = null; 
 let minRight = null;
 
@@ -862,7 +875,8 @@ function TextScaleX () {
 }
 
 TextInput.addEventListener('input', function() {
-    TextPreview.textContent = TextInput.value;
+    TextPreviewP.innerText = TextInput.value;
+    TextPreviewColor.innerText = TextInput.value;
     TextScaleX();
 });
 
@@ -942,9 +956,110 @@ function TextMoveDown() {
 addTouchHoldListener(TextUp, TextMoveUp);
 addTouchHoldListener(TextDown, TextMoveDown);
 
-let BackgroundEffect = null;
+//  TEXT FONT FAMILY
+
+const fontFamilyLinks = [
+    'Fonts/alfa-slab-one/AlfaSlabOne-Regular.ttf',
+    'Fonts/amos-normal-maisfontes.b214/amos-normal.ttf',
+    'Fonts/army_rust/ARMYRUST.ttf',
+    'Fonts/ataxia-brk/Ataxia.ttf',
+    'Fonts/blackletter_ds/BLACEB.TTF',
+    'Fonts/bodoni-poster_Gw4Y3/BodoniPoster/BodoniPoster.otf',
+    'Fonts/brush-script-std_EOAtM/BrushScriptStd/BrushScriptStdMedium/BrushScriptStdMedium.ttf',
+    'Fonts/choc-std-regular/ChocStdRegular/ChocStdRegular.otf',
+    'Fonts/cloister_black/CloisterBlack.ttf',
+    'Fonts/cooper-std-black-maisfontes.ed43/cooper-std-black.otf',
+    'Fonts/coverface-se-font/CoverfaceSeBold-Yw2O.ttf',
+    'Fonts/detonate_brk/detonate.ttf',
+    'Fonts/fusion-sans/PFFusionSansPro-Black-subset.otf',
+    'Fonts/mistral-maisfontes.b5f1/mistral.ttf',
+    'Fonts/revue-maisfontes.99f9/revue.otf',
+    'Fonts/soccer_league/SoccerLeague.ttf',
+    'Fonts/stencil-std/StencilStd.otf',
+    'Fonts/TextFonts.net_ole-ingrish-font-1239226/OleIngrish.ttf',
+    'Fonts/top_secret_kb/TopSecret.ttf',
+    'Fonts/wanted_m54/WantedM54.ttf',
+    'Fonts/wide_latin/Wide_Latin/Nexus_Font.TTF',
+]
+
+const FontFamilyContainer = document.querySelector('.FontFamilyContainer');
+
+function createFontSelector() {
+    fontFamilyLinks.forEach((link, index) => {
+        var button = document.createElement('div');
+        button.className = 'FontFamilySelector';
+        var fontFamilyName = 'Font' + (index + 1);
+        if (index === 0) {
+            button.classList.add('selected');
+            TextPreview.style.fontFamily = 'Font' + (index + 1);
+        }
+        button.style.fontFamily = fontFamilyName;
+        button.innerText = 'A';
+        FontFamilyContainer.appendChild(button);
+
+        var css = '@font-face {' +
+            'font-family: "' + fontFamilyName + '";' +
+            'src: url(' + link + ') format("truetype");' +
+        '}';
+        StyleCss.appendChild(document.createTextNode(css));
+    });
+}
+
+createFontSelector();
+
+const FontFamilySelector = document.querySelectorAll('.FontFamilySelector');
+
+FontFamilySelector.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        FontFamilySelector.forEach(element => {
+            element.classList.remove('selected');
+        });
+        button.classList.add('selected');
+        TextPreview.style.fontFamily = button.style.fontFamily;
+        minLeft = button.getAttribute('min-left');
+        minRight = button.getAttribute('min-right');
+        TextPreview.setAttribute('min-left', minLeft);
+        TextPreview.setAttribute('min-right', minRight);
+        TextScaleX();
+    });
+});
+
+//  TEXT COLOR
+
+const InputTextColor = document.querySelector('.InputTextColor');
+
+InputJsColorFunction(InputTextColor, '', '', updateTextColor);
+
+function updateTextColor() {
+    TextPreviewColor.style.backgroundColor = NewValue;
+}
+
+//  TEXT BACKGROUND
+
+const BackgroundTextLinks = [
+    'gggrain1.svg',
+    'gggrain2.svg',
+    'pattern.svg',
+    'subtle-prism.svg',
+]
+const BackgroundTextEffect = document.querySelector('.BackgroundTextEffect');
+
+function creatBackgroundText() {
+    BackgroundTextLinks.forEach((link, index) => {
+        var button = document.createElement('div');
+        button.className = 'btnBackgroundText';
+        if (index === 0) {
+            button.classList.add('selected');
+            TextPreview.style.backgroundImage = `url(${link})`;
+        }
+        button.style.backgroundImage = `url(${link})`;
+        BackgroundTextEffect.appendChild(button);
+    });
+}
+
+creatBackgroundText();
+
 const btnBackgroundText = document.querySelectorAll('.btnBackgroundText');
-const TextPreviewBackground = document.querySelectorAll('.TextPreviewBackground');
 
 btnBackgroundText.forEach((button, index) => {
     button.addEventListener('click', () => {
@@ -957,44 +1072,21 @@ btnBackgroundText.forEach((button, index) => {
     });
 });
 
-const FontFamilySelector = document.querySelectorAll('.FontFamilySelector');
-
-FontFamilySelector.forEach((button, index) => {
-    button.addEventListener('click', () => {
-        FontFamilySelector.forEach(element => {
-            element.classList.remove('selected');
-        });
-        FontFamilySelector[index].classList.add('selected');
-        var BtnStyle = FontFamilySelector[index];
-        TextPreview.style.fontFamily = BtnStyle.style.fontFamily;
-        minLeft = BtnStyle.getAttribute('min-left');
-        minRight = BtnStyle.getAttribute('min-right');
-        TextPreview.setAttribute('min-left', minLeft);
-        TextPreview.setAttribute('min-right', minRight);
-        TextScaleX();
-    });
-});
-
-
         //  BACKGROUND CUSTOMIZATION
 
 const InputBgColor = document.querySelector('.InputBgColor');
 const ImgContainerMasked = document.querySelector('.ImgContainerMasked');
 const ImgContainerColor = document.querySelector('.ImgContainerColor');
-const BgOptionMask = document.querySelectorAll('.BgOption.Mask');
-const BgOptionTexture = document.querySelectorAll('.BgOption.Texture');
 
 InputJsColorFunction(InputBgColor, () => ImgContainerColor, 'BgColor', updateBgColor);
 
 function updateBgColor() {
     ImgContainerColor.style.backgroundColor = NewValue;
 }
+
+        //  BG MASK
+
 const maskLinks = [
-    'Background/5-Soft-Grunge-Textures/1.png',
-    'Background/5-Soft-Grunge-Textures/2.png',
-    'Background/5-Soft-Grunge-Textures/3.png',
-    'Background/5-Soft-Grunge-Textures/4.png',
-    'Background/5-Soft-Grunge-Textures/5.png',
     '',
     '',
     '',
@@ -1002,11 +1094,21 @@ const maskLinks = [
     '',
 ];
 
-BgOptionMask.forEach((element, index) => {
-    element.style.maskImage = `url(${maskLinks[index]})`;
-    element.style.webkitMaskImage = `url(${maskLinks[index]})`;
-});
+const ContMask = document.querySelector('.BackgroundCustomOptions.Mask');
 
+function CreatMaskOptions() {
+    maskLinks.forEach(link => {
+        var divMask = document.createElement('div')
+        divMask.className = 'BgOption Mask';
+        divMask.style.maskImage = `url(${link})`;
+        divMask.style.webkitMaskImage = `url(${link})`;
+        ContMask.appendChild(divMask);
+    });
+}
+
+CreatMaskOptions();
+
+const BgOptionMask = document.querySelectorAll('.BgOption.Mask');
 BgOptionMask.forEach((button, index) => {
     button.addEventListener('click', function() {
         var Mask = `url(${maskLinks[index]})`;
@@ -1014,10 +1116,9 @@ BgOptionMask.forEach((button, index) => {
     });
 });
 
+        //  BG TEXTURES
+
 const TextureLinks = [
-    'https://i.pinimg.com/236x/1b/c2/78/1bc278fa51bee2cf5b0c31d7661ed213.jpg',
-    'https://i.pinimg.com/236x/c6/a7/1d/c6a71d1e0b407796e21ced5e9ca035da.jpg',
-    'https://i.pinimg.com/originals/b3/35/8e/b3358eaf5e1972467a502edd2a367f40.jpg',
     'Background/Textures/1.jpg',
     'Background/Textures/2.jpg',
     'Background/Textures/3.jpg',
@@ -1025,15 +1126,35 @@ const TextureLinks = [
     'Background/Textures/5.jpg',
     'Background/Textures/6.jpg',
     'Background/Textures/7.jpg',
-    '',
+    'Background/Textures/8.jpg',
 ];
 
-BgOptionTexture.forEach((element, index) => {
-    element.style.backgroundImage = `url(${TextureLinks[index]})`;
-});
+const ContTexture = document.querySelector('.BackgroundCustomOptions.Texture');
+
+function CreatTextureOptions() {
+    TextureLinks.forEach((link, index) => {
+        const Texture = document.createElement('div');
+        Texture.className = 'BgOption Texture';
+        if (index === 0) {
+            Texture.classList.add('selected');
+        }
+        Texture.style.backgroundImage = `url(${link})`;
+        ContTexture.appendChild(Texture);
+    });
+    ImgContainerMasked.style.backgroundImage = `url(${TextureLinks[0]})`;
+}
+
+
+CreatTextureOptions();
+
+const BgOptionTexture = document.querySelectorAll('.BgOption.Texture');
 
 BgOptionTexture.forEach((button, index) => {
     button.addEventListener('click', function() {
+        BgOptionTexture.forEach(button => {
+            button.classList.remove('selected');
+        });
+        this.classList.add('selected');
         ImgContainerMasked.style.backgroundImage = `url(${TextureLinks[index]})`;
     });
 });
